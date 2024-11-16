@@ -1162,12 +1162,18 @@
                                 <goals>
                                     <goal>install-node-and-npm</goal>
                                 </goals>
+                                <configuration>
+                                    <skip>${skip.frontend}</skip>
+                                </configuration>
                             </execution>
                             <execution>
                                 <id>npm install</id>
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
+                                <configuration>
+                                    <skip>${skip.frontend}</skip>
+                                </configuration>
                             </execution>
                             <execution>
                                 <id>webapp build dev</id>
