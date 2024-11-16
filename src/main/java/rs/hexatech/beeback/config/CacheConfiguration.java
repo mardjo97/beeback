@@ -46,6 +46,7 @@ public class CacheConfiguration {
             createCache(cm, rs.hexatech.beeback.domain.User.class.getName());
             createCache(cm, rs.hexatech.beeback.domain.Authority.class.getName());
             createCache(cm, rs.hexatech.beeback.domain.User.class.getName() + ".authorities");
+            createCache(cm, rs.hexatech.beeback.domain.Apiary.class.getName());
             // jhipster-needle-caffeine-add-entry
         };
     }

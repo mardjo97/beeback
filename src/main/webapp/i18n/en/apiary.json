@@ -1,0 +1,37 @@
+{
+  "beebackApp": {
+    "apiary": {
+      "home": {
+        "title": "Apiaries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Apiary",
+        "createOrEditLabel": "Create or edit a Apiary",
+        "notFound": "No Apiaries found"
+      },
+      "created": "A new Apiary is created with identifier {{ param }}",
+      "updated": "A Apiary is updated with identifier {{ param }}",
+      "deleted": "A Apiary is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Apiary {{ id }}?"
+      },
+      "detail": {
+        "title": "Apiary"
+      },
+      "id": "ID",
+      "name": "Name",
+      "idNumber": "Id Number",
+      "color": "Color",
+      "location": "Location",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "orderNumber": "Order Number",
+      "hiveCount": "Hive Count",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "user": "User"
+    }
+  }
+}

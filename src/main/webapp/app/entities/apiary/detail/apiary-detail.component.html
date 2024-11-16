@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (apiary(); as apiaryRef) {
+      <div>
+        <h2 data-cy="apiaryDetailsHeading"><span jhiTranslate="beebackApp.apiary.detail.title">Apiary</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ apiaryRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.name">Name</span></dt>
+          <dd>
+            <span>{{ apiaryRef.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.idNumber">Id Number</span></dt>
+          <dd>
+            <span>{{ apiaryRef.idNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.color">Color</span></dt>
+          <dd>
+            <span>{{ apiaryRef.color }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.location">Location</span></dt>
+          <dd>
+            <span>{{ apiaryRef.location }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.latitude">Latitude</span></dt>
+          <dd>
+            <span>{{ apiaryRef.latitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.longitude">Longitude</span></dt>
+          <dd>
+            <span>{{ apiaryRef.longitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.orderNumber">Order Number</span></dt>
+          <dd>
+            <span>{{ apiaryRef.orderNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.hiveCount">Hive Count</span></dt>
+          <dd>
+            <span>{{ apiaryRef.hiveCount }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ apiaryRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ apiaryRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ apiaryRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ apiaryRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ apiaryRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.apiary.user">User</span></dt>
+          <dd>
+            <span>{{ apiaryRef.user?.id }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/apiary', apiaryRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

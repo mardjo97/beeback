@@ -55,8 +55,9 @@
       "fieldName": "dateModified",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
-    },    {
-      "fieldName": "dateSynced",
+    },
+    {
+      "fieldName": "dateSynched",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
     }

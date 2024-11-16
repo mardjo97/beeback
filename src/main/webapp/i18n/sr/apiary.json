@@ -1,0 +1,37 @@
+{
+  "beebackApp": {
+    "apiary": {
+      "home": {
+        "title": "Apiaries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Apiary",
+        "createOrEditLabel": "Kreirajte ili izmenite Apiary",
+        "notFound": "No Apiaries found"
+      },
+      "created": "Kreiran je novi Apiary pod nazivom {{ param }}",
+      "updated": "Apiary pod nazivom {{ param }} je ažuriran",
+      "deleted": "Apiary pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Apiary pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Apiary"
+      },
+      "id": "ID",
+      "name": "Name",
+      "idNumber": "Id Number",
+      "color": "Color",
+      "location": "Location",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "orderNumber": "Order Number",
+      "hiveCount": "Hive Count",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "user": "User"
+    }
+  }
+}
