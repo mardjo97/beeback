@@ -1,11 +1,19 @@
 package rs.hexatech.beeback.domain;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import java.io.Serializable;
-import java.time.Instant;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * A Apiary.
@@ -290,20 +298,20 @@ public class Apiary implements Serializable {
     @Override
     public String toString() {
         return "Apiary{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", idNumber='" + getIdNumber() + "'" +
-            ", color='" + getColor() + "'" +
-            ", location='" + getLocation() + "'" +
-            ", latitude=" + getLatitude() +
-            ", longitude=" + getLongitude() +
-            ", orderNumber=" + getOrderNumber() +
-            ", hiveCount=" + getHiveCount() +
-            ", externalId=" + getExternalId() +
-            ", uuid='" + getUuid() + "'" +
-            ", dateCreated='" + getDateCreated() + "'" +
-            ", dateModified='" + getDateModified() + "'" +
-            ", dateSynched='" + getDateSynched() + "'" +
-            "}";
+                "id=" + getId() +
+                ", name='" + getName() + "'" +
+                ", idNumber='" + getIdNumber() + "'" +
+                ", color='" + getColor() + "'" +
+                ", location='" + getLocation() + "'" +
+                ", latitude=" + getLatitude() +
+                ", longitude=" + getLongitude() +
+                ", orderNumber=" + getOrderNumber() +
+                ", hiveCount=" + getHiveCount() +
+                ", externalId=" + getExternalId() +
+                ", uuid='" + getUuid() + "'" +
+                ", dateCreated='" + getDateCreated() + "'" +
+                ", dateModified='" + getDateModified() + "'" +
+                ", dateSynched='" + getDateSynched() + "'" +
+                "}";
     }
 }

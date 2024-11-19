@@ -1,16 +1,22 @@
 package rs.hexatech.beeback.service;
 
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hexatech.beeback.domain.Apiary;
+import rs.hexatech.beeback.domain.User;
 import rs.hexatech.beeback.repository.ApiaryRepository;
 import rs.hexatech.beeback.service.dto.ApiaryDTO;
 import rs.hexatech.beeback.service.mapper.ApiaryMapper;
+
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Service Implementation for managing {@link rs.hexatech.beeback.domain.Apiary}.
@@ -25,9 +31,50 @@ public class ApiaryService {
 
     private final ApiaryMapper apiaryMapper;
 
+    @Autowired
+    private SecurityService securityService;
+
     public ApiaryService(ApiaryRepository apiaryRepository, ApiaryMapper apiaryMapper) {
         this.apiaryRepository = apiaryRepository;
         this.apiaryMapper = apiaryMapper;
+    }
+
+    /**
+     * Sync apiaries.
+     *
+     * @param apiaryDTOs the entity to save.
+     * @return the persisted entity.
+     */
+    public List<ApiaryDTO> sync(List<ApiaryDTO> apiaryDTOs) {
+        LOG.debug("Request to sync Apiaries : {}", apiaryDTOs);
+
+        User user = securityService.getCurrentUser();
+        return apiaryDTOs.stream().map(el -> syncApiary(el, user)).map(apiaryMapper::toDto).toList();
+    }
+
+    private Apiary syncApiary(final ApiaryDTO apiaryDto, final User user) {
+        if (apiaryDto.getUuid() != null) {
+            Apiary existingApiary = apiaryRepository.findByUuidIs(apiaryDto.getUuid());
+            if (existingApiary == null) {
+                LOG.error("The entity does not exist, but there is uuid in the request body {}", apiaryDto);
+                LOG.error("Returning the response with uuid and dateSynched as nulls!");
+                Apiary mappedApiary = apiaryMapper.toEntity(apiaryDto);
+                toReset(mappedApiary);
+                return mappedApiary;
+            }
+            apiaryMapper.partialUpdate(existingApiary, apiaryDto);
+            toUpdate(existingApiary);
+            return apiaryRepository.save(existingApiary);
+        }
+        Apiary existingApiary = apiaryRepository.findByUserAndExternalId(user, apiaryDto.getId().intValue());
+        if (existingApiary != null) {
+            LOG.error("The entity {} exists but in the request the uuid is {}", existingApiary, apiaryDto.getUuid());
+            LOG.warn("The entity {} is not synched", apiaryDto);
+            return null;
+        }
+        Apiary toCreateApiary = apiaryMapper.toEntity(apiaryDto);
+        toCreate(toCreateApiary, user);
+        return apiaryRepository.save(toCreateApiary);
     }
 
     /**
@@ -66,14 +113,14 @@ public class ApiaryService {
         LOG.debug("Request to partially update Apiary : {}", apiaryDTO);
 
         return apiaryRepository
-            .findById(apiaryDTO.getId())
-            .map(existingApiary -> {
-                apiaryMapper.partialUpdate(existingApiary, apiaryDTO);
+                .findById(apiaryDTO.getId())
+                .map(existingApiary -> {
+                    apiaryMapper.partialUpdate(existingApiary, apiaryDTO);
 
-                return existingApiary;
-            })
-            .map(apiaryRepository::save)
-            .map(apiaryMapper::toDto);
+                    return existingApiary;
+                })
+                .map(apiaryRepository::save)
+                .map(apiaryMapper::toDto);
     }
 
     /**
@@ -97,6 +144,8 @@ public class ApiaryService {
     @Transactional(readOnly = true)
     public Optional<ApiaryDTO> findOne(Long id) {
         LOG.debug("Request to get Apiary : {}", id);
+        User user = securityService.getCurrentUser();
+        LOG.info(user.getLogin());
         return apiaryRepository.findById(id).map(apiaryMapper::toDto);
     }
 
@@ -108,5 +157,17 @@ public class ApiaryService {
     public void delete(Long id) {
         LOG.debug("Request to delete Apiary : {}", id);
         apiaryRepository.deleteById(id);
+    }
+
+    private void toUpdate(final Apiary apiary) {
+        apiary.dateSynched(Instant.now());
+    }
+
+    private void toCreate(final Apiary apiary, final User user) {
+        apiary.user(user).uuid(UUID.randomUUID().toString()).dateSynched(Instant.now());
+    }
+
+    private void toReset(final Apiary apiary) {
+        apiary.uuid(null).dateSynched(null);
     }
 }

@@ -48,6 +48,20 @@ public class ApiaryResource {
     }
 
     /**
+     * {@code POST  /apiaries/sync} : Sync list of apiaries.
+     *
+     * @param apiaryDTOs the apiaryDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 200 } and with List of the apiaryDTO, or with status {@code 400 (Bad Request)} if the apiary has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/sync")
+    public ResponseEntity<List<ApiaryDTO>> syncApiaries(@RequestBody List<ApiaryDTO> apiaryDTOs) throws URISyntaxException {
+        LOG.debug("REST request to sync Apiaries : {}", apiaryDTOs);
+        List<ApiaryDTO> syncedApiariesDTOs = apiaryService.sync(apiaryDTOs);
+        return ResponseEntity.ok().body(syncedApiariesDTOs);
+    }
+
+    /**
      * {@code POST  /apiaries} : Create a new apiary.
      *
      * @param apiaryDTO the apiaryDTO to create.

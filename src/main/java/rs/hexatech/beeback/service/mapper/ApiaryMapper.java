@@ -1,21 +1,25 @@
 package rs.hexatech.beeback.service.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import rs.hexatech.beeback.domain.Apiary;
-import rs.hexatech.beeback.domain.User;
 import rs.hexatech.beeback.service.dto.ApiaryDTO;
-import rs.hexatech.beeback.service.dto.UserDTO;
 
 /**
  * Mapper for the entity {@link Apiary} and its DTO {@link ApiaryDTO}.
  */
 @Mapper(componentModel = "spring")
 public interface ApiaryMapper extends EntityMapper<ApiaryDTO, Apiary> {
-    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
+    @Mapping(target = "id", source = "externalId")
     ApiaryDTO toDto(Apiary s);
 
-    @Named("userId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    UserDTO toDtoUserId(User user);
+    @Mapping(target = "externalId", source = "id")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "uuid", ignore = true)
+    Apiary toEntity(ApiaryDTO s);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "uuid", ignore = true)
+    void partialUpdate(@MappingTarget Apiary entity, ApiaryDTO dto);
 }

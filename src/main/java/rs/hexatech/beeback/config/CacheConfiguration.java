@@ -1,8 +1,6 @@
 package rs.hexatech.beeback.config;
 
 import com.github.benmanes.caffeine.jcache.configuration.CaffeineConfiguration;
-import java.util.OptionalLong;
-import java.util.concurrent.TimeUnit;
 import org.hibernate.cache.jcache.ConfigSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
@@ -11,9 +9,14 @@ import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import rs.hexatech.beeback.repository.UserRepository;
 import tech.jhipster.config.JHipsterProperties;
 import tech.jhipster.config.cache.PrefixedKeyGenerator;
+
+import java.util.OptionalLong;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableCaching
@@ -43,6 +46,7 @@ public class CacheConfiguration {
         return cm -> {
             createCache(cm, rs.hexatech.beeback.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, rs.hexatech.beeback.repository.UserRepository.USERS_BY_EMAIL_CACHE);
+            createCache(cm, UserRepository.USERS_BY_LOGIN_SIMPLE_CACHE);
             createCache(cm, rs.hexatech.beeback.domain.User.class.getName());
             createCache(cm, rs.hexatech.beeback.domain.Authority.class.getName());
             createCache(cm, rs.hexatech.beeback.domain.User.class.getName() + ".authorities");

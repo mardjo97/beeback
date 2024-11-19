@@ -1,6 +1,7 @@
 package rs.hexatech.beeback.service.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -43,8 +44,6 @@ public class ApiaryDTO implements Serializable {
 
     @NotNull
     private Instant dateSynched;
-
-    private UserDTO user;
 
     public Long getId() {
         return id;
@@ -158,14 +157,6 @@ public class ApiaryDTO implements Serializable {
         this.dateSynched = dateSynched;
     }
 
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -191,21 +182,20 @@ public class ApiaryDTO implements Serializable {
     @Override
     public String toString() {
         return "ApiaryDTO{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", idNumber='" + getIdNumber() + "'" +
-            ", color='" + getColor() + "'" +
-            ", location='" + getLocation() + "'" +
-            ", latitude=" + getLatitude() +
-            ", longitude=" + getLongitude() +
-            ", orderNumber=" + getOrderNumber() +
-            ", hiveCount=" + getHiveCount() +
-            ", externalId=" + getExternalId() +
-            ", uuid='" + getUuid() + "'" +
-            ", dateCreated='" + getDateCreated() + "'" +
-            ", dateModified='" + getDateModified() + "'" +
-            ", dateSynched='" + getDateSynched() + "'" +
-            ", user=" + getUser() +
-            "}";
+                "id=" + getId() +
+                ", name='" + getName() + "'" +
+                ", idNumber='" + getIdNumber() + "'" +
+                ", color='" + getColor() + "'" +
+                ", location='" + getLocation() + "'" +
+                ", latitude=" + getLatitude() +
+                ", longitude=" + getLongitude() +
+                ", orderNumber=" + getOrderNumber() +
+                ", hiveCount=" + getHiveCount() +
+                ", externalId=" + getExternalId() +
+                ", uuid='" + getUuid() + "'" +
+                ", dateCreated='" + getDateCreated() + "'" +
+                ", dateModified='" + getDateModified() + "'" +
+                ", dateSynched='" + getDateSynched() + "'" +
+                "}";
     }
 }
