@@ -6,7 +6,7 @@
 
     <groupId>rs.hexatech.beeback</groupId>
     <artifactId>beeback</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>Beeback</name>
     <description>Description for Beeback</description>

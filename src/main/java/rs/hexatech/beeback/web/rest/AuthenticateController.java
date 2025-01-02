@@ -1,16 +1,10 @@
 package rs.hexatech.beeback.web.rest;
 
-import static rs.hexatech.beeback.security.SecurityUtils.AUTHORITIES_KEY;
-import static rs.hexatech.beeback.security.SecurityUtils.JWT_ALGORITHM;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
-import java.security.Principal;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,8 +19,23 @@ import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import rs.hexatech.beeback.domain.User;
+import rs.hexatech.beeback.service.SecurityService;
 import rs.hexatech.beeback.web.rest.vm.LoginVM;
+
+import java.security.Principal;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.stream.Collectors;
+
+import static rs.hexatech.beeback.security.SecurityUtils.AUTHORITIES_KEY;
+import static rs.hexatech.beeback.security.SecurityUtils.JWT_ALGORITHM;
 
 /**
  * Controller to authenticate users.
@@ -47,6 +56,9 @@ public class AuthenticateController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+    @Autowired
+    private SecurityService securityService;
+
     public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.jwtEncoder = jwtEncoder;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
@@ -55,8 +67,8 @@ public class AuthenticateController {
     @PostMapping("/authenticate")
     public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-            loginVM.getUsername(),
-            loginVM.getPassword()
+                loginVM.getUsername(),
+                loginVM.getPassword()
         );
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -74,9 +86,22 @@ public class AuthenticateController {
      * @return the login if the user is authenticated.
      */
     @GetMapping(value = "/authenticate", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String isAuthenticated(Principal principal) {
+    public String isAuthenticated(@RequestHeader("Device-Id") String deviceId, Principal principal) {
         LOG.debug("REST request to check if the current user is authenticated");
         return principal == null ? null : principal.getName();
+    }
+
+    /**
+     * {@code GET /validate} : check if the user is authenticated, and deviceId is valid, returns its login.
+     *
+     * @param deviceId the valid device id .
+     * @return the login if the user is authenticated.
+     */
+    @GetMapping(value = "/validate", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String validate(@RequestHeader("Device-Id") String deviceId) {
+        LOG.debug("REST request to check if the current user is authenticated and deviceId is valid");
+        User user = securityService.getCurrentUser();
+        return user.getLogin();
     }
 
     public String createToken(Authentication authentication, boolean rememberMe) {

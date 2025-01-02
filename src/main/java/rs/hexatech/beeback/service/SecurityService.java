@@ -1,5 +1,6 @@
 package rs.hexatech.beeback.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class SecurityService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public User getCurrentUser() {
 
         Optional<String> loginOptional = SecurityUtils.getCurrentUserLogin();

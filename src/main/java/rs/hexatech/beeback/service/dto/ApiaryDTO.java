@@ -1,5 +1,7 @@
 package rs.hexatech.beeback.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
@@ -10,8 +12,10 @@ import java.util.Objects;
  * A DTO for the {@link rs.hexatech.beeback.domain.Apiary} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiaryDTO implements Serializable {
 
+    @NotNull
     private Long id;
 
     private String name;
@@ -31,18 +35,18 @@ public class ApiaryDTO implements Serializable {
     private Integer hiveCount;
 
     @NotNull
-    private Integer externalId;
-
-    @NotNull
     private String uuid;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
     private Instant dateCreated;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
     private Instant dateModified;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
     private Instant dateSynched;
 
     public Long getId() {
@@ -117,14 +121,6 @@ public class ApiaryDTO implements Serializable {
         this.hiveCount = hiveCount;
     }
 
-    public Integer getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(Integer externalId) {
-        this.externalId = externalId;
-    }
-
     public String getUuid() {
         return uuid;
     }
@@ -191,7 +187,6 @@ public class ApiaryDTO implements Serializable {
                 ", longitude=" + getLongitude() +
                 ", orderNumber=" + getOrderNumber() +
                 ", hiveCount=" + getHiveCount() +
-                ", externalId=" + getExternalId() +
                 ", uuid='" + getUuid() + "'" +
                 ", dateCreated='" + getDateCreated() + "'" +
                 ", dateModified='" + getDateModified() + "'" +

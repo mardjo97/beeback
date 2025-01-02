@@ -12,9 +12,11 @@ import rs.hexatech.beeback.domain.User;
 import rs.hexatech.beeback.repository.ApiaryRepository;
 import rs.hexatech.beeback.service.dto.ApiaryDTO;
 import rs.hexatech.beeback.service.mapper.ApiaryMapper;
+import rs.hexatech.beeback.utils.DateTimeUtil;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,7 +51,23 @@ public class ApiaryService {
         LOG.debug("Request to sync Apiaries : {}", apiaryDTOs);
 
         User user = securityService.getCurrentUser();
-        return apiaryDTOs.stream().map(el -> syncApiary(el, user)).map(apiaryMapper::toDto).toList();
+        return apiaryDTOs.stream().map(el -> syncApiary(el, user))
+                .map(apiaryMapper::toDto)
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
+    /**
+     * Retrieve apiaries.
+     *
+     * @param deviceId to check the device.
+     * @return the persisted entity.
+     */
+    public List<ApiaryDTO> userApiaries(String deviceId) {
+        User user = securityService.getCurrentUser();
+        LOG.debug("Request to retrieve user's Apiaries! User {}, DeviceId: {}", user.getLogin(), deviceId);
+        //validate deviceId
+        return apiaryMapper.toDto(apiaryRepository.findByUserIsCurrentUser());
     }
 
     private Apiary syncApiary(final ApiaryDTO apiaryDto, final User user) {
@@ -160,7 +178,8 @@ public class ApiaryService {
     }
 
     private void toUpdate(final Apiary apiary) {
-        apiary.dateSynched(Instant.now());
+        apiary.dateSynched(DateTimeUtil.now());
+        LOG.error("{}", DateTimeUtil.now());
     }
 
     private void toCreate(final Apiary apiary, final User user) {

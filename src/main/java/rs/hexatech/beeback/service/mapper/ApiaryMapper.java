@@ -21,5 +21,7 @@ public interface ApiaryMapper extends EntityMapper<ApiaryDTO, Apiary> {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "uuid", ignore = true)
+    @Mapping(target = "dateSynched", ignore = true)
+    @Mapping(target = "externalId", ignore = true)
     void partialUpdate(@MappingTarget Apiary entity, ApiaryDTO dto);
 }

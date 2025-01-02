@@ -2,11 +2,6 @@ package rs.hexatech.beeback.web.rest;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +9,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import rs.hexatech.beeback.repository.ApiaryRepository;
 import rs.hexatech.beeback.service.ApiaryService;
@@ -23,6 +27,12 @@ import rs.hexatech.beeback.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * REST controller for managing {@link rs.hexatech.beeback.domain.Apiary}.
@@ -62,6 +72,20 @@ public class ApiaryResource {
     }
 
     /**
+     * {@code GET  /apiaries/all} : Retrieve list of user's apiaries.
+     *
+     * @param deviceId to validate device id
+     * @return the {@link ResponseEntity} with status {@code 200 } and with List of the apiaryDTO, or with status {@code 400 (Bad Request)} if the apiary has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @GetMapping("/all")
+    public ResponseEntity<List<ApiaryDTO>> userApiaries(@RequestHeader("Device-Id") String deviceId) throws URISyntaxException {
+        LOG.debug("REST request to retrieve user's Apiaries");
+        List<ApiaryDTO> userApiaries = apiaryService.userApiaries(deviceId);
+        return ResponseEntity.ok().body(userApiaries);
+    }
+
+    /**
      * {@code POST  /apiaries} : Create a new apiary.
      *
      * @param apiaryDTO the apiaryDTO to create.
@@ -76,14 +100,14 @@ public class ApiaryResource {
         }
         apiaryDTO = apiaryService.save(apiaryDTO);
         return ResponseEntity.created(new URI("/api/apiaries/" + apiaryDTO.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString()))
-            .body(apiaryDTO);
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString()))
+                .body(apiaryDTO);
     }
 
     /**
      * {@code PUT  /apiaries/:id} : Updates an existing apiary.
      *
-     * @param id the id of the apiaryDTO to save.
+     * @param id        the id of the apiaryDTO to save.
      * @param apiaryDTO the apiaryDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated apiaryDTO,
      * or with status {@code 400 (Bad Request)} if the apiaryDTO is not valid,
@@ -92,8 +116,8 @@ public class ApiaryResource {
      */
     @PutMapping("/{id}")
     public ResponseEntity<ApiaryDTO> updateApiary(
-        @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody ApiaryDTO apiaryDTO
+            @PathVariable(value = "id", required = false) final Long id,
+            @Valid @RequestBody ApiaryDTO apiaryDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to update Apiary : {}, {}", id, apiaryDTO);
         if (apiaryDTO.getId() == null) {
@@ -109,14 +133,14 @@ public class ApiaryResource {
 
         apiaryDTO = apiaryService.update(apiaryDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString()))
-            .body(apiaryDTO);
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString()))
+                .body(apiaryDTO);
     }
 
     /**
      * {@code PATCH  /apiaries/:id} : Partial updates given fields of an existing apiary, field will ignore if it is null
      *
-     * @param id the id of the apiaryDTO to save.
+     * @param id        the id of the apiaryDTO to save.
      * @param apiaryDTO the apiaryDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated apiaryDTO,
      * or with status {@code 400 (Bad Request)} if the apiaryDTO is not valid,
@@ -124,10 +148,10 @@ public class ApiaryResource {
      * or with status {@code 500 (Internal Server Error)} if the apiaryDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<ApiaryDTO> partialUpdateApiary(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody ApiaryDTO apiaryDTO
+            @PathVariable(value = "id", required = false) final Long id,
+            @NotNull @RequestBody ApiaryDTO apiaryDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update Apiary partially : {}, {}", id, apiaryDTO);
         if (apiaryDTO.getId() == null) {
@@ -144,8 +168,8 @@ public class ApiaryResource {
         Optional<ApiaryDTO> result = apiaryService.partialUpdate(apiaryDTO);
 
         return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString())
+                result,
+                HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString())
         );
     }
 
@@ -187,7 +211,7 @@ public class ApiaryResource {
         LOG.debug("REST request to delete Apiary : {}", id);
         apiaryService.delete(id);
         return ResponseEntity.noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+                .build();
     }
 }
