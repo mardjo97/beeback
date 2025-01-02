@@ -1,9 +1,9 @@
 package rs.hexatech.beeback.service.dto;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 import rs.hexatech.beeback.web.rest.TestUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ApiaryDTOTest {
 

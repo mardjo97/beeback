@@ -18,31 +18,33 @@ import java.util.Optional;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    String USERS_BY_LOGIN_CACHE = "usersByLogin";
-    String USERS_BY_LOGIN_SIMPLE_CACHE = "usersByLoginSimple";
-    String USERS_BY_EMAIL_CACHE = "usersByEmail";
+  String USERS_BY_LOGIN_CACHE = "usersByLogin";
+  String USERS_BY_LOGIN_SIMPLE_CACHE = "usersByLoginSimple";
+  String USERS_BY_EMAIL_CACHE = "usersByEmail";
 
-    Optional<User> findOneByActivationKey(String activationKey);
+  Optional<User> findOneByActivationKey(String activationKey);
 
-    List<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);
+  List<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);
 
-    Optional<User> findOneByResetKey(String resetKey);
+  Optional<User> findOneByResetKey(String resetKey);
 
-    Optional<User> findOneByEmailIgnoreCase(String email);
+  Optional<User> findOneByEmailIgnoreCase(String email);
 
-    @Cacheable(cacheNames = USERS_BY_LOGIN_SIMPLE_CACHE)
-    Optional<User> findOneByLogin(String login);
+  Optional<User> findOneByEmailIgnoreCaseAndActivatedTrue(String email);
 
-    @EntityGraph(attributePaths = "authorities")
-    @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
-    Optional<User> findOneWithAuthoritiesByLogin(String login);
+  //@Cacheable(cacheNames = USERS_BY_LOGIN_SIMPLE_CACHE)
+  Optional<User> findOneByLogin(String login);
 
-    @EntityGraph(attributePaths = "authorities")
-    @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
-    Optional<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
+  @EntityGraph(attributePaths = "authorities")
+  @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
+  Optional<User> findOneWithAuthoritiesByLogin(String login);
 
-    Page<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
+  @EntityGraph(attributePaths = "authorities")
+  @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
+  Optional<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 
-    @Query("select user from User user where user.login = ?#{principal.username}")
-    User findCurrentUser(); //this is not working
+  Page<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
+
+  @Query("select user from User user where user.login = ?#{principal.username}")
+  User findCurrentUser(); //this is not working
 }
