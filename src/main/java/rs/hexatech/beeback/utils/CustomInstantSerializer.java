@@ -11,14 +11,14 @@ import java.time.format.DateTimeFormatter;
 
 public class CustomInstantSerializer extends JsonSerializer<Instant> {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS") // Custom pattern with 7 fractional digits
-            .withChronology(IsoChronology.INSTANCE)
-            .withZone(java.time.ZoneOffset.UTC);
+  private static final DateTimeFormatter formatter = DateTimeFormatter
+      .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS") // Custom pattern with 10 fractional digits
+      .withChronology(IsoChronology.INSTANCE)
+      .withZone(java.time.ZoneOffset.UTC);
 
-    @Override
-    public void serialize(Instant value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        String formatted = formatter.format(value);
-        gen.writeString(formatted);
-    }
+  @Override
+  public void serialize(Instant value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    String formatted = formatter.format(value);
+    gen.writeString(formatted);
+  }
 }

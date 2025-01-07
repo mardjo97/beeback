@@ -12,7 +12,8 @@ docker image build -f ./AppDocker/Dockerfile -t beeback .
 
 -- run docker container
 docker run -d --name own-sql -p 3310:3306 my-sql:latest
-docker run -d --name beeback -p 8081:8080 beeback:latest
+docker run -d --name my-sql -p 3306:3306 my-sql:latest
+docker run -d --name beeback -p 8080:8080 beeback:latest
 
 -- save container in the .tar file
 docker save -o my-sql-image.tar my-sql:latest

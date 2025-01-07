@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.hexatech.beeback.domain.User;
 import rs.hexatech.beeback.repository.UserRepository;
@@ -19,6 +20,7 @@ import rs.hexatech.beeback.web.rest.errors.LoginAlreadyUsedException;
 import rs.hexatech.beeback.web.rest.vm.KeyAndPasswordVM;
 import rs.hexatech.beeback.web.rest.vm.ManagedUserVM;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.Optional;
 
 /**
@@ -159,14 +161,14 @@ public class AccountResource {
    * @param mail the mail of the user.
    */
   @PostMapping(path = "/account/reset-password/init")
-  public void requestPasswordReset(@RequestBody String mail) {
+  public ResponseEntity<String> requestPasswordReset(@RequestBody String mail) throws AccountNotFoundException {
     Optional<User> user = userService.requestPasswordReset(mail);
     if (user.isPresent()) {
       mailService.sendPasswordResetMail(user.orElseThrow());
+      return ResponseEntity.ok().body("Password reset initiated");
     } else {
-      // Pretend the request has been successful to prevent checking which emails really exist
-      // but log that an invalid attempt has been made
       LOG.warn("Password reset requested for non existing mail");
+      return ResponseEntity.notFound().build();
     }
   }
 

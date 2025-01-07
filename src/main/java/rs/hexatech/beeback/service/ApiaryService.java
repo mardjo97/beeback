@@ -27,166 +27,165 @@ import java.util.UUID;
 @Transactional
 public class ApiaryService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ApiaryService.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ApiaryService.class);
 
-    private final ApiaryRepository apiaryRepository;
+  private final ApiaryRepository apiaryRepository;
 
-    private final ApiaryMapper apiaryMapper;
+  private final ApiaryMapper apiaryMapper;
 
-    @Autowired
-    private SecurityService securityService;
+  @Autowired
+  private SecurityService securityService;
 
-    public ApiaryService(ApiaryRepository apiaryRepository, ApiaryMapper apiaryMapper) {
-        this.apiaryRepository = apiaryRepository;
-        this.apiaryMapper = apiaryMapper;
+  public ApiaryService(ApiaryRepository apiaryRepository, ApiaryMapper apiaryMapper) {
+    this.apiaryRepository = apiaryRepository;
+    this.apiaryMapper = apiaryMapper;
+  }
+
+  /**
+   * Sync apiaries.
+   *
+   * @param apiaryDTOs the entity to save.
+   * @return the persisted entity.
+   */
+  public List<ApiaryDTO> sync(List<ApiaryDTO> apiaryDTOs) {
+    LOG.debug("Request to sync Apiaries : {}", apiaryDTOs);
+
+    User user = securityService.getCurrentUser();
+    return apiaryDTOs.stream().map(el -> syncApiary(el, user))
+        .map(apiaryMapper::toDto)
+        .filter(Objects::nonNull)
+        .toList();
+  }
+
+  /**
+   * Retrieve apiaries.
+   *
+   * @param deviceId to check the device.
+   * @return the persisted entity.
+   */
+  public List<ApiaryDTO> userApiaries(String deviceId) {
+    User user = securityService.getCurrentUser();
+    LOG.debug("Request to retrieve user's Apiaries! User {}, DeviceId: {}", user.getLogin(), deviceId);
+    //validate deviceId
+    return apiaryMapper.toDto(apiaryRepository.findByUserIsCurrentUser());
+  }
+
+  private Apiary syncApiary(final ApiaryDTO apiaryDto, final User user) {
+    if (apiaryDto.getUuid() != null) {
+      Apiary existingApiary = apiaryRepository.findByUuidIs(apiaryDto.getUuid());
+      if (existingApiary == null) {
+        LOG.error("The entity does not exist, but there is uuid in the request body {}", apiaryDto);
+        LOG.error("Returning the response with uuid and dateSynched as nulls!");
+        Apiary mappedApiary = apiaryMapper.toEntity(apiaryDto);
+        toReset(mappedApiary);
+        return mappedApiary;
+      }
+      apiaryMapper.partialUpdate(existingApiary, apiaryDto);
+      toUpdate(existingApiary);
+      return apiaryRepository.save(existingApiary);
     }
-
-    /**
-     * Sync apiaries.
-     *
-     * @param apiaryDTOs the entity to save.
-     * @return the persisted entity.
-     */
-    public List<ApiaryDTO> sync(List<ApiaryDTO> apiaryDTOs) {
-        LOG.debug("Request to sync Apiaries : {}", apiaryDTOs);
-
-        User user = securityService.getCurrentUser();
-        return apiaryDTOs.stream().map(el -> syncApiary(el, user))
-                .map(apiaryMapper::toDto)
-                .filter(Objects::nonNull)
-                .toList();
+    Apiary existingApiary = apiaryRepository.findByUserAndExternalId(user, apiaryDto.getId().intValue());
+    if (existingApiary != null) {
+      LOG.error("The entity {} exists but in the request the uuid is {}", existingApiary, apiaryDto.getUuid());
+      LOG.warn("The entity {} is not synched", apiaryDto);
+      return null;
     }
+    Apiary toCreateApiary = apiaryMapper.toEntity(apiaryDto);
+    toCreate(toCreateApiary, user);
+    return apiaryRepository.save(toCreateApiary);
+  }
 
-    /**
-     * Retrieve apiaries.
-     *
-     * @param deviceId to check the device.
-     * @return the persisted entity.
-     */
-    public List<ApiaryDTO> userApiaries(String deviceId) {
-        User user = securityService.getCurrentUser();
-        LOG.debug("Request to retrieve user's Apiaries! User {}, DeviceId: {}", user.getLogin(), deviceId);
-        //validate deviceId
-        return apiaryMapper.toDto(apiaryRepository.findByUserIsCurrentUser());
-    }
+  /**
+   * Save a apiary.
+   *
+   * @param apiaryDTO the entity to save.
+   * @return the persisted entity.
+   */
+  public ApiaryDTO save(ApiaryDTO apiaryDTO) {
+    LOG.debug("Request to save Apiary : {}", apiaryDTO);
+    Apiary apiary = apiaryMapper.toEntity(apiaryDTO);
+    apiary = apiaryRepository.save(apiary);
+    return apiaryMapper.toDto(apiary);
+  }
 
-    private Apiary syncApiary(final ApiaryDTO apiaryDto, final User user) {
-        if (apiaryDto.getUuid() != null) {
-            Apiary existingApiary = apiaryRepository.findByUuidIs(apiaryDto.getUuid());
-            if (existingApiary == null) {
-                LOG.error("The entity does not exist, but there is uuid in the request body {}", apiaryDto);
-                LOG.error("Returning the response with uuid and dateSynched as nulls!");
-                Apiary mappedApiary = apiaryMapper.toEntity(apiaryDto);
-                toReset(mappedApiary);
-                return mappedApiary;
-            }
-            apiaryMapper.partialUpdate(existingApiary, apiaryDto);
-            toUpdate(existingApiary);
-            return apiaryRepository.save(existingApiary);
-        }
-        Apiary existingApiary = apiaryRepository.findByUserAndExternalId(user, apiaryDto.getId().intValue());
-        if (existingApiary != null) {
-            LOG.error("The entity {} exists but in the request the uuid is {}", existingApiary, apiaryDto.getUuid());
-            LOG.warn("The entity {} is not synched", apiaryDto);
-            return null;
-        }
-        Apiary toCreateApiary = apiaryMapper.toEntity(apiaryDto);
-        toCreate(toCreateApiary, user);
-        return apiaryRepository.save(toCreateApiary);
-    }
+  /**
+   * Update a apiary.
+   *
+   * @param apiaryDTO the entity to save.
+   * @return the persisted entity.
+   */
+  public ApiaryDTO update(ApiaryDTO apiaryDTO) {
+    LOG.debug("Request to update Apiary : {}", apiaryDTO);
+    Apiary apiary = apiaryMapper.toEntity(apiaryDTO);
+    apiary = apiaryRepository.save(apiary);
+    return apiaryMapper.toDto(apiary);
+  }
 
-    /**
-     * Save a apiary.
-     *
-     * @param apiaryDTO the entity to save.
-     * @return the persisted entity.
-     */
-    public ApiaryDTO save(ApiaryDTO apiaryDTO) {
-        LOG.debug("Request to save Apiary : {}", apiaryDTO);
-        Apiary apiary = apiaryMapper.toEntity(apiaryDTO);
-        apiary = apiaryRepository.save(apiary);
-        return apiaryMapper.toDto(apiary);
-    }
+  /**
+   * Partially update a apiary.
+   *
+   * @param apiaryDTO the entity to update partially.
+   * @return the persisted entity.
+   */
+  public Optional<ApiaryDTO> partialUpdate(ApiaryDTO apiaryDTO) {
+    LOG.debug("Request to partially update Apiary : {}", apiaryDTO);
 
-    /**
-     * Update a apiary.
-     *
-     * @param apiaryDTO the entity to save.
-     * @return the persisted entity.
-     */
-    public ApiaryDTO update(ApiaryDTO apiaryDTO) {
-        LOG.debug("Request to update Apiary : {}", apiaryDTO);
-        Apiary apiary = apiaryMapper.toEntity(apiaryDTO);
-        apiary = apiaryRepository.save(apiary);
-        return apiaryMapper.toDto(apiary);
-    }
+    return apiaryRepository
+        .findById(apiaryDTO.getId())
+        .map(existingApiary -> {
+          apiaryMapper.partialUpdate(existingApiary, apiaryDTO);
 
-    /**
-     * Partially update a apiary.
-     *
-     * @param apiaryDTO the entity to update partially.
-     * @return the persisted entity.
-     */
-    public Optional<ApiaryDTO> partialUpdate(ApiaryDTO apiaryDTO) {
-        LOG.debug("Request to partially update Apiary : {}", apiaryDTO);
+          return existingApiary;
+        })
+        .map(apiaryRepository::save)
+        .map(apiaryMapper::toDto);
+  }
 
-        return apiaryRepository
-                .findById(apiaryDTO.getId())
-                .map(existingApiary -> {
-                    apiaryMapper.partialUpdate(existingApiary, apiaryDTO);
+  /**
+   * Get all the apiaries.
+   *
+   * @param pageable the pagination information.
+   * @return the list of entities.
+   */
+  @Transactional(readOnly = true)
+  public Page<ApiaryDTO> findAll(Pageable pageable) {
+    LOG.debug("Request to get all Apiaries");
+    return apiaryRepository.findAll(pageable).map(apiaryMapper::toDto);
+  }
 
-                    return existingApiary;
-                })
-                .map(apiaryRepository::save)
-                .map(apiaryMapper::toDto);
-    }
+  /**
+   * Get one apiary by id.
+   *
+   * @param id the id of the entity.
+   * @return the entity.
+   */
+  @Transactional(readOnly = true)
+  public Optional<ApiaryDTO> findOne(Long id) {
+    LOG.debug("Request to get Apiary : {}", id);
+    User user = securityService.getCurrentUser();
+    LOG.info(user.getLogin());
+    return apiaryRepository.findById(id).map(apiaryMapper::toDto);
+  }
 
-    /**
-     * Get all the apiaries.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public Page<ApiaryDTO> findAll(Pageable pageable) {
-        LOG.debug("Request to get all Apiaries");
-        return apiaryRepository.findAll(pageable).map(apiaryMapper::toDto);
-    }
+  /**
+   * Delete the apiary by id.
+   *
+   * @param id the id of the entity.
+   */
+  public void delete(Long id) {
+    LOG.debug("Request to delete Apiary : {}", id);
+    apiaryRepository.deleteById(id);
+  }
 
-    /**
-     * Get one apiary by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    @Transactional(readOnly = true)
-    public Optional<ApiaryDTO> findOne(Long id) {
-        LOG.debug("Request to get Apiary : {}", id);
-        User user = securityService.getCurrentUser();
-        LOG.info(user.getLogin());
-        return apiaryRepository.findById(id).map(apiaryMapper::toDto);
-    }
+  private void toUpdate(final Apiary apiary) {
+    apiary.dateSynched(DateTimeUtil.getDateSynced(apiary.getDateModified()));
+  }
 
-    /**
-     * Delete the apiary by id.
-     *
-     * @param id the id of the entity.
-     */
-    public void delete(Long id) {
-        LOG.debug("Request to delete Apiary : {}", id);
-        apiaryRepository.deleteById(id);
-    }
+  private void toCreate(final Apiary apiary, final User user) {
+    apiary.user(user).uuid(UUID.randomUUID().toString()).dateSynched(Instant.now());
+  }
 
-    private void toUpdate(final Apiary apiary) {
-        apiary.dateSynched(DateTimeUtil.now());
-        LOG.error("{}", DateTimeUtil.now());
-    }
-
-    private void toCreate(final Apiary apiary, final User user) {
-        apiary.user(user).uuid(UUID.randomUUID().toString()).dateSynched(Instant.now());
-    }
-
-    private void toReset(final Apiary apiary) {
-        apiary.uuid(null).dateSynched(null);
-    }
+  private void toReset(final Apiary apiary) {
+    apiary.uuid(null).dateSynched(null);
+  }
 }
