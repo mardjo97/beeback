@@ -19,13 +19,7 @@ import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import rs.hexatech.beeback.domain.User;
+import org.springframework.web.bind.annotation.*;
 import rs.hexatech.beeback.service.SecurityService;
 import rs.hexatech.beeback.web.rest.vm.LoginVM;
 
@@ -44,78 +38,84 @@ import static rs.hexatech.beeback.security.SecurityUtils.JWT_ALGORITHM;
 @RequestMapping("/api")
 public class AuthenticateController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuthenticateController.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AuthenticateController.class);
 
-    private final JwtEncoder jwtEncoder;
+  private final JwtEncoder jwtEncoder;
 
-    @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds:0}")
-    private long tokenValidityInSeconds;
+  @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds:0}")
+  private long tokenValidityInSeconds;
 
-    @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds-for-remember-me:0}")
-    private long tokenValidityInSecondsForRememberMe;
+  @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds-for-remember-me:0}")
+  private long tokenValidityInSecondsForRememberMe;
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+  private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @Autowired
-    private SecurityService securityService;
+  @Autowired
+  private SecurityService securityService;
 
-    public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
-        this.jwtEncoder = jwtEncoder;
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
+  public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    this.jwtEncoder = jwtEncoder;
+    this.authenticationManagerBuilder = authenticationManagerBuilder;
+  }
+
+  @PostMapping("/authenticate")
+  public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM, @RequestHeader("Device-Id") String deviceId) {
+    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+        loginVM.getUsername(),
+        loginVM.getPassword()
+    );
+
+    Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    String jwt = this.createToken(authentication, loginVM.isRememberMe());
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setBearerAuth(jwt);
+    securityService.storeUserDeviceId(deviceId);
+    return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+  }
+
+  /**
+   * {@code GET /authenticate} : check if the user is authenticated, and return its login.
+   *
+   * @param principal the authentication principal.
+   * @return the login if the user is authenticated.
+   */
+  @GetMapping(value = "/authenticate", produces = MediaType.TEXT_PLAIN_VALUE)
+  public String isAuthenticated(@RequestHeader("Device-Id") String deviceId, Principal principal) {
+    LOG.debug("REST request to check if the current user is authenticated");
+    return principal == null ? null : principal.getName();
+  }
+
+  /**
+   * {@code GET /validate} : check if the user is authenticated, and deviceId is valid, returns its login.
+   *
+   * @param deviceId the valid device id .
+   * @return the login if the user is authenticated.
+   */
+  @GetMapping(value = "/validate")
+  public ResponseEntity<JWTToken> validate(@RequestHeader("Device-Id") String deviceId) {
+    LOG.debug("REST request to check if the current user is authenticated and deviceId is valid");
+    securityService.checkUserDeviceId(deviceId);
+
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String jwt = this.createToken(authentication, true);
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setBearerAuth(jwt);
+    return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+  }
+
+  public String createToken(Authentication authentication, boolean rememberMe) {
+    String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
+
+    Instant now = Instant.now();
+    Instant validity;
+    if (rememberMe) {
+      validity = now.plus(this.tokenValidityInSecondsForRememberMe, ChronoUnit.SECONDS);
+    } else {
+      validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                loginVM.getUsername(),
-                loginVM.getPassword()
-        );
-
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = this.createToken(authentication, loginVM.isRememberMe());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setBearerAuth(jwt);
-        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
-    }
-
-    /**
-     * {@code GET /authenticate} : check if the user is authenticated, and return its login.
-     *
-     * @param principal the authentication principal.
-     * @return the login if the user is authenticated.
-     */
-    @GetMapping(value = "/authenticate", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String isAuthenticated(@RequestHeader("Device-Id") String deviceId, Principal principal) {
-        LOG.debug("REST request to check if the current user is authenticated");
-        return principal == null ? null : principal.getName();
-    }
-
-    /**
-     * {@code GET /validate} : check if the user is authenticated, and deviceId is valid, returns its login.
-     *
-     * @param deviceId the valid device id .
-     * @return the login if the user is authenticated.
-     */
-    @GetMapping(value = "/validate", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String validate(@RequestHeader("Device-Id") String deviceId) {
-        LOG.debug("REST request to check if the current user is authenticated and deviceId is valid");
-        User user = securityService.getCurrentUser();
-        return user.getLogin();
-    }
-
-    public String createToken(Authentication authentication, boolean rememberMe) {
-        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
-
-        Instant now = Instant.now();
-        Instant validity;
-        if (rememberMe) {
-            validity = now.plus(this.tokenValidityInSecondsForRememberMe, ChronoUnit.SECONDS);
-        } else {
-            validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
-        }
-
-        // @formatter:off
+    // @formatter:off
         JwtClaimsSet claims = JwtClaimsSet.builder()
             .issuedAt(now)
             .expiresAt(validity)
@@ -130,7 +130,7 @@ public class AuthenticateController {
     /**
      * Object to return as body in JWT Authentication.
      */
-    static class JWTToken {
+    public static class JWTToken {
 
         private String idToken;
 
