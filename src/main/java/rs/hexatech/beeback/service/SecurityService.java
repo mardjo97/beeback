@@ -7,6 +7,7 @@ import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 import rs.hexatech.beeback.domain.Authority;
 import rs.hexatech.beeback.domain.User;
+import rs.hexatech.beeback.exception.DeviceIdForbiddenException;
 import rs.hexatech.beeback.repository.UserRepository;
 import rs.hexatech.beeback.security.AuthoritiesConstants;
 import rs.hexatech.beeback.security.SecurityUtils;
@@ -59,11 +60,11 @@ public class SecurityService {
 
   public void checkUserDeviceId(String deviceId) {
     if (deviceId == null) {
-      throw new AuthorizationServiceException("Device Id must have a value");
+      throw new DeviceIdForbiddenException("Device Id must have a value");
     }
     User user = getCurrentUser();
     if (!deviceId.equals(user.getDeviceId())) {
-      throw new AuthorizationServiceException("Device Id is not valid");
+      throw new DeviceIdForbiddenException("Device Id is not valid");
     }
   }
 
