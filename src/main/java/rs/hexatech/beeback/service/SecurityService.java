@@ -22,7 +22,7 @@ public class SecurityService {
   @Autowired
   private UserRepository userRepository;
 
-  @Transactional
+  @Transactional(Transactional.TxType.REQUIRES_NEW)
   public User getCurrentUser() {
 
     Optional<String> loginOptional = SecurityUtils.getCurrentUserLogin();
@@ -49,13 +49,19 @@ public class SecurityService {
         .anyMatch(authority -> authority.equals(AuthoritiesConstants.ADMIN));
   }
 
-  public void storeUserDeviceId(String deviceId) {
-    if (deviceId == null) {
+  public void storeUserDeviceId(String deviceId, String appId) {
+    if (deviceId == null && appId == null) {
       throw new AuthorizationServiceException("Device Id must have a value");
     }
-    User user = getCurrentUser();
-    user.setDeviceId(deviceId);
-    userRepository.save(user);
+    if (deviceId != null) {
+      User user = getCurrentUser();
+      user.setDeviceId(deviceId);
+      userRepository.save(user);
+      return;
+    }
+    if (!"2yNP94zvdWU=".equals(appId)) {
+      throw new AuthorizationServiceException("AppId not valid");
+    }
   }
 
   public void checkUserDeviceId(String deviceId) {

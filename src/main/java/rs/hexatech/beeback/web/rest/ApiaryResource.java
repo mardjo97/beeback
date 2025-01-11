@@ -12,19 +12,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import rs.hexatech.beeback.exception.DeviceIdForbiddenException;
 import rs.hexatech.beeback.repository.ApiaryRepository;
 import rs.hexatech.beeback.service.ApiaryService;
 import rs.hexatech.beeback.service.SecurityService;
 import rs.hexatech.beeback.service.dto.ApiaryDTO;
-import rs.hexatech.beeback.web.rest.errors.BadRequestAlertException;
-import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -73,10 +70,9 @@ public class ApiaryResource {
    *
    * @param deviceId to validate device id
    * @return the {@link ResponseEntity} with status {@code 200 } and with List of the apiaryDTO, or with status {@code 400 (Bad Request)} if the apiary has already an ID.
-   * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
   @GetMapping("/all")
-  public ResponseEntity<List<ApiaryDTO>> userApiaries(@RequestHeader("Device-Id") String deviceId) throws URISyntaxException {
+  public ResponseEntity<List<ApiaryDTO>> userApiaries(@RequestHeader(value = "Device-Id", required = false) String deviceId) {
     LOG.debug("REST request to retrieve user's Apiaries");
     List<ApiaryDTO> userApiaries = apiaryService.userApiaries(deviceId);
     return ResponseEntity.ok().body(userApiaries);
@@ -92,13 +88,14 @@ public class ApiaryResource {
   @PostMapping("")
   public ResponseEntity<ApiaryDTO> createApiary(@Valid @RequestBody ApiaryDTO apiaryDTO) throws URISyntaxException {
     LOG.debug("REST request to save Apiary : {}", apiaryDTO);
-    if (apiaryDTO.getId() != null) {
-      throw new BadRequestAlertException("A new apiary cannot already have an ID", ENTITY_NAME, "idexists");
-    }
-    apiaryDTO = apiaryService.save(apiaryDTO);
-    return ResponseEntity.created(new URI("/api/apiaries/" + apiaryDTO.getId()))
-        .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString()))
-        .body(apiaryDTO);
+    throw new DeviceIdForbiddenException("Can not create record from this device");
+//    if (apiaryDTO.getId() != null) {
+//      throw new BadRequestAlertException("A new apiary cannot already have an ID", ENTITY_NAME, "idexists");
+//    }
+//    apiaryDTO = apiaryService.save(apiaryDTO);
+//    return ResponseEntity.created(new URI("/api/apiaries/" + apiaryDTO.getId()))
+//        .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString()))
+//        .body(apiaryDTO);
   }
 
   /**
@@ -117,21 +114,22 @@ public class ApiaryResource {
       @Valid @RequestBody ApiaryDTO apiaryDTO
   ) throws URISyntaxException {
     LOG.debug("REST request to update Apiary : {}, {}", id, apiaryDTO);
-    if (apiaryDTO.getId() == null) {
-      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-    }
-    if (!Objects.equals(id, apiaryDTO.getId())) {
-      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-    }
-
-    if (!apiaryRepository.existsById(id)) {
-      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-    }
-
-    apiaryDTO = apiaryService.update(apiaryDTO);
-    return ResponseEntity.ok()
-        .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString()))
-        .body(apiaryDTO);
+    throw new DeviceIdForbiddenException("Can not create record from this device");
+//    if (apiaryDTO.getId() == null) {
+//      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+//    }
+//    if (!Objects.equals(id, apiaryDTO.getId())) {
+//      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+//    }
+//
+//    if (!apiaryRepository.existsById(id)) {
+//      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+//    }
+//
+//    apiaryDTO = apiaryService.update(apiaryDTO);
+//    return ResponseEntity.ok()
+//        .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString()))
+//        .body(apiaryDTO);
   }
 
   /**
@@ -151,23 +149,24 @@ public class ApiaryResource {
       @NotNull @RequestBody ApiaryDTO apiaryDTO
   ) throws URISyntaxException {
     LOG.debug("REST request to partial update Apiary partially : {}, {}", id, apiaryDTO);
-    if (apiaryDTO.getId() == null) {
-      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-    }
-    if (!Objects.equals(id, apiaryDTO.getId())) {
-      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-    }
-
-    if (!apiaryRepository.existsById(id)) {
-      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-    }
-
-    Optional<ApiaryDTO> result = apiaryService.partialUpdate(apiaryDTO);
-
-    return ResponseUtil.wrapOrNotFound(
-        result,
-        HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString())
-    );
+    throw new DeviceIdForbiddenException("Can not create record from this device");
+//    if (apiaryDTO.getId() == null) {
+//      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+//    }
+//    if (!Objects.equals(id, apiaryDTO.getId())) {
+//      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+//    }
+//
+//    if (!apiaryRepository.existsById(id)) {
+//      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+//    }
+//
+//    Optional<ApiaryDTO> result = apiaryService.partialUpdate(apiaryDTO);
+//
+//    return ResponseUtil.wrapOrNotFound(
+//        result,
+//        HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, apiaryDTO.getId().toString())
+//    );
   }
 
   /**
@@ -206,9 +205,10 @@ public class ApiaryResource {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteApiary(@PathVariable("id") Long id) {
     LOG.debug("REST request to delete Apiary : {}", id);
-    apiaryService.delete(id);
-    return ResponseEntity.noContent()
-        .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-        .build();
+    throw new DeviceIdForbiddenException("Can not delete record from this device");
+//    apiaryService.delete(id);
+//    return ResponseEntity.noContent()
+//        .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+//        .build();
   }
 }

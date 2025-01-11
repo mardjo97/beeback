@@ -1,4 +1,7 @@
-create Dockerfile and define the script
+-- Compile files
+mvn clean compile '-Dskip.frontend'
+
+---create Dockerfile and define the script
 
 -- create jar file
 mvn clean package -Pprod -DskipTests
@@ -8,7 +11,8 @@ docker buildx build -t my-sql .
 docker buildx build -f ./AppDocker/Dockerfile -t beeback .
 -or
 docker image build -f ./AppDocker/Dockerfile -t beeback .
-
+-or on server
+docker image build -f Dockerfile -t beeback .
 
 -- run docker container
 docker run -d --name own-sql -p 3310:3306 my-sql:latest

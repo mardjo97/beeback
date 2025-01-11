@@ -86,6 +86,26 @@ public class AccountResource {
   }
 
   /**
+   * {@code POST  /register} : register the user.
+   *
+   * @param managedUserVM the managed user View Model.
+   * @throws InvalidPasswordException  {@code 400 (Bad Request)} if the password is incorrect.
+   * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
+   * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
+   */
+  @PostMapping("/delete")
+  @ResponseStatus(HttpStatus.OK)
+  public void deleteAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
+    if (isPasswordLengthInvalid(managedUserVM.getPassword())) {
+      throw new InvalidPasswordException();
+    }
+
+    userService.deleteAccount(managedUserVM);
+//    User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
+//    mailService.sendActivationEmail(user);
+  }
+
+  /**
    * {@code GET  /activate} : activate the registered user.
    *
    * @param key the activation key.

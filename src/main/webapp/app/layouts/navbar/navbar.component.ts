@@ -13,6 +13,7 @@ import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import ActiveMenuDirective from './active-menu.directive';
 import NavbarItem from './navbar-item.model';
+import { Account } from 'app/core/auth/account.model';
 
 @Component({
   standalone: true,
@@ -29,6 +30,7 @@ export default class NavbarComponent implements OnInit {
   version = '';
   account = inject(AccountService).trackCurrentAccount();
   entitiesNavbarItems: NavbarItem[] = [];
+  showNav = true;
 
   private readonly loginService = inject(LoginService);
   private readonly translateService = inject(TranslateService);
@@ -36,10 +38,25 @@ export default class NavbarComponent implements OnInit {
   private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);
 
-  constructor() {
+  constructor(router: Router) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
     }
+    router.events.subscribe(event => {
+      if (
+        !this.hasAuthority(this.account(), 'ROLE_ADMIN') &&
+        (router.url.includes('/account/reset/request') ||
+          router.url.includes('/account/reset/finish') ||
+          router.url.includes('/account/activate') ||
+          router.url.includes('/account/register') ||
+          router.url.includes('/login') ||
+          router.url.includes('/'))
+      ) {
+        this.showNav = false;
+      } else {
+        this.showNav = true;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -71,5 +88,13 @@ export default class NavbarComponent implements OnInit {
 
   toggleNavbar(): void {
     this.isNavbarCollapsed.update(isNavbarCollapsed => !isNavbarCollapsed);
+  }
+
+  hasAuthority(account: Account | null, authority: string): boolean {
+    if (!account?.authorities) {
+      return false;
+    }
+    const index = account.authorities.indexOf(authority);
+    return index >= 0;
   }
 }

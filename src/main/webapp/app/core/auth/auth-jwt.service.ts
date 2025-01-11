@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -22,8 +22,11 @@ export class AuthServerProvider {
   }
 
   login(credentials: Login): Observable<void> {
+    const headers = new HttpHeaders({
+      'App-Id': '2yNP94zvdWU=',
+    });
     return this.http
-      .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials)
+      .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials, { headers })
       .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
   }
 

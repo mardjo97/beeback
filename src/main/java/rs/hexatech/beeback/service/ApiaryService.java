@@ -42,6 +42,19 @@ public class ApiaryService {
   }
 
   /**
+   * Retrieve apiaries.
+   *
+   * @param deviceId to check the device.
+   * @return the persisted entity.
+   */
+  public List<ApiaryDTO> userApiaries(String deviceId) {
+    User user = securityService.getCurrentUser();
+    LOG.debug("Request to retrieve user's Apiaries! User {}, DeviceId: {}", user.getLogin(), deviceId);
+    //validate deviceId
+    return apiaryMapper.toDto(apiaryRepository.findByUserIsCurrentUser());
+  }
+
+  /**
    * Sync apiaries.
    *
    * @param apiaryDTOs the entity to save.
@@ -55,19 +68,6 @@ public class ApiaryService {
         .map(apiaryMapper::toDto)
         .filter(Objects::nonNull)
         .toList();
-  }
-
-  /**
-   * Retrieve apiaries.
-   *
-   * @param deviceId to check the device.
-   * @return the persisted entity.
-   */
-  public List<ApiaryDTO> userApiaries(String deviceId) {
-    User user = securityService.getCurrentUser();
-    LOG.debug("Request to retrieve user's Apiaries! User {}, DeviceId: {}", user.getLogin(), deviceId);
-    //validate deviceId
-    return apiaryMapper.toDto(apiaryRepository.findByUserIsCurrentUser());
   }
 
   private Apiary syncApiary(final ApiaryDTO apiaryDto, final User user) {
@@ -149,8 +149,9 @@ public class ApiaryService {
    */
   @Transactional(readOnly = true)
   public Page<ApiaryDTO> findAll(Pageable pageable) {
-    LOG.debug("Request to get all Apiaries");
-    return apiaryRepository.findAll(pageable).map(apiaryMapper::toDto);
+    User user = securityService.getCurrentUser();
+    LOG.debug("Request to get all Apiaries for the current user");
+    return apiaryRepository.findDistinctByUser_id(pageable, user.getId()).map(apiaryMapper::toDto);
   }
 
   /**

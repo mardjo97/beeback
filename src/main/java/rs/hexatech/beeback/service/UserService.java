@@ -2,6 +2,7 @@ package rs.hexatech.beeback.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,9 @@ import rs.hexatech.beeback.security.AuthoritiesConstants;
 import rs.hexatech.beeback.security.SecurityUtils;
 import rs.hexatech.beeback.service.dto.AdminUserDTO;
 import rs.hexatech.beeback.service.dto.UserDTO;
+import rs.hexatech.beeback.web.rest.AuthenticateController;
+import rs.hexatech.beeback.web.rest.vm.LoginVM;
+import rs.hexatech.beeback.web.rest.vm.ManagedUserVM;
 import tech.jhipster.security.RandomUtil;
 
 import java.time.Instant;
@@ -44,6 +48,12 @@ public class UserService {
   private final AuthorityRepository authorityRepository;
 
   private final CacheManager cacheManager;
+
+  @Autowired
+  AuthenticateController authenticateController;
+
+  @Autowired
+  SecurityService securityService;
 
   public UserService(
       UserRepository userRepository,
@@ -137,6 +147,25 @@ public class UserService {
     this.clearUserCaches(newUser);
     LOG.debug("Created Information for User: {}", newUser);
     return newUser;
+  }
+
+  @Transactional
+  public void deleteAccount(ManagedUserVM managedUserVM) {
+    LoginVM loginVM = new LoginVM();
+    loginVM.setUsername(managedUserVM.getEmail());
+    loginVM.setPassword(managedUserVM.getPassword());
+    authenticateController.authorize(loginVM, null, "2yNP94zvdWU=");
+
+    User user = securityService.getCurrentUser();
+    String uuid = UUID.randomUUID().toString();
+    user.setEmail(uuid + "@pd.rs");
+    user.setLogin(uuid);
+    user.setPassword(passwordEncoder.encode("Pc3l4rsk1Dn3vn1k"));
+    user.setFirstName("***");
+    user.setLastName("***");
+    user.setActivated(false);
+
+    userRepository.save(user);
   }
 
   private boolean removeNonActivatedUser(User existingUser) {

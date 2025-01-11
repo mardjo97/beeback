@@ -59,7 +59,9 @@ public class AuthenticateController {
   }
 
   @PostMapping("/authenticate")
-  public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM, @RequestHeader("Device-Id") String deviceId) {
+  public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM,
+                                            @RequestHeader(value = "Device-Id", required = false) String deviceId,
+                                            @RequestHeader(value = "App-Id", required = false) String appId) {
     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
         loginVM.getUsername(),
         loginVM.getPassword()
@@ -70,7 +72,7 @@ public class AuthenticateController {
     String jwt = this.createToken(authentication, loginVM.isRememberMe());
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setBearerAuth(jwt);
-    securityService.storeUserDeviceId(deviceId);
+    securityService.storeUserDeviceId(deviceId, appId);
     return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
   }
 
