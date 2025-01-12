@@ -1,0 +1,25 @@
+{
+  "delete": {
+    "title": "Delete account",
+    "form": {
+      "button": "Delete account"
+    },
+    "messages": {
+      "validate": {
+        "login": {
+          "required": "Your username is required.",
+          "minlength": "Your username is required to be at least 1 character.",
+          "maxlength": "Your username cannot be longer than 50 characters.",
+          "pattern": "Your username is invalid."
+        }
+      },
+      "success": "<strong>Account deleted!</strong> Your account is deleted.",
+      "error": {
+        "fail": "<strong>Registration failed!</strong> Please try again later.",
+        "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again.",
+        "userexists": "<strong>Login name already registered!</strong> Please choose another one.",
+        "emailexists": "<strong>Email is already in use!</strong> Please choose another one."
+      }
+    }
+  }
+}
