@@ -1,3 +1,7 @@
+---Jhispter
+--jhipster generate only one entity
+jhipster entity hive --regenerate --single-entity
+
 -- Compile files
 mvn clean compile '-Dskip.frontend'
 

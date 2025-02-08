@@ -1,0 +1,31 @@
+{
+  "beebackApp": {
+    "hiveType": {
+      "home": {
+        "title": "Hive Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Hive Type",
+        "createOrEditLabel": "Create or edit a Hive Type",
+        "notFound": "No Hive Types found"
+      },
+      "created": "A new Hive Type is created with identifier {{ param }}",
+      "updated": "A Hive Type is updated with identifier {{ param }}",
+      "deleted": "A Hive Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Hive Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Hive Type"
+      },
+      "id": "ID",
+      "Name": "Name",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}

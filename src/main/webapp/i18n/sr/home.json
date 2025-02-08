@@ -1,6 +1,6 @@
 {
   "home": {
-    "title": "Dobrodošli u Pčelarski Dnevnik!",
+    "title": "Dobrodošli, Java Hipsteru!",
     "subtitle": "Ovo je Vaša početna stranica",
     "logged": {
       "message": "Prijavljeni ste kao korisnik \"{{username}}\"."

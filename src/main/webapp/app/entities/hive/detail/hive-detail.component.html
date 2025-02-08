@@ -1,0 +1,98 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (hive(); as hiveRef) {
+      <div>
+        <h2 data-cy="hiveDetailsHeading"><span jhiTranslate="beebackApp.hive.detail.title">Hive</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ hiveRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.barcode">Barcode</span></dt>
+          <dd>
+            <span>{{ hiveRef.barcode }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.orderNumber">Order Number</span></dt>
+          <dd>
+            <span>{{ hiveRef.orderNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.description">Description</span></dt>
+          <dd>
+            <span>{{ hiveRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.examinationDate">Examination Date</span></dt>
+          <dd>
+            <span>{{ hiveRef.examinationDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.archivedDate">Archived Date</span></dt>
+          <dd>
+            <span>{{ hiveRef.archivedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.archivedReason">Archived Reason</span></dt>
+          <dd>
+            <span>{{ hiveRef.archivedReason }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ hiveRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ hiveRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ hiveRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ hiveRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ hiveRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ hiveRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.user">User</span></dt>
+          <dd>
+            <span>{{ hiveRef.user?.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.hiveType">Hive Type</span></dt>
+          <dd>
+            @if (hive()!.hiveType) {
+              <div>
+                <a [routerLink]="['/hive-type', hive()!.hiveType?.id, 'view']">{{ hiveRef.hiveType?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hive.apiary">Apiary</span></dt>
+          <dd>
+            @if (hive()!.apiary) {
+              <div>
+                <a [routerLink]="['/apiary', hive()!.apiary?.id, 'view']">{{ hiveRef.apiary?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/hive', hiveRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

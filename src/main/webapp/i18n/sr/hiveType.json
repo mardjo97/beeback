@@ -1,0 +1,31 @@
+{
+  "beebackApp": {
+    "hiveType": {
+      "home": {
+        "title": "Hive Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Hive Type",
+        "createOrEditLabel": "Kreirajte ili izmenite Hive Type",
+        "notFound": "No Hive Types found"
+      },
+      "created": "Kreiran je novi Hive Type pod nazivom {{ param }}",
+      "updated": "Hive Type pod nazivom {{ param }} je ažuriran",
+      "deleted": "Hive Type pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Hive Type pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Hive Type"
+      },
+      "id": "ID",
+      "Name": "Name",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}

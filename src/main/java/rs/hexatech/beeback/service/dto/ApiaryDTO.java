@@ -49,6 +49,9 @@ public class ApiaryDTO implements Serializable {
   @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
   private Instant dateSynched;
 
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateDeleted;
+
   public Long getId() {
     return id;
   }
@@ -153,6 +156,14 @@ public class ApiaryDTO implements Serializable {
     this.dateSynched = dateSynched;
   }
 
+  public Instant getDateDeleted() {
+    return dateDeleted;
+  }
+
+  public void setDateDeleted(Instant dateDeleted) {
+    this.dateDeleted = dateDeleted;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -191,6 +202,7 @@ public class ApiaryDTO implements Serializable {
         ", dateCreated='" + getDateCreated() + "'" +
         ", dateModified='" + getDateModified() + "'" +
         ", dateSynched='" + getDateSynched() + "'" +
+        ", dateDeleted='" + getDateDeleted() + "'" +
         "}";
   }
 }

@@ -1,0 +1,38 @@
+{
+  "beebackApp": {
+    "hive": {
+      "home": {
+        "title": "Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Hive",
+        "createOrEditLabel": "Kreirajte ili izmenite Hive",
+        "notFound": "No Hives found"
+      },
+      "created": "Kreiran je novi Hive pod nazivom {{ param }}",
+      "updated": "Hive pod nazivom {{ param }} je ažuriran",
+      "deleted": "Hive pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Hive pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Hive"
+      },
+      "id": "ID",
+      "barcode": "Barcode",
+      "orderNumber": "Order Number",
+      "description": "Description",
+      "examinationDate": "Examination Date",
+      "archivedDate": "Archived Date",
+      "archivedReason": "Archived Reason",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User",
+      "hiveType": "Hive Type",
+      "apiary": "Apiary"
+    }
+  }
+}

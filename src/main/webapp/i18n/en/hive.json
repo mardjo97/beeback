@@ -1,0 +1,38 @@
+{
+  "beebackApp": {
+    "hive": {
+      "home": {
+        "title": "Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Hive",
+        "createOrEditLabel": "Create or edit a Hive",
+        "notFound": "No Hives found"
+      },
+      "created": "A new Hive is created with identifier {{ param }}",
+      "updated": "A Hive is updated with identifier {{ param }}",
+      "deleted": "A Hive is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Hive {{ id }}?"
+      },
+      "detail": {
+        "title": "Hive"
+      },
+      "id": "ID",
+      "barcode": "Barcode",
+      "orderNumber": "Order Number",
+      "description": "Description",
+      "examinationDate": "Examination Date",
+      "archivedDate": "Archived Date",
+      "archivedReason": "Archived Reason",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User",
+      "hiveType": "Hive Type",
+      "apiary": "Apiary"
+    }
+  }
+}

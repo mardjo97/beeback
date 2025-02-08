@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import rs.hexatech.beeback.exception.DeviceIdForbiddenException;
-import rs.hexatech.beeback.repository.ApiaryRepository;
 import rs.hexatech.beeback.service.ApiaryService;
 import rs.hexatech.beeback.service.SecurityService;
 import rs.hexatech.beeback.service.dto.ApiaryDTO;
@@ -40,14 +39,11 @@ public class ApiaryResource {
 
   private final ApiaryService apiaryService;
 
-  private final ApiaryRepository apiaryRepository;
-
   @Autowired
   private SecurityService securityService;
 
-  public ApiaryResource(ApiaryService apiaryService, ApiaryRepository apiaryRepository) {
+  public ApiaryResource(ApiaryService apiaryService) {
     this.apiaryService = apiaryService;
-    this.apiaryRepository = apiaryRepository;
   }
 
   /**
@@ -74,6 +70,7 @@ public class ApiaryResource {
   @GetMapping("/all")
   public ResponseEntity<List<ApiaryDTO>> userApiaries(@RequestHeader(value = "Device-Id", required = false) String deviceId) {
     LOG.debug("REST request to retrieve user's Apiaries");
+    securityService.checkUserDeviceId(deviceId);
     List<ApiaryDTO> userApiaries = apiaryService.userApiaries(deviceId);
     return ResponseEntity.ok().body(userApiaries);
   }

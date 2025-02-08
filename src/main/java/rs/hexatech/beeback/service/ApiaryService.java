@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hexatech.beeback.domain.Apiary;
 import rs.hexatech.beeback.domain.User;
+import rs.hexatech.beeback.exception.NotFoundException;
 import rs.hexatech.beeback.repository.ApiaryRepository;
 import rs.hexatech.beeback.service.dto.ApiaryDTO;
 import rs.hexatech.beeback.service.mapper.ApiaryMapper;
@@ -39,6 +40,22 @@ public class ApiaryService {
   public ApiaryService(ApiaryRepository apiaryRepository, ApiaryMapper apiaryMapper) {
     this.apiaryRepository = apiaryRepository;
     this.apiaryMapper = apiaryMapper;
+  }
+
+  public Apiary getApiaryByUUIDOrUserAndExternalId(String uuid, User user, Long externalId) {
+    if (uuid != null) {
+      Apiary e = apiaryRepository.findByUuidIs(uuid);
+      if (e != null) {
+        return e;
+      }
+    }
+    if (user != null && externalId != null) {
+      Apiary e = apiaryRepository.findByUserAndExternalId(user, externalId.intValue());
+      if (e != null) {
+        return e;
+      }
+    }
+    throw new NotFoundException("Apiary not found for");
   }
 
   /**

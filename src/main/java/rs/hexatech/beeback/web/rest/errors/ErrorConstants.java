@@ -13,6 +13,7 @@ public final class ErrorConstants {
   public static final URI DEVICE_ID_FORBIDDEN = URI.create(PROBLEM_BASE_URL + "/device-id-forbidden");
   public static final URI EMAIL_ALREADY_USED_TYPE = URI.create(PROBLEM_BASE_URL + "/email-already-used");
   public static final URI LOGIN_ALREADY_USED_TYPE = URI.create(PROBLEM_BASE_URL + "/login-already-used");
+  public static final URI NOT_FOUND = URI.create(PROBLEM_BASE_URL + "/not-found");
 
   private ErrorConstants() {
   }

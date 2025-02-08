@@ -94,6 +94,9 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
     if (
         ex instanceof rs.hexatech.beeback.exception.InvalidPasswordException
     ) return (ProblemDetailWithCause) new InvalidPasswordException().getBody();
+    if (
+        ex instanceof rs.hexatech.beeback.exception.NotFoundException
+    ) return (ProblemDetailWithCause) new NotFoundException().getBody();
 
     if (
         ex instanceof ErrorResponseException exp && exp.getBody() instanceof ProblemDetailWithCause problemDetailWithCause

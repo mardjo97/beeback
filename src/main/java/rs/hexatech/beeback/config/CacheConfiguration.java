@@ -1,6 +1,8 @@
 package rs.hexatech.beeback.config;
 
 import com.github.benmanes.caffeine.jcache.configuration.CaffeineConfiguration;
+import java.util.OptionalLong;
+import java.util.concurrent.TimeUnit;
 import org.hibernate.cache.jcache.ConfigSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
@@ -14,9 +16,6 @@ import org.springframework.context.annotation.Configuration;
 import rs.hexatech.beeback.repository.UserRepository;
 import tech.jhipster.config.JHipsterProperties;
 import tech.jhipster.config.cache.PrefixedKeyGenerator;
-
-import java.util.OptionalLong;
-import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableCaching
@@ -51,6 +50,8 @@ public class CacheConfiguration {
             createCache(cm, rs.hexatech.beeback.domain.Authority.class.getName());
             createCache(cm, rs.hexatech.beeback.domain.User.class.getName() + ".authorities");
             createCache(cm, rs.hexatech.beeback.domain.Apiary.class.getName());
+            createCache(cm, rs.hexatech.beeback.domain.HiveType.class.getName());
+            createCache(cm, rs.hexatech.beeback.domain.Hive.class.getName());
             // jhipster-needle-caffeine-add-entry
         };
     }
