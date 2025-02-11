@@ -29,6 +29,7 @@
     <include file="config/liquibase/changelog/20250210200545_added_entity_MovedHive.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250210200545_added_entity_QueenChangeHive.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250210200545_added_entity_GoodHarvestHive.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250210200545_added_entity_ReproductionHive.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20241113174017_added_entity_constraints_Apiary.xml"
              relativeToChangelogFile="false"/>
@@ -48,6 +49,7 @@
     <include file="config/liquibase/changelog/20250210200545_added_entity_constraints_MovedHive.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250210200545_added_entity_constraints_QueenChangeHive.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250210200545_added_entity_constraints_GoodHarvestHive.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250210200545_added_entity_constraints_ReproductionHive.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
     <changeSet author="dmarkovic" id="20250208184828">

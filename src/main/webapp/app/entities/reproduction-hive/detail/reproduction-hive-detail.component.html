@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (reproductionHive(); as reproductionHiveRef) {
+      <div>
+        <h2 data-cy="reproductionHiveDetailsHeading">
+          <span jhiTranslate="beebackApp.reproductionHive.detail.title">Reproduction Hive</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ reproductionHiveRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.reproductionHive.note">Note</span></dt>
+          <dd>
+            <span>{{ reproductionHiveRef.note }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.reproductionHive.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ reproductionHiveRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.reproductionHive.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ reproductionHiveRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.reproductionHive.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ reproductionHiveRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.reproductionHive.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ reproductionHiveRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.reproductionHive.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ reproductionHiveRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.reproductionHive.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ reproductionHiveRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.reproductionHive.user">User</span></dt>
+          <dd>
+            <span>{{ reproductionHiveRef.user?.id }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/reproduction-hive', reproductionHiveRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

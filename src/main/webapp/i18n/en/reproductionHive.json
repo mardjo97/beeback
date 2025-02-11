@@ -1,0 +1,31 @@
+{
+  "beebackApp": {
+    "reproductionHive": {
+      "home": {
+        "title": "Reproduction Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Reproduction Hive",
+        "createOrEditLabel": "Create or edit a Reproduction Hive",
+        "notFound": "No Reproduction Hives found"
+      },
+      "created": "A new Reproduction Hive is created with identifier {{ param }}",
+      "updated": "A Reproduction Hive is updated with identifier {{ param }}",
+      "deleted": "A Reproduction Hive is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Reproduction Hive {{ id }}?"
+      },
+      "detail": {
+        "title": "Reproduction Hive"
+      },
+      "id": "ID",
+      "note": "Note",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}
