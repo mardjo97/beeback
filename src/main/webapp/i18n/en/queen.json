@@ -1,0 +1,37 @@
+{
+  "beebackApp": {
+    "queen": {
+      "home": {
+        "title": "Queens",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Queen",
+        "createOrEditLabel": "Create or edit a Queen",
+        "notFound": "No Queens found"
+      },
+      "created": "A new Queen is created with identifier {{ param }}",
+      "updated": "A Queen is updated with identifier {{ param }}",
+      "deleted": "A Queen is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Queen {{ id }}?"
+      },
+      "detail": {
+        "title": "Queen"
+      },
+      "id": "ID",
+      "origin": "Origin",
+      "year": "Year",
+      "isMarked": "Is Marked",
+      "active": "Active",
+      "activeFromDate": "Active From Date",
+      "activeToDate": "Active To Date",
+      "queenChangeDate": "Queen Change Date",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "user": "User",
+      "hive": "Hive"
+    }
+  }
+}

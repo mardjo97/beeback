@@ -21,6 +21,11 @@ const routes: Routes = [
     data: { pageTitle: 'beebackApp.hive.home.title' },
     loadChildren: () => import('./hive/hive.routes'),
   },
+  {
+    path: 'queen',
+    data: { pageTitle: 'beebackApp.queen.home.title' },
+    loadChildren: () => import('./queen/queen.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

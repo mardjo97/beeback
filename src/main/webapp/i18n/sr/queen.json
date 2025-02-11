@@ -1,0 +1,37 @@
+{
+  "beebackApp": {
+    "queen": {
+      "home": {
+        "title": "Queens",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Queen",
+        "createOrEditLabel": "Kreirajte ili izmenite Queen",
+        "notFound": "No Queens found"
+      },
+      "created": "Kreiran je novi Queen pod nazivom {{ param }}",
+      "updated": "Queen pod nazivom {{ param }} je ažuriran",
+      "deleted": "Queen pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Queen pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Queen"
+      },
+      "id": "ID",
+      "origin": "Origin",
+      "year": "Year",
+      "isMarked": "Is Marked",
+      "active": "Active",
+      "activeFromDate": "Active From Date",
+      "activeToDate": "Active To Date",
+      "queenChangeDate": "Queen Change Date",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "user": "User",
+      "hive": "Hive"
+    }
+  }
+}

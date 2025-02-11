@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (queen(); as queenRef) {
+      <div>
+        <h2 data-cy="queenDetailsHeading"><span jhiTranslate="beebackApp.queen.detail.title">Queen</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ queenRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.origin">Origin</span></dt>
+          <dd>
+            <span>{{ queenRef.origin }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.year">Year</span></dt>
+          <dd>
+            <span>{{ queenRef.year }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.isMarked">Is Marked</span></dt>
+          <dd>
+            <span>{{ queenRef.isMarked }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.active">Active</span></dt>
+          <dd>
+            <span>{{ queenRef.active }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.activeFromDate">Active From Date</span></dt>
+          <dd>
+            <span>{{ queenRef.activeFromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.activeToDate">Active To Date</span></dt>
+          <dd>
+            <span>{{ queenRef.activeToDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.queenChangeDate">Queen Change Date</span></dt>
+          <dd>
+            <span>{{ queenRef.queenChangeDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ queenRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ queenRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ queenRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ queenRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ queenRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.user">User</span></dt>
+          <dd>
+            <span>{{ queenRef.user?.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queen.hive">Hive</span></dt>
+          <dd>
+            @if (queen()!.hive) {
+              <div>
+                <a [routerLink]="['/hive', queen()!.hive?.id, 'view']">{{ queenRef.hive?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/queen', queenRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
