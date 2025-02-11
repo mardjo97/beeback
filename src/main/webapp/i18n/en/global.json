@@ -8,7 +8,7 @@
       "entities": {
         "main": "Entities",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "examinationHive": "Examination Hive"
+        "feedingHive": "Feeding Hive"
       },
       "account": {
         "main": "Account",

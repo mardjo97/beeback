@@ -1,0 +1,31 @@
+{
+  "beebackApp": {
+    "feedingHive": {
+      "home": {
+        "title": "Feeding Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Feeding Hive",
+        "createOrEditLabel": "Create or edit a Feeding Hive",
+        "notFound": "No Feeding Hives found"
+      },
+      "created": "A new Feeding Hive is created with identifier {{ param }}",
+      "updated": "A Feeding Hive is updated with identifier {{ param }}",
+      "deleted": "A Feeding Hive is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Feeding Hive {{ id }}?"
+      },
+      "detail": {
+        "title": "Feeding Hive"
+      },
+      "id": "ID",
+      "foodAmount": "Food Amount",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}

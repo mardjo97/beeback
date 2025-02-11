@@ -1,0 +1,31 @@
+{
+  "beebackApp": {
+    "feedingHive": {
+      "home": {
+        "title": "Feeding Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Feeding Hive",
+        "createOrEditLabel": "Kreirajte ili izmenite Feeding Hive",
+        "notFound": "No Feeding Hives found"
+      },
+      "created": "Kreiran je novi Feeding Hive pod nazivom {{ param }}",
+      "updated": "Feeding Hive pod nazivom {{ param }} je ažuriran",
+      "deleted": "Feeding Hive pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Feeding Hive pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Feeding Hive"
+      },
+      "id": "ID",
+      "foodAmount": "Food Amount",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}
