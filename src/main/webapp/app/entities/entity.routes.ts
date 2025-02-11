@@ -36,6 +36,11 @@ const routes: Routes = [
     data: { pageTitle: 'beebackApp.harvestType.home.title' },
     loadChildren: () => import('./harvest-type/harvest-type.routes'),
   },
+  {
+    path: 'harvest',
+    data: { pageTitle: 'beebackApp.harvest.home.title' },
+    loadChildren: () => import('./harvest/harvest.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

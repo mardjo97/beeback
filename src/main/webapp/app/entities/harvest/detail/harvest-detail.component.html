@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (harvest(); as harvestRef) {
+      <div>
+        <h2 data-cy="harvestDetailsHeading"><span jhiTranslate="beebackApp.harvest.detail.title">Harvest</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ harvestRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.hiveFrames">Hive Frames</span></dt>
+          <dd>
+            <span>{{ harvestRef.hiveFrames }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.amount">Amount</span></dt>
+          <dd>
+            <span>{{ harvestRef.amount }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.dateCollected">Date Collected</span></dt>
+          <dd>
+            <span>{{ harvestRef.dateCollected | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.group">Group</span></dt>
+          <dd>
+            <span>{{ harvestRef.group }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.groupRecordId">Group Record Id</span></dt>
+          <dd>
+            <span>{{ harvestRef.groupRecordId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ harvestRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ harvestRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ harvestRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ harvestRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ harvestRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ harvestRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.user">User</span></dt>
+          <dd>
+            <span>{{ harvestRef.user?.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.hive">Hive</span></dt>
+          <dd>
+            @if (harvest()!.hive) {
+              <div>
+                <a [routerLink]="['/hive', harvest()!.hive?.id, 'view']">{{ harvestRef.hive?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvest.harvestType">Harvest Type</span></dt>
+          <dd>
+            @if (harvest()!.harvestType) {
+              <div>
+                <a [routerLink]="['/harvest-type', harvest()!.harvestType?.id, 'view']">{{ harvestRef.harvestType?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/harvest', harvestRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

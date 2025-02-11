@@ -1,0 +1,220 @@
+<div>
+  <h2 id="page-heading" data-cy="HarvestHeading">
+    <span jhiTranslate="beebackApp.harvest.home.title">Harvests</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="beebackApp.harvest.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-harvest"
+        [routerLink]="['/harvest/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="beebackApp.harvest.home.createLabel">Create a new Harvest</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (harvests?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="beebackApp.harvest.home.notFound">No Harvests found</span>
+    </div>
+  }
+
+  @if (harvests && harvests.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="hiveFrames">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.hiveFrames">Hive Frames</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="amount">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.amount">Amount</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateCollected">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.dateCollected">Date Collected</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="group">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.group">Group</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="groupRecordId">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.groupRecordId">Group Record Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="externalId">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.externalId">External Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="uuid">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.uuid">Uuid</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateCreated">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.dateCreated">Date Created</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateModified">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.dateModified">Date Modified</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateSynched">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.dateSynched">Date Synched</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateDeleted">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.dateDeleted">Date Deleted</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="user.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.user">User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="hive.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.hive">Hive</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="harvestType.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.harvest.harvestType">Harvest Type</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (harvest of harvests; track trackId(harvest)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/harvest', harvest.id, 'view']">{{ harvest.id }}</a>
+              </td>
+              <td>{{ harvest.hiveFrames }}</td>
+              <td>{{ harvest.amount }}</td>
+              <td>{{ harvest.dateCollected | formatMediumDatetime }}</td>
+              <td>{{ harvest.group }}</td>
+              <td>{{ harvest.groupRecordId }}</td>
+              <td>{{ harvest.externalId }}</td>
+              <td>{{ harvest.uuid }}</td>
+              <td>{{ harvest.dateCreated | formatMediumDatetime }}</td>
+              <td>{{ harvest.dateModified | formatMediumDatetime }}</td>
+              <td>{{ harvest.dateSynched | formatMediumDatetime }}</td>
+              <td>{{ harvest.dateDeleted | formatMediumDatetime }}</td>
+              <td>
+                {{ harvest.user?.id }}
+              </td>
+              <td>
+                @if (harvest.hive) {
+                  <div>
+                    <a [routerLink]="['/hive', harvest.hive.id, 'view']">{{ harvest.hive.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (harvest.harvestType) {
+                  <div>
+                    <a [routerLink]="['/harvest-type', harvest.harvestType.id, 'view']">{{ harvest.harvestType.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/harvest', harvest.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/harvest', harvest.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(harvest)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (harvests && harvests.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

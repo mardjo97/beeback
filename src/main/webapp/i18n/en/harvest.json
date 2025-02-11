@@ -1,0 +1,37 @@
+{
+  "beebackApp": {
+    "harvest": {
+      "home": {
+        "title": "Harvests",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Harvest",
+        "createOrEditLabel": "Create or edit a Harvest",
+        "notFound": "No Harvests found"
+      },
+      "created": "A new Harvest is created with identifier {{ param }}",
+      "updated": "A Harvest is updated with identifier {{ param }}",
+      "deleted": "A Harvest is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Harvest {{ id }}?"
+      },
+      "detail": {
+        "title": "Harvest"
+      },
+      "id": "ID",
+      "hiveFrames": "Hive Frames",
+      "amount": "Amount",
+      "dateCollected": "Date Collected",
+      "group": "Group",
+      "groupRecordId": "Group Record Id",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User",
+      "hive": "Hive",
+      "harvestType": "Harvest Type"
+    }
+  }
+}
