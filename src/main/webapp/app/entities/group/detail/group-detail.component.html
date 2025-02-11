@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (group(); as groupRef) {
+      <div>
+        <h2 data-cy="groupDetailsHeading"><span jhiTranslate="beebackApp.group.detail.title">Group</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ groupRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.name">Name</span></dt>
+          <dd>
+            <span>{{ groupRef.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.enumValueName">Enum Value Name</span></dt>
+          <dd>
+            <span>{{ groupRef.enumValueName }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.color">Color</span></dt>
+          <dd>
+            <span>{{ groupRef.color }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.hiveCount">Hive Count</span></dt>
+          <dd>
+            <span>{{ groupRef.hiveCount }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.hiveCountFinished">Hive Count Finished</span></dt>
+          <dd>
+            <span>{{ groupRef.hiveCountFinished }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.additionalInfo">Additional Info</span></dt>
+          <dd>
+            <span>{{ groupRef.additionalInfo }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.orderNumber">Order Number</span></dt>
+          <dd>
+            <span>{{ groupRef.orderNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ groupRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ groupRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ groupRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ groupRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ groupRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ groupRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.group.user">User</span></dt>
+          <dd>
+            <span>{{ groupRef.user?.id }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/group', groupRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,37 @@
+{
+  "beebackApp": {
+    "group": {
+      "home": {
+        "title": "Groups",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Group",
+        "createOrEditLabel": "Create or edit a Group",
+        "notFound": "No Groups found"
+      },
+      "created": "A new Group is created with identifier {{ param }}",
+      "updated": "A Group is updated with identifier {{ param }}",
+      "deleted": "A Group is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Group {{ id }}?"
+      },
+      "detail": {
+        "title": "Group"
+      },
+      "id": "ID",
+      "name": "Name",
+      "enumValueName": "Enum Value Name",
+      "color": "Color",
+      "hiveCount": "Hive Count",
+      "hiveCountFinished": "Hive Count Finished",
+      "additionalInfo": "Additional Info",
+      "orderNumber": "Order Number",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}
