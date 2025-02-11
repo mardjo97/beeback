@@ -62,6 +62,7 @@ public class CacheConfiguration {
             createCache(cm, rs.hexatech.beeback.domain.QueenChangeHive.class.getName());
             createCache(cm, rs.hexatech.beeback.domain.GoodHarvestHive.class.getName());
             createCache(cm, rs.hexatech.beeback.domain.ReproductionHive.class.getName());
+            createCache(cm, rs.hexatech.beeback.domain.ExaminationHive.class.getName());
             // jhipster-needle-caffeine-add-entry
         };
     }

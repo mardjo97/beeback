@@ -1,0 +1,33 @@
+{
+  "beebackApp": {
+    "examinationHive": {
+      "home": {
+        "title": "Examination Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Examination Hive",
+        "createOrEditLabel": "Kreirajte ili izmenite Examination Hive",
+        "notFound": "No Examination Hives found"
+      },
+      "created": "Kreiran je novi Examination Hive pod nazivom {{ param }}",
+      "updated": "Examination Hive pod nazivom {{ param }} je ažuriran",
+      "deleted": "Examination Hive pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Examination Hive pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Examination Hive"
+      },
+      "id": "ID",
+      "note": "Note",
+      "dateExamination": "Date Examination",
+      "reminderId": "Reminder Id",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}
