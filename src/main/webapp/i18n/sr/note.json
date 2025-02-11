@@ -1,0 +1,38 @@
+{
+  "beebackApp": {
+    "note": {
+      "home": {
+        "title": "Notes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Note",
+        "createOrEditLabel": "Kreirajte ili izmenite Note",
+        "notFound": "No Notes found"
+      },
+      "created": "Kreiran je novi Note pod nazivom {{ param }}",
+      "updated": "Note pod nazivom {{ param }} je ažuriran",
+      "deleted": "Note pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Note pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Note"
+      },
+      "id": "ID",
+      "hasReminder": "Has Reminder",
+      "title": "Title",
+      "content": "Content",
+      "group": "Group",
+      "groupRecordId": "Group Record Id",
+      "dateHidden": "Date Hidden",
+      "reminderDate": "Reminder Date",
+      "reminderId": "Reminder Id",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "user": "User",
+      "hive": "Hive"
+    }
+  }
+}

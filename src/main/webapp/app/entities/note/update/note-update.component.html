@@ -1,0 +1,263 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-note-heading" data-cy="NoteCreateUpdateHeading" jhiTranslate="beebackApp.note.home.createOrEditLabel">
+        Create or edit a Note
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="beebackApp.note.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_hasReminder" jhiTranslate="beebackApp.note.hasReminder">Has Reminder</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="hasReminder"
+            id="field_hasReminder"
+            data-cy="hasReminder"
+            formControlName="hasReminder"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_title" jhiTranslate="beebackApp.note.title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_content" jhiTranslate="beebackApp.note.content">Content</label>
+          <input type="text" class="form-control" name="content" id="field_content" data-cy="content" formControlName="content" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_group" jhiTranslate="beebackApp.note.group">Group</label>
+          <input type="text" class="form-control" name="group" id="field_group" data-cy="group" formControlName="group" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_groupRecordId" jhiTranslate="beebackApp.note.groupRecordId">Group Record Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="groupRecordId"
+            id="field_groupRecordId"
+            data-cy="groupRecordId"
+            formControlName="groupRecordId"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dateHidden" jhiTranslate="beebackApp.note.dateHidden">Date Hidden</label>
+          <div class="d-flex">
+            <input
+              id="field_dateHidden"
+              data-cy="dateHidden"
+              type="datetime-local"
+              class="form-control"
+              name="dateHidden"
+              formControlName="dateHidden"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_reminderDate" jhiTranslate="beebackApp.note.reminderDate">Reminder Date</label>
+          <div class="d-flex">
+            <input
+              id="field_reminderDate"
+              data-cy="reminderDate"
+              type="datetime-local"
+              class="form-control"
+              name="reminderDate"
+              formControlName="reminderDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_reminderId" jhiTranslate="beebackApp.note.reminderId">Reminder Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="reminderId"
+            id="field_reminderId"
+            data-cy="reminderId"
+            formControlName="reminderId"
+          />
+        </div>
+
+        @let externalIdRef = editForm.get('externalId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_externalId" jhiTranslate="beebackApp.note.externalId">External Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="externalId"
+            id="field_externalId"
+            data-cy="externalId"
+            formControlName="externalId"
+          />
+          @if (externalIdRef.invalid && (externalIdRef.dirty || externalIdRef.touched)) {
+            <div>
+              @if (editForm.get('externalId')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('externalId')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let uuidRef = editForm.get('uuid')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_uuid" jhiTranslate="beebackApp.note.uuid">Uuid</label>
+          <input type="text" class="form-control" name="uuid" id="field_uuid" data-cy="uuid" formControlName="uuid" />
+          @if (uuidRef.invalid && (uuidRef.dirty || uuidRef.touched)) {
+            <div>
+              @if (editForm.get('uuid')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let dateCreatedRef = editForm.get('dateCreated')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dateCreated" jhiTranslate="beebackApp.note.dateCreated">Date Created</label>
+          <div class="d-flex">
+            <input
+              id="field_dateCreated"
+              data-cy="dateCreated"
+              type="datetime-local"
+              class="form-control"
+              name="dateCreated"
+              formControlName="dateCreated"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dateCreatedRef.invalid && (dateCreatedRef.dirty || dateCreatedRef.touched)) {
+            <div>
+              @if (editForm.get('dateCreated')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dateCreated')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let dateModifiedRef = editForm.get('dateModified')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dateModified" jhiTranslate="beebackApp.note.dateModified">Date Modified</label>
+          <div class="d-flex">
+            <input
+              id="field_dateModified"
+              data-cy="dateModified"
+              type="datetime-local"
+              class="form-control"
+              name="dateModified"
+              formControlName="dateModified"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dateModifiedRef.invalid && (dateModifiedRef.dirty || dateModifiedRef.touched)) {
+            <div>
+              @if (editForm.get('dateModified')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dateModified')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let dateSynchedRef = editForm.get('dateSynched')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dateSynched" jhiTranslate="beebackApp.note.dateSynched">Date Synched</label>
+          <div class="d-flex">
+            <input
+              id="field_dateSynched"
+              data-cy="dateSynched"
+              type="datetime-local"
+              class="form-control"
+              name="dateSynched"
+              formControlName="dateSynched"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dateSynchedRef.invalid && (dateSynchedRef.dirty || dateSynchedRef.touched)) {
+            <div>
+              @if (editForm.get('dateSynched')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dateSynched')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_user" jhiTranslate="beebackApp.note.user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_hive" jhiTranslate="beebackApp.note.hive">Hive</label>
+          <select class="form-control" id="field_hive" data-cy="hive" name="hive" formControlName="hive" [compareWith]="compareHive">
+            <option [ngValue]="null"></option>
+            @for (hiveOption of hivesSharedCollection; track $index) {
+              <option [ngValue]="hiveOption">{{ hiveOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
