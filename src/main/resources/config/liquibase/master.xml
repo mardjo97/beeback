@@ -87,4 +87,17 @@
                  path="mysql/20250211184828_insert_default_harvest_types.sql"
                  relativeToChangelogFile="true" splitStatements="true"/>
     </changeSet>
+
+    <changeSet author="dmarkovic" id="20250211191231">
+        <sqlFile dbms="mysql" encoding="utf8" endDelimiter=";"
+                 path="mysql/20250211191231_insert_default_groups.sql"
+                 relativeToChangelogFile="true" splitStatements="true"/>
+    </changeSet>
+
+    <changeSet author="dmarkovic" id="20250211191634">
+        <sqlFile dbms="mysql" encoding="utf8" endDelimiter=";"
+                 path="mysql/20250211191634_insert_default_app_config.sql"
+                 relativeToChangelogFile="true" splitStatements="true"/>
+    </changeSet>
+
 </databaseChangeLog>
