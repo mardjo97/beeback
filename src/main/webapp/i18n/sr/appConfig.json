@@ -1,0 +1,33 @@
+{
+  "beebackApp": {
+    "appConfig": {
+      "home": {
+        "title": "App Configs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi App Config",
+        "createOrEditLabel": "Kreirajte ili izmenite App Config",
+        "notFound": "No App Configs found"
+      },
+      "created": "Kreiran je novi App Config pod nazivom {{ param }}",
+      "updated": "App Config pod nazivom {{ param }} je ažuriran",
+      "deleted": "App Config pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete App Config pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "App Config"
+      },
+      "id": "ID",
+      "key": "Key",
+      "type": "Type",
+      "value": "Value",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}

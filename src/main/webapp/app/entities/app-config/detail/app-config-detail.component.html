@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (appConfig(); as appConfigRef) {
+      <div>
+        <h2 data-cy="appConfigDetailsHeading"><span jhiTranslate="beebackApp.appConfig.detail.title">App Config</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ appConfigRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.key">Key</span></dt>
+          <dd>
+            <span>{{ appConfigRef.key }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.type">Type</span></dt>
+          <dd>
+            <span>{{ appConfigRef.type }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.value">Value</span></dt>
+          <dd>
+            <span>{{ appConfigRef.value }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ appConfigRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ appConfigRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ appConfigRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ appConfigRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ appConfigRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ appConfigRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.appConfig.user">User</span></dt>
+          <dd>
+            <span>{{ appConfigRef.user?.id }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/app-config', appConfigRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
