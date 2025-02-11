@@ -1,0 +1,31 @@
+{
+  "beebackApp": {
+    "harvestType": {
+      "home": {
+        "title": "Harvest Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Harvest Type",
+        "createOrEditLabel": "Kreirajte ili izmenite Harvest Type",
+        "notFound": "No Harvest Types found"
+      },
+      "created": "Kreiran je novi Harvest Type pod nazivom {{ param }}",
+      "updated": "Harvest Type pod nazivom {{ param }} je ažuriran",
+      "deleted": "Harvest Type pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Harvest Type pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Harvest Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}

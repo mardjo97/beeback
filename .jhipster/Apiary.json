@@ -60,6 +60,10 @@
       "fieldName": "dateSynched",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateDeleted",
+      "fieldType": "Instant"
     }
   ],
   "jpaMetamodelFiltering": false,

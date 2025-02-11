@@ -1,0 +1,31 @@
+{
+  "beebackApp": {
+    "harvestType": {
+      "home": {
+        "title": "Harvest Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Harvest Type",
+        "createOrEditLabel": "Create or edit a Harvest Type",
+        "notFound": "No Harvest Types found"
+      },
+      "created": "A new Harvest Type is created with identifier {{ param }}",
+      "updated": "A Harvest Type is updated with identifier {{ param }}",
+      "deleted": "A Harvest Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Harvest Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Harvest Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}

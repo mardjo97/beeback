@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (harvestType(); as harvestTypeRef) {
+      <div>
+        <h2 data-cy="harvestTypeDetailsHeading"><span jhiTranslate="beebackApp.harvestType.detail.title">Harvest Type</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ harvestTypeRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvestType.name">Name</span></dt>
+          <dd>
+            <span>{{ harvestTypeRef.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvestType.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ harvestTypeRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvestType.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ harvestTypeRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvestType.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ harvestTypeRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvestType.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ harvestTypeRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvestType.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ harvestTypeRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvestType.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ harvestTypeRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.harvestType.user">User</span></dt>
+          <dd>
+            <span>{{ harvestTypeRef.user?.id }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/harvest-type', harvestTypeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
