@@ -17,6 +17,7 @@ export interface INote {
   dateCreated?: dayjs.Dayjs | null;
   dateModified?: dayjs.Dayjs | null;
   dateSynched?: dayjs.Dayjs | null;
+  dateDeleted?: dayjs.Dayjs | null;
   user?: Pick<IUser, 'id'> | null;
   hive?: Pick<IHive, 'id'> | null;
 }

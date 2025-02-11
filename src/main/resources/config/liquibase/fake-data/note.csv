@@ -1,11 +1,11 @@
-id;has_reminder;title;content;jhi_group;group_record_id;date_hidden;reminder_date;reminder_id;external_id;uuid;date_created;date_modified;date_synched
-1;true;sympathetically;kindly ew commercial;overvalue plain acidly;29460;2025-02-10T09:12:03;2025-02-10T16:31:07;26140;25550;premeditation personalise;2025-02-10T09:05:26;2025-02-10T09:57:10;2025-02-10T14:57:42
-2;true;lest place into;fatally gah;ack;23529;2025-02-10T08:55:12;2025-02-10T00:05:19;13384;2460;stealthily upright roughly;2025-02-10T19:24:40;2025-02-10T03:08:42;2025-02-10T15:19:33
-3;true;cautiously helplessly;however suffice;zowie;18805;2025-02-10T17:11:50;2025-02-10T11:26:51;1985;482;abaft;2025-02-10T08:37:56;2025-02-10T13:53:26;2025-02-10T01:24:53
-4;true;huzzah so;whether;instance;17237;2025-02-10T07:58:39;2025-02-10T06:06:48;24624;27475;abaft habit;2025-02-10T14:48:11;2025-02-10T03:55:27;2025-02-10T00:00:24
-5;true;merrily;uselessly;glittering;11827;2025-02-10T08:57:29;2025-02-10T04:21:37;8897;25844;someplace pish presell;2025-02-10T03:39:09;2025-02-10T04:58:24;2025-02-10T05:29:58
-6;false;whereas however;bah;larva;12236;2025-02-10T06:43:08;2025-02-10T10:54:03;1104;27606;dash;2025-02-10T18:08:47;2025-02-10T16:12:15;2025-02-09T20:33:18
-7;true;that;ah;obnoxiously;20225;2025-02-10T09:33:15;2025-02-09T23:13:39;25287;20327;regularly amount though;2025-02-10T05:15:10;2025-02-10T13:54:47;2025-02-10T19:32:54
-8;true;drat vice;incandescence onto;near;15732;2025-02-10T19:07:06;2025-02-09T21:21:47;27170;19910;bowed;2025-02-10T04:58:59;2025-02-10T03:58:59;2025-02-10T09:41:49
-9;true;down;nor low weep;lest why;10653;2025-02-10T17:44:32;2025-02-10T10:16:46;16186;22637;drat substitution;2025-02-10T06:32:59;2025-02-10T02:06:39;2025-02-10T06:57:17
-10;true;accentuate;within anneal following;every;21931;2025-02-10T12:36:22;2025-02-10T00:23:57;21925;7906;severe fuss;2025-02-10T18:16:48;2025-02-10T03:13:04;2025-02-09T21:49:21
+id;has_reminder;title;content;jhi_group;group_record_id;date_hidden;reminder_date;reminder_id;external_id;uuid;date_created;date_modified;date_synched;date_deleted
+1;true;sympathetically;kindly ew commercial;overvalue plain acidly;29460;2025-02-10T09:12:03;2025-02-10T16:31:07;26140;25550;premeditation personalise;2025-02-10T09:05:26;2025-02-10T09:57:10;2025-02-10T14:57:42;2025-02-10T07:31:02
+2;false;decriminalize midst;loyalty unbearably;under;2807;2025-02-10T18:10:18;2025-02-10T02:55:07;7043;3019;although gah swill;2025-02-10T11:47:15;2025-02-10T07:33:14;2025-02-09T23:53:27;2025-02-10T03:32:00
+3;true;blah smoothly pfft;badly huzzah outrank;sedately geez abaft;11097;2025-02-09T23:54:57;2025-02-10T10:57:04;23003;31030;ameliorate;2025-02-10T01:22:51;2025-02-10T10:35:46;2025-02-09T22:01:36;2025-02-10T16:43:45
+4;true;nicely astride um;huzzah an notwithstanding;parody how mmm;14255;2025-02-10T16:00:18;2025-02-09T22:25:00;31088;27448;gosh;2025-02-10T17:34:08;2025-02-10T08:31:15;2025-02-10T11:13:44;2025-02-10T03:39:09
+5;true;painfully provided;duh;federate;19284;2025-02-10T08:20:17;2025-02-10T05:03:27;14504;20214;flawed;2025-02-10T10:20:29;2025-02-10T01:21:08;2025-02-10T18:08:47;2025-02-10T16:12:15
+6;true;cricket;amid unto;through regularly;3193;2025-02-10T10:12:43;2025-02-10T15:37:57;32218;16872;joshingly sans voluntarily;2025-02-10T12:04:53;2025-02-10T09:01:40;2025-02-10T04:26:14;2025-02-10T16:26:27
+7;true;foretell swim duh;yum bowed boohoo;ha hmph;21075;2025-02-10T11:54:38;2025-02-10T12:06:27;27492;15926;goose lest;2025-02-10T19:21:06;2025-02-10T14:32:48;2025-02-10T19:13:27;2025-02-10T06:22:02
+8;true;hospitable;frantically;pfft plain dividend;30276;2025-02-10T18:44:46;2025-02-10T00:36:10;31965;8469;woot;2025-02-10T12:55:17;2025-02-10T18:57:29;2025-02-10T05:08:56;2025-02-09T20:34:11
+9;true;every;tough properly frequent;shoddy;28510;2025-02-10T11:00:42;2025-02-10T09:10:58;21519;22840;ha;2025-02-10T12:16:37;2025-02-10T15:04:51;2025-02-10T10:22:41;2025-02-09T22:29:15
+10;true;scoop yippee;posh;explode ouch;23584;2025-02-10T04:26:15;2025-02-09T22:21:55;19556;4880;boulevard deduce;2025-02-10T09:12:27;2025-02-09T23:29:45;2025-02-10T10:05:54;2025-02-10T15:30:39

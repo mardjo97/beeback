@@ -133,6 +133,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="dateDeleted">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.note.dateDeleted">Date Deleted</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="user.id">
               <div class="d-flex">
                 <span jhiTranslate="beebackApp.note.user">User</span>
@@ -167,6 +174,7 @@
               <td>{{ note.dateCreated | formatMediumDatetime }}</td>
               <td>{{ note.dateModified | formatMediumDatetime }}</td>
               <td>{{ note.dateSynched | formatMediumDatetime }}</td>
+              <td>{{ note.dateDeleted | formatMediumDatetime }}</td>
               <td>
                 {{ note.user?.id }}
               </td>

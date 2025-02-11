@@ -68,6 +68,9 @@ public class Note implements Serializable {
     @Column(name = "date_synched", nullable = false)
     private Instant dateSynched;
 
+    @Column(name = "date_deleted")
+    private Instant dateDeleted;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -259,6 +262,19 @@ public class Note implements Serializable {
         this.dateSynched = dateSynched;
     }
 
+    public Instant getDateDeleted() {
+        return this.dateDeleted;
+    }
+
+    public Note dateDeleted(Instant dateDeleted) {
+        this.setDateDeleted(dateDeleted);
+        return this;
+    }
+
+    public void setDateDeleted(Instant dateDeleted) {
+        this.dateDeleted = dateDeleted;
+    }
+
     public User getUser() {
         return this.user;
     }
@@ -322,6 +338,7 @@ public class Note implements Serializable {
             ", dateCreated='" + getDateCreated() + "'" +
             ", dateModified='" + getDateModified() + "'" +
             ", dateSynched='" + getDateSynched() + "'" +
+            ", dateDeleted='" + getDateDeleted() + "'" +
             "}";
     }
 }

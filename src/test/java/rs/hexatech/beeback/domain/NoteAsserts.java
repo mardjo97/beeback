@@ -59,7 +59,8 @@ public class NoteAsserts {
             .satisfies(e -> assertThat(e.getUuid()).as("check uuid").isEqualTo(actual.getUuid()))
             .satisfies(e -> assertThat(e.getDateCreated()).as("check dateCreated").isEqualTo(actual.getDateCreated()))
             .satisfies(e -> assertThat(e.getDateModified()).as("check dateModified").isEqualTo(actual.getDateModified()))
-            .satisfies(e -> assertThat(e.getDateSynched()).as("check dateSynched").isEqualTo(actual.getDateSynched()));
+            .satisfies(e -> assertThat(e.getDateSynched()).as("check dateSynched").isEqualTo(actual.getDateSynched()))
+            .satisfies(e -> assertThat(e.getDateDeleted()).as("check dateDeleted").isEqualTo(actual.getDateDeleted()));
     }
 
     /**

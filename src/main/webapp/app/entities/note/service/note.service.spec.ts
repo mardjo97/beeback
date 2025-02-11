@@ -14,6 +14,7 @@ const requireRestSample: RestNote = {
   dateCreated: sampleWithRequiredData.dateCreated?.toJSON(),
   dateModified: sampleWithRequiredData.dateModified?.toJSON(),
   dateSynched: sampleWithRequiredData.dateSynched?.toJSON(),
+  dateDeleted: sampleWithRequiredData.dateDeleted?.toJSON(),
 };
 
 describe('Note Service', () => {

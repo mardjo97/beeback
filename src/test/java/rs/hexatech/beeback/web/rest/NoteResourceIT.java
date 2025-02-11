@@ -76,6 +76,9 @@ class NoteResourceIT {
     private static final Instant DEFAULT_DATE_SYNCHED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_SYNCHED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Instant DEFAULT_DATE_DELETED = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_DELETED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final String ENTITY_API_URL = "/api/notes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -124,7 +127,8 @@ class NoteResourceIT {
             .uuid(DEFAULT_UUID)
             .dateCreated(DEFAULT_DATE_CREATED)
             .dateModified(DEFAULT_DATE_MODIFIED)
-            .dateSynched(DEFAULT_DATE_SYNCHED);
+            .dateSynched(DEFAULT_DATE_SYNCHED)
+            .dateDeleted(DEFAULT_DATE_DELETED);
     }
 
     /**
@@ -147,7 +151,8 @@ class NoteResourceIT {
             .uuid(UPDATED_UUID)
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
-            .dateSynched(UPDATED_DATE_SYNCHED);
+            .dateSynched(UPDATED_DATE_SYNCHED)
+            .dateDeleted(UPDATED_DATE_DELETED);
     }
 
     @BeforeEach
@@ -314,7 +319,8 @@ class NoteResourceIT {
             .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID)))
             .andExpect(jsonPath("$.[*].dateCreated").value(hasItem(DEFAULT_DATE_CREATED.toString())))
             .andExpect(jsonPath("$.[*].dateModified").value(hasItem(DEFAULT_DATE_MODIFIED.toString())))
-            .andExpect(jsonPath("$.[*].dateSynched").value(hasItem(DEFAULT_DATE_SYNCHED.toString())));
+            .andExpect(jsonPath("$.[*].dateSynched").value(hasItem(DEFAULT_DATE_SYNCHED.toString())))
+            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())));
     }
 
     @Test
@@ -341,7 +347,8 @@ class NoteResourceIT {
             .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID))
             .andExpect(jsonPath("$.dateCreated").value(DEFAULT_DATE_CREATED.toString()))
             .andExpect(jsonPath("$.dateModified").value(DEFAULT_DATE_MODIFIED.toString()))
-            .andExpect(jsonPath("$.dateSynched").value(DEFAULT_DATE_SYNCHED.toString()));
+            .andExpect(jsonPath("$.dateSynched").value(DEFAULT_DATE_SYNCHED.toString()))
+            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()));
     }
 
     @Test
@@ -376,7 +383,8 @@ class NoteResourceIT {
             .uuid(UPDATED_UUID)
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
-            .dateSynched(UPDATED_DATE_SYNCHED);
+            .dateSynched(UPDATED_DATE_SYNCHED)
+            .dateDeleted(UPDATED_DATE_DELETED);
         NoteDTO noteDTO = noteMapper.toDto(updatedNote);
 
         restNoteMockMvc
@@ -458,7 +466,14 @@ class NoteResourceIT {
         Note partialUpdatedNote = new Note();
         partialUpdatedNote.setId(note.getId());
 
-        partialUpdatedNote.content(UPDATED_CONTENT).groupRecordId(UPDATED_GROUP_RECORD_ID).dateSynched(UPDATED_DATE_SYNCHED);
+        partialUpdatedNote
+            .title(UPDATED_TITLE)
+            .content(UPDATED_CONTENT)
+            .group(UPDATED_GROUP)
+            .groupRecordId(UPDATED_GROUP_RECORD_ID)
+            .reminderId(UPDATED_REMINDER_ID)
+            .dateCreated(UPDATED_DATE_CREATED)
+            .dateDeleted(UPDATED_DATE_DELETED);
 
         restNoteMockMvc
             .perform(
@@ -499,7 +514,8 @@ class NoteResourceIT {
             .uuid(UPDATED_UUID)
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
-            .dateSynched(UPDATED_DATE_SYNCHED);
+            .dateSynched(UPDATED_DATE_SYNCHED)
+            .dateDeleted(UPDATED_DATE_DELETED);
 
         restNoteMockMvc
             .perform(

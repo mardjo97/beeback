@@ -67,6 +67,10 @@
           <dd>
             <span>{{ noteRef.dateSynched | formatMediumDatetime }}</span>
           </dd>
+          <dt><span jhiTranslate="beebackApp.note.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ noteRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
           <dt><span jhiTranslate="beebackApp.note.user">User</span></dt>
           <dd>
             <span>{{ noteRef.user?.id }}</span>

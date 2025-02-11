@@ -44,6 +44,8 @@ public class NoteDTO implements Serializable {
     @NotNull
     private Instant dateSynched;
 
+    private Instant dateDeleted;
+
     private UserDTO user;
 
     private HiveDTO hive;
@@ -160,6 +162,14 @@ public class NoteDTO implements Serializable {
         this.dateSynched = dateSynched;
     }
 
+    public Instant getDateDeleted() {
+        return dateDeleted;
+    }
+
+    public void setDateDeleted(Instant dateDeleted) {
+        this.dateDeleted = dateDeleted;
+    }
+
     public UserDTO getUser() {
         return user;
     }
@@ -215,6 +225,7 @@ public class NoteDTO implements Serializable {
             ", dateCreated='" + getDateCreated() + "'" +
             ", dateModified='" + getDateModified() + "'" +
             ", dateSynched='" + getDateSynched() + "'" +
+            ", dateDeleted='" + getDateDeleted() + "'" +
             ", user=" + getUser() +
             ", hive=" + getHive() +
             "}";

@@ -11,12 +11,16 @@ import { INote, NewNote } from '../note.model';
 
 export type PartialUpdateNote = Partial<INote> & Pick<INote, 'id'>;
 
-type RestOf<T extends INote | NewNote> = Omit<T, 'dateHidden' | 'reminderDate' | 'dateCreated' | 'dateModified' | 'dateSynched'> & {
+type RestOf<T extends INote | NewNote> = Omit<
+  T,
+  'dateHidden' | 'reminderDate' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+> & {
   dateHidden?: string | null;
   reminderDate?: string | null;
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
+  dateDeleted?: string | null;
 };
 
 export type RestNote = RestOf<INote>;
@@ -107,6 +111,7 @@ export class NoteService {
       dateCreated: note.dateCreated?.toJSON() ?? null,
       dateModified: note.dateModified?.toJSON() ?? null,
       dateSynched: note.dateSynched?.toJSON() ?? null,
+      dateDeleted: note.dateDeleted?.toJSON() ?? null,
     };
   }
 
@@ -118,6 +123,7 @@ export class NoteService {
       dateCreated: restNote.dateCreated ? dayjs(restNote.dateCreated) : undefined,
       dateModified: restNote.dateModified ? dayjs(restNote.dateModified) : undefined,
       dateSynched: restNote.dateSynched ? dayjs(restNote.dateSynched) : undefined,
+      dateDeleted: restNote.dateDeleted ? dayjs(restNote.dateDeleted) : undefined,
     };
   }
 

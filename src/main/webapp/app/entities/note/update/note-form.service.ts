@@ -19,12 +19,16 @@ type NoteFormGroupInput = INote | PartialWithRequiredKeyOf<NewNote>;
 /**
  * Type that converts some properties for forms.
  */
-type FormValueOf<T extends INote | NewNote> = Omit<T, 'dateHidden' | 'reminderDate' | 'dateCreated' | 'dateModified' | 'dateSynched'> & {
+type FormValueOf<T extends INote | NewNote> = Omit<
+  T,
+  'dateHidden' | 'reminderDate' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+> & {
   dateHidden?: string | null;
   reminderDate?: string | null;
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
+  dateDeleted?: string | null;
 };
 
 type NoteFormRawValue = FormValueOf<INote>;
@@ -33,7 +37,7 @@ type NewNoteFormRawValue = FormValueOf<NewNote>;
 
 type NoteFormDefaults = Pick<
   NewNote,
-  'id' | 'hasReminder' | 'dateHidden' | 'reminderDate' | 'dateCreated' | 'dateModified' | 'dateSynched'
+  'id' | 'hasReminder' | 'dateHidden' | 'reminderDate' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
 >;
 
 type NoteFormGroupContent = {
@@ -51,6 +55,7 @@ type NoteFormGroupContent = {
   dateCreated: FormControl<NoteFormRawValue['dateCreated']>;
   dateModified: FormControl<NoteFormRawValue['dateModified']>;
   dateSynched: FormControl<NoteFormRawValue['dateSynched']>;
+  dateDeleted: FormControl<NoteFormRawValue['dateDeleted']>;
   user: FormControl<NoteFormRawValue['user']>;
   hive: FormControl<NoteFormRawValue['hive']>;
 };
@@ -95,6 +100,7 @@ export class NoteFormService {
       dateSynched: new FormControl(noteRawValue.dateSynched, {
         validators: [Validators.required],
       }),
+      dateDeleted: new FormControl(noteRawValue.dateDeleted),
       user: new FormControl(noteRawValue.user),
       hive: new FormControl(noteRawValue.hive),
     });
@@ -125,6 +131,7 @@ export class NoteFormService {
       dateCreated: currentTime,
       dateModified: currentTime,
       dateSynched: currentTime,
+      dateDeleted: currentTime,
     };
   }
 
@@ -136,6 +143,7 @@ export class NoteFormService {
       dateCreated: dayjs(rawNote.dateCreated, DATE_TIME_FORMAT),
       dateModified: dayjs(rawNote.dateModified, DATE_TIME_FORMAT),
       dateSynched: dayjs(rawNote.dateSynched, DATE_TIME_FORMAT),
+      dateDeleted: dayjs(rawNote.dateDeleted, DATE_TIME_FORMAT),
     };
   }
 
@@ -149,6 +157,7 @@ export class NoteFormService {
       dateCreated: note.dateCreated ? note.dateCreated.format(DATE_TIME_FORMAT) : undefined,
       dateModified: note.dateModified ? note.dateModified.format(DATE_TIME_FORMAT) : undefined,
       dateSynched: note.dateSynched ? note.dateSynched.format(DATE_TIME_FORMAT) : undefined,
+      dateDeleted: note.dateDeleted ? note.dateDeleted.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }
