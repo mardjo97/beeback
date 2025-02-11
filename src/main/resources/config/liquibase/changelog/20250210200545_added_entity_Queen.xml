@@ -50,6 +50,9 @@
             <column name="date_synched" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
+            <column name="date_deleted" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
             <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -64,6 +67,7 @@
         <dropDefaultValue tableName="queen" columnName="date_created" columnDataType="${datetimeType}"/>
         <dropDefaultValue tableName="queen" columnName="date_modified" columnDataType="${datetimeType}"/>
         <dropDefaultValue tableName="queen" columnName="date_synched" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="queen" columnName="date_deleted" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -95,6 +99,7 @@
             <column name="date_created" type="date"/>
             <column name="date_modified" type="date"/>
             <column name="date_synched" type="date"/>
+            <column name="date_deleted" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

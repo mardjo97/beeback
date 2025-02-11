@@ -21,7 +21,7 @@ type QueenFormGroupInput = IQueen | PartialWithRequiredKeyOf<NewQueen>;
  */
 type FormValueOf<T extends IQueen | NewQueen> = Omit<
   T,
-  'activeFromDate' | 'activeToDate' | 'queenChangeDate' | 'dateCreated' | 'dateModified' | 'dateSynched'
+  'activeFromDate' | 'activeToDate' | 'queenChangeDate' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
 > & {
   activeFromDate?: string | null;
   activeToDate?: string | null;
@@ -29,6 +29,7 @@ type FormValueOf<T extends IQueen | NewQueen> = Omit<
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
+  dateDeleted?: string | null;
 };
 
 type QueenFormRawValue = FormValueOf<IQueen>;
@@ -37,7 +38,16 @@ type NewQueenFormRawValue = FormValueOf<NewQueen>;
 
 type QueenFormDefaults = Pick<
   NewQueen,
-  'id' | 'isMarked' | 'active' | 'activeFromDate' | 'activeToDate' | 'queenChangeDate' | 'dateCreated' | 'dateModified' | 'dateSynched'
+  | 'id'
+  | 'isMarked'
+  | 'active'
+  | 'activeFromDate'
+  | 'activeToDate'
+  | 'queenChangeDate'
+  | 'dateCreated'
+  | 'dateModified'
+  | 'dateSynched'
+  | 'dateDeleted'
 >;
 
 type QueenFormGroupContent = {
@@ -54,6 +64,7 @@ type QueenFormGroupContent = {
   dateCreated: FormControl<QueenFormRawValue['dateCreated']>;
   dateModified: FormControl<QueenFormRawValue['dateModified']>;
   dateSynched: FormControl<QueenFormRawValue['dateSynched']>;
+  dateDeleted: FormControl<QueenFormRawValue['dateDeleted']>;
   user: FormControl<QueenFormRawValue['user']>;
   hive: FormControl<QueenFormRawValue['hive']>;
 };
@@ -97,6 +108,7 @@ export class QueenFormService {
       dateSynched: new FormControl(queenRawValue.dateSynched, {
         validators: [Validators.required],
       }),
+      dateDeleted: new FormControl(queenRawValue.dateDeleted),
       user: new FormControl(queenRawValue.user),
       hive: new FormControl(queenRawValue.hive),
     });
@@ -129,6 +141,7 @@ export class QueenFormService {
       dateCreated: currentTime,
       dateModified: currentTime,
       dateSynched: currentTime,
+      dateDeleted: currentTime,
     };
   }
 
@@ -141,6 +154,7 @@ export class QueenFormService {
       dateCreated: dayjs(rawQueen.dateCreated, DATE_TIME_FORMAT),
       dateModified: dayjs(rawQueen.dateModified, DATE_TIME_FORMAT),
       dateSynched: dayjs(rawQueen.dateSynched, DATE_TIME_FORMAT),
+      dateDeleted: dayjs(rawQueen.dateDeleted, DATE_TIME_FORMAT),
     };
   }
 
@@ -155,6 +169,7 @@ export class QueenFormService {
       dateCreated: queen.dateCreated ? queen.dateCreated.format(DATE_TIME_FORMAT) : undefined,
       dateModified: queen.dateModified ? queen.dateModified.format(DATE_TIME_FORMAT) : undefined,
       dateSynched: queen.dateSynched ? queen.dateSynched.format(DATE_TIME_FORMAT) : undefined,
+      dateDeleted: queen.dateDeleted ? queen.dateDeleted.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }

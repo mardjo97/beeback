@@ -73,6 +73,9 @@ class QueenResourceIT {
     private static final Instant DEFAULT_DATE_SYNCHED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_SYNCHED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Instant DEFAULT_DATE_DELETED = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_DELETED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final String ENTITY_API_URL = "/api/queens";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -120,7 +123,8 @@ class QueenResourceIT {
             .uuid(DEFAULT_UUID)
             .dateCreated(DEFAULT_DATE_CREATED)
             .dateModified(DEFAULT_DATE_MODIFIED)
-            .dateSynched(DEFAULT_DATE_SYNCHED);
+            .dateSynched(DEFAULT_DATE_SYNCHED)
+            .dateDeleted(DEFAULT_DATE_DELETED);
     }
 
     /**
@@ -142,7 +146,8 @@ class QueenResourceIT {
             .uuid(UPDATED_UUID)
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
-            .dateSynched(UPDATED_DATE_SYNCHED);
+            .dateSynched(UPDATED_DATE_SYNCHED)
+            .dateDeleted(UPDATED_DATE_DELETED);
     }
 
     @BeforeEach
@@ -308,7 +313,8 @@ class QueenResourceIT {
             .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID)))
             .andExpect(jsonPath("$.[*].dateCreated").value(hasItem(DEFAULT_DATE_CREATED.toString())))
             .andExpect(jsonPath("$.[*].dateModified").value(hasItem(DEFAULT_DATE_MODIFIED.toString())))
-            .andExpect(jsonPath("$.[*].dateSynched").value(hasItem(DEFAULT_DATE_SYNCHED.toString())));
+            .andExpect(jsonPath("$.[*].dateSynched").value(hasItem(DEFAULT_DATE_SYNCHED.toString())))
+            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())));
     }
 
     @Test
@@ -334,7 +340,8 @@ class QueenResourceIT {
             .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID))
             .andExpect(jsonPath("$.dateCreated").value(DEFAULT_DATE_CREATED.toString()))
             .andExpect(jsonPath("$.dateModified").value(DEFAULT_DATE_MODIFIED.toString()))
-            .andExpect(jsonPath("$.dateSynched").value(DEFAULT_DATE_SYNCHED.toString()));
+            .andExpect(jsonPath("$.dateSynched").value(DEFAULT_DATE_SYNCHED.toString()))
+            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()));
     }
 
     @Test
@@ -368,7 +375,8 @@ class QueenResourceIT {
             .uuid(UPDATED_UUID)
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
-            .dateSynched(UPDATED_DATE_SYNCHED);
+            .dateSynched(UPDATED_DATE_SYNCHED)
+            .dateDeleted(UPDATED_DATE_DELETED);
         QueenDTO queenDTO = queenMapper.toDto(updatedQueen);
 
         restQueenMockMvc
@@ -455,12 +463,13 @@ class QueenResourceIT {
         partialUpdatedQueen.setId(queen.getId());
 
         partialUpdatedQueen
-            .year(UPDATED_YEAR)
-            .activeToDate(UPDATED_ACTIVE_TO_DATE)
+            .active(UPDATED_ACTIVE)
+            .activeFromDate(UPDATED_ACTIVE_FROM_DATE)
             .queenChangeDate(UPDATED_QUEEN_CHANGE_DATE)
-            .externalId(UPDATED_EXTERNAL_ID)
             .uuid(UPDATED_UUID)
-            .dateCreated(UPDATED_DATE_CREATED);
+            .dateCreated(UPDATED_DATE_CREATED)
+            .dateModified(UPDATED_DATE_MODIFIED)
+            .dateSynched(UPDATED_DATE_SYNCHED);
 
         restQueenMockMvc
             .perform(
@@ -500,7 +509,8 @@ class QueenResourceIT {
             .uuid(UPDATED_UUID)
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
-            .dateSynched(UPDATED_DATE_SYNCHED);
+            .dateSynched(UPDATED_DATE_SYNCHED)
+            .dateDeleted(UPDATED_DATE_DELETED);
 
         restQueenMockMvc
             .perform(

@@ -30,6 +30,7 @@
       "dateCreated": "Date Created",
       "dateModified": "Date Modified",
       "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
       "user": "User",
       "hive": "Hive"
     }

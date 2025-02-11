@@ -13,7 +13,7 @@ export type PartialUpdateQueen = Partial<IQueen> & Pick<IQueen, 'id'>;
 
 type RestOf<T extends IQueen | NewQueen> = Omit<
   T,
-  'activeFromDate' | 'activeToDate' | 'queenChangeDate' | 'dateCreated' | 'dateModified' | 'dateSynched'
+  'activeFromDate' | 'activeToDate' | 'queenChangeDate' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
 > & {
   activeFromDate?: string | null;
   activeToDate?: string | null;
@@ -21,6 +21,7 @@ type RestOf<T extends IQueen | NewQueen> = Omit<
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
+  dateDeleted?: string | null;
 };
 
 export type RestQueen = RestOf<IQueen>;
@@ -112,6 +113,7 @@ export class QueenService {
       dateCreated: queen.dateCreated?.toJSON() ?? null,
       dateModified: queen.dateModified?.toJSON() ?? null,
       dateSynched: queen.dateSynched?.toJSON() ?? null,
+      dateDeleted: queen.dateDeleted?.toJSON() ?? null,
     };
   }
 
@@ -124,6 +126,7 @@ export class QueenService {
       dateCreated: restQueen.dateCreated ? dayjs(restQueen.dateCreated) : undefined,
       dateModified: restQueen.dateModified ? dayjs(restQueen.dateModified) : undefined,
       dateSynched: restQueen.dateSynched ? dayjs(restQueen.dateSynched) : undefined,
+      dateDeleted: restQueen.dateDeleted ? dayjs(restQueen.dateDeleted) : undefined,
     };
   }
 
