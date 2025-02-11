@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (queenChangeHive(); as queenChangeHiveRef) {
+      <div>
+        <h2 data-cy="queenChangeHiveDetailsHeading">
+          <span jhiTranslate="beebackApp.queenChangeHive.detail.title">Queen Change Hive</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.dateQueenChange">Date Queen Change</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.dateQueenChange | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.reminderId">Reminder Id</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.reminderId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.user">User</span></dt>
+          <dd>
+            <span>{{ queenChangeHiveRef.user?.id }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/queen-change-hive', queenChangeHiveRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -56,6 +56,11 @@ const routes: Routes = [
     data: { pageTitle: 'beebackApp.movedHive.home.title' },
     loadChildren: () => import('./moved-hive/moved-hive.routes'),
   },
+  {
+    path: 'queen-change-hive',
+    data: { pageTitle: 'beebackApp.queenChangeHive.home.title' },
+    loadChildren: () => import('./queen-change-hive/queen-change-hive.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

@@ -1,0 +1,32 @@
+{
+  "beebackApp": {
+    "queenChangeHive": {
+      "home": {
+        "title": "Queen Change Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Queen Change Hive",
+        "createOrEditLabel": "Create or edit a Queen Change Hive",
+        "notFound": "No Queen Change Hives found"
+      },
+      "created": "A new Queen Change Hive is created with identifier {{ param }}",
+      "updated": "A Queen Change Hive is updated with identifier {{ param }}",
+      "deleted": "A Queen Change Hive is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Queen Change Hive {{ id }}?"
+      },
+      "detail": {
+        "title": "Queen Change Hive"
+      },
+      "id": "ID",
+      "dateQueenChange": "Date Queen Change",
+      "reminderId": "Reminder Id",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}

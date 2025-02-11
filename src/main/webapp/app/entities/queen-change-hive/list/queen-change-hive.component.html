@@ -1,0 +1,178 @@
+<div>
+  <h2 id="page-heading" data-cy="QueenChangeHiveHeading">
+    <span jhiTranslate="beebackApp.queenChangeHive.home.title">Queen Change Hives</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="beebackApp.queenChangeHive.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-queen-change-hive"
+        [routerLink]="['/queen-change-hive/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="beebackApp.queenChangeHive.home.createLabel">Create a new Queen Change Hive</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (queenChangeHives?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="beebackApp.queenChangeHive.home.notFound">No Queen Change Hives found</span>
+    </div>
+  }
+
+  @if (queenChangeHives && queenChangeHives.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateQueenChange">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.queenChangeHive.dateQueenChange">Date Queen Change</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="reminderId">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.queenChangeHive.reminderId">Reminder Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="externalId">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.queenChangeHive.externalId">External Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="uuid">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.queenChangeHive.uuid">Uuid</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateCreated">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.queenChangeHive.dateCreated">Date Created</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateModified">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.queenChangeHive.dateModified">Date Modified</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateSynched">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.queenChangeHive.dateSynched">Date Synched</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateDeleted">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.queenChangeHive.dateDeleted">Date Deleted</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="user.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.queenChangeHive.user">User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (queenChangeHive of queenChangeHives; track trackId(queenChangeHive)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/queen-change-hive', queenChangeHive.id, 'view']">{{ queenChangeHive.id }}</a>
+              </td>
+              <td>{{ queenChangeHive.dateQueenChange | formatMediumDatetime }}</td>
+              <td>{{ queenChangeHive.reminderId }}</td>
+              <td>{{ queenChangeHive.externalId }}</td>
+              <td>{{ queenChangeHive.uuid }}</td>
+              <td>{{ queenChangeHive.dateCreated | formatMediumDatetime }}</td>
+              <td>{{ queenChangeHive.dateModified | formatMediumDatetime }}</td>
+              <td>{{ queenChangeHive.dateSynched | formatMediumDatetime }}</td>
+              <td>{{ queenChangeHive.dateDeleted | formatMediumDatetime }}</td>
+              <td>
+                {{ queenChangeHive.user?.id }}
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/queen-change-hive', queenChangeHive.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/queen-change-hive', queenChangeHive.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(queenChangeHive)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (queenChangeHives && queenChangeHives.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>
