@@ -1,0 +1,183 @@
+<div>
+  <h2 id="page-heading" data-cy="GoodHarvestHiveHeading">
+    <span jhiTranslate="beebackApp.goodHarvestHive.home.title">Good Harvest Hives</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="beebackApp.goodHarvestHive.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-good-harvest-hive"
+        [routerLink]="['/good-harvest-hive/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="beebackApp.goodHarvestHive.home.createLabel">Create a new Good Harvest Hive</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (goodHarvestHives?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="beebackApp.goodHarvestHive.home.notFound">No Good Harvest Hives found</span>
+    </div>
+  }
+
+  @if (goodHarvestHives && goodHarvestHives.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="amount">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.amount">Amount</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="externalId">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.externalId">External Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="uuid">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.uuid">Uuid</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateCreated">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.dateCreated">Date Created</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateModified">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.dateModified">Date Modified</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateSynched">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.dateSynched">Date Synched</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateDeleted">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.dateDeleted">Date Deleted</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="user.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.user">User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="harvestType.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.harvestType">Harvest Type</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (goodHarvestHive of goodHarvestHives; track trackId(goodHarvestHive)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/good-harvest-hive', goodHarvestHive.id, 'view']">{{ goodHarvestHive.id }}</a>
+              </td>
+              <td>{{ goodHarvestHive.amount }}</td>
+              <td>{{ goodHarvestHive.externalId }}</td>
+              <td>{{ goodHarvestHive.uuid }}</td>
+              <td>{{ goodHarvestHive.dateCreated | formatMediumDatetime }}</td>
+              <td>{{ goodHarvestHive.dateModified | formatMediumDatetime }}</td>
+              <td>{{ goodHarvestHive.dateSynched | formatMediumDatetime }}</td>
+              <td>{{ goodHarvestHive.dateDeleted | formatMediumDatetime }}</td>
+              <td>
+                {{ goodHarvestHive.user?.id }}
+              </td>
+              <td>
+                @if (goodHarvestHive.harvestType) {
+                  <div>
+                    <a [routerLink]="['/harvest-type', goodHarvestHive.harvestType.id, 'view']">{{ goodHarvestHive.harvestType.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/good-harvest-hive', goodHarvestHive.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/good-harvest-hive', goodHarvestHive.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(goodHarvestHive)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (goodHarvestHives && goodHarvestHives.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

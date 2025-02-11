@@ -1,0 +1,213 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-good-harvest-hive-heading"
+        data-cy="GoodHarvestHiveCreateUpdateHeading"
+        jhiTranslate="beebackApp.goodHarvestHive.home.createOrEditLabel"
+      >
+        Create or edit a Good Harvest Hive
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="beebackApp.goodHarvestHive.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_amount" jhiTranslate="beebackApp.goodHarvestHive.amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+        </div>
+
+        @let externalIdRef = editForm.get('externalId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_externalId" jhiTranslate="beebackApp.goodHarvestHive.externalId">External Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="externalId"
+            id="field_externalId"
+            data-cy="externalId"
+            formControlName="externalId"
+          />
+          @if (externalIdRef.invalid && (externalIdRef.dirty || externalIdRef.touched)) {
+            <div>
+              @if (editForm.get('externalId')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('externalId')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let uuidRef = editForm.get('uuid')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_uuid" jhiTranslate="beebackApp.goodHarvestHive.uuid">Uuid</label>
+          <input type="text" class="form-control" name="uuid" id="field_uuid" data-cy="uuid" formControlName="uuid" />
+          @if (uuidRef.invalid && (uuidRef.dirty || uuidRef.touched)) {
+            <div>
+              @if (editForm.get('uuid')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let dateCreatedRef = editForm.get('dateCreated')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dateCreated" jhiTranslate="beebackApp.goodHarvestHive.dateCreated">Date Created</label>
+          <div class="d-flex">
+            <input
+              id="field_dateCreated"
+              data-cy="dateCreated"
+              type="datetime-local"
+              class="form-control"
+              name="dateCreated"
+              formControlName="dateCreated"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dateCreatedRef.invalid && (dateCreatedRef.dirty || dateCreatedRef.touched)) {
+            <div>
+              @if (editForm.get('dateCreated')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dateCreated')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let dateModifiedRef = editForm.get('dateModified')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dateModified" jhiTranslate="beebackApp.goodHarvestHive.dateModified">Date Modified</label>
+          <div class="d-flex">
+            <input
+              id="field_dateModified"
+              data-cy="dateModified"
+              type="datetime-local"
+              class="form-control"
+              name="dateModified"
+              formControlName="dateModified"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dateModifiedRef.invalid && (dateModifiedRef.dirty || dateModifiedRef.touched)) {
+            <div>
+              @if (editForm.get('dateModified')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dateModified')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let dateSynchedRef = editForm.get('dateSynched')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dateSynched" jhiTranslate="beebackApp.goodHarvestHive.dateSynched">Date Synched</label>
+          <div class="d-flex">
+            <input
+              id="field_dateSynched"
+              data-cy="dateSynched"
+              type="datetime-local"
+              class="form-control"
+              name="dateSynched"
+              formControlName="dateSynched"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dateSynchedRef.invalid && (dateSynchedRef.dirty || dateSynchedRef.touched)) {
+            <div>
+              @if (editForm.get('dateSynched')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dateSynched')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dateDeleted" jhiTranslate="beebackApp.goodHarvestHive.dateDeleted">Date Deleted</label>
+          <div class="d-flex">
+            <input
+              id="field_dateDeleted"
+              data-cy="dateDeleted"
+              type="datetime-local"
+              class="form-control"
+              name="dateDeleted"
+              formControlName="dateDeleted"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_user" jhiTranslate="beebackApp.goodHarvestHive.user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_harvestType" jhiTranslate="beebackApp.goodHarvestHive.harvestType">Harvest Type</label>
+          <select
+            class="form-control"
+            id="field_harvestType"
+            data-cy="harvestType"
+            name="harvestType"
+            formControlName="harvestType"
+            [compareWith]="compareHarvestType"
+          >
+            <option [ngValue]="null"></option>
+            @for (harvestTypeOption of harvestTypesSharedCollection; track $index) {
+              <option [ngValue]="harvestTypeOption">{{ harvestTypeOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

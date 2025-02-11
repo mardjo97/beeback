@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (goodHarvestHive(); as goodHarvestHiveRef) {
+      <div>
+        <h2 data-cy="goodHarvestHiveDetailsHeading">
+          <span jhiTranslate="beebackApp.goodHarvestHive.detail.title">Good Harvest Hive</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ goodHarvestHiveRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.goodHarvestHive.amount">Amount</span></dt>
+          <dd>
+            <span>{{ goodHarvestHiveRef.amount }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.goodHarvestHive.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ goodHarvestHiveRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.goodHarvestHive.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ goodHarvestHiveRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.goodHarvestHive.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ goodHarvestHiveRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.goodHarvestHive.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ goodHarvestHiveRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.goodHarvestHive.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ goodHarvestHiveRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.goodHarvestHive.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ goodHarvestHiveRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.goodHarvestHive.user">User</span></dt>
+          <dd>
+            <span>{{ goodHarvestHiveRef.user?.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.goodHarvestHive.harvestType">Harvest Type</span></dt>
+          <dd>
+            @if (goodHarvestHive()!.harvestType) {
+              <div>
+                <a [routerLink]="['/harvest-type', goodHarvestHive()!.harvestType?.id, 'view']">{{ goodHarvestHiveRef.harvestType?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/good-harvest-hive', goodHarvestHiveRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

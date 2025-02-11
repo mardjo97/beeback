@@ -1,0 +1,32 @@
+{
+  "beebackApp": {
+    "goodHarvestHive": {
+      "home": {
+        "title": "Good Harvest Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Good Harvest Hive",
+        "createOrEditLabel": "Create or edit a Good Harvest Hive",
+        "notFound": "No Good Harvest Hives found"
+      },
+      "created": "A new Good Harvest Hive is created with identifier {{ param }}",
+      "updated": "A Good Harvest Hive is updated with identifier {{ param }}",
+      "deleted": "A Good Harvest Hive is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Good Harvest Hive {{ id }}?"
+      },
+      "detail": {
+        "title": "Good Harvest Hive"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User",
+      "harvestType": "Harvest Type"
+    }
+  }
+}

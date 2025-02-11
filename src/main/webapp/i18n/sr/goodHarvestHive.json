@@ -1,0 +1,32 @@
+{
+  "beebackApp": {
+    "goodHarvestHive": {
+      "home": {
+        "title": "Good Harvest Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Good Harvest Hive",
+        "createOrEditLabel": "Kreirajte ili izmenite Good Harvest Hive",
+        "notFound": "No Good Harvest Hives found"
+      },
+      "created": "Kreiran je novi Good Harvest Hive pod nazivom {{ param }}",
+      "updated": "Good Harvest Hive pod nazivom {{ param }} je ažuriran",
+      "deleted": "Good Harvest Hive pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Good Harvest Hive pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Good Harvest Hive"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User",
+      "harvestType": "Harvest Type"
+    }
+  }
+}
