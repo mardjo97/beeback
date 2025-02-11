@@ -1,0 +1,31 @@
+{
+  "beebackApp": {
+    "hiveLocation": {
+      "home": {
+        "title": "Hive Locations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Hive Location",
+        "createOrEditLabel": "Create or edit a Hive Location",
+        "notFound": "No Hive Locations found"
+      },
+      "created": "A new Hive Location is created with identifier {{ param }}",
+      "updated": "A Hive Location is updated with identifier {{ param }}",
+      "deleted": "A Hive Location is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Hive Location {{ id }}?"
+      },
+      "detail": {
+        "title": "Hive Location"
+      },
+      "id": "ID",
+      "name": "Name",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User"
+    }
+  }
+}

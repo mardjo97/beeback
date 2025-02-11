@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (hiveLocation(); as hiveLocationRef) {
+      <div>
+        <h2 data-cy="hiveLocationDetailsHeading"><span jhiTranslate="beebackApp.hiveLocation.detail.title">Hive Location</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ hiveLocationRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hiveLocation.name">Name</span></dt>
+          <dd>
+            <span>{{ hiveLocationRef.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hiveLocation.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ hiveLocationRef.externalId }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hiveLocation.uuid">Uuid</span></dt>
+          <dd>
+            <span>{{ hiveLocationRef.uuid }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hiveLocation.dateCreated">Date Created</span></dt>
+          <dd>
+            <span>{{ hiveLocationRef.dateCreated | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hiveLocation.dateModified">Date Modified</span></dt>
+          <dd>
+            <span>{{ hiveLocationRef.dateModified | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hiveLocation.dateSynched">Date Synched</span></dt>
+          <dd>
+            <span>{{ hiveLocationRef.dateSynched | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hiveLocation.dateDeleted">Date Deleted</span></dt>
+          <dd>
+            <span>{{ hiveLocationRef.dateDeleted | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="beebackApp.hiveLocation.user">User</span></dt>
+          <dd>
+            <span>{{ hiveLocationRef.user?.id }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/hive-location', hiveLocationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
