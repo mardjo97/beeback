@@ -1,0 +1,32 @@
+{
+  "beebackApp": {
+    "movedHive": {
+      "home": {
+        "title": "Moved Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Moved Hive",
+        "createOrEditLabel": "Create or edit a Moved Hive",
+        "notFound": "No Moved Hives found"
+      },
+      "created": "A new Moved Hive is created with identifier {{ param }}",
+      "updated": "A Moved Hive is updated with identifier {{ param }}",
+      "deleted": "A Moved Hive is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Moved Hive {{ id }}?"
+      },
+      "detail": {
+        "title": "Moved Hive"
+      },
+      "id": "ID",
+      "location": "Location",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User",
+      "harvestType": "Harvest Type"
+    }
+  }
+}

@@ -1,0 +1,175 @@
+<div>
+  <h2 id="page-heading" data-cy="MovedHiveHeading">
+    <span jhiTranslate="beebackApp.movedHive.home.title">Moved Hives</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="beebackApp.movedHive.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-moved-hive"
+        [routerLink]="['/moved-hive/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="beebackApp.movedHive.home.createLabel">Create a new Moved Hive</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (movedHives?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="beebackApp.movedHive.home.notFound">No Moved Hives found</span>
+    </div>
+  }
+
+  @if (movedHives && movedHives.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="location">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.movedHive.location">Location</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="externalId">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.movedHive.externalId">External Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="uuid">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.movedHive.uuid">Uuid</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateCreated">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.movedHive.dateCreated">Date Created</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateModified">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.movedHive.dateModified">Date Modified</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateSynched">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.movedHive.dateSynched">Date Synched</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateDeleted">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.movedHive.dateDeleted">Date Deleted</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="user.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.movedHive.user">User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="harvestType.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.movedHive.harvestType">Harvest Type</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (movedHive of movedHives; track trackId(movedHive)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/moved-hive', movedHive.id, 'view']">{{ movedHive.id }}</a>
+              </td>
+              <td>{{ movedHive.location }}</td>
+              <td>{{ movedHive.externalId }}</td>
+              <td>{{ movedHive.uuid }}</td>
+              <td>{{ movedHive.dateCreated | formatMediumDatetime }}</td>
+              <td>{{ movedHive.dateModified | formatMediumDatetime }}</td>
+              <td>{{ movedHive.dateSynched | formatMediumDatetime }}</td>
+              <td>{{ movedHive.dateDeleted | formatMediumDatetime }}</td>
+              <td>
+                {{ movedHive.user?.id }}
+              </td>
+              <td>
+                @if (movedHive.harvestType) {
+                  <div>
+                    <a [routerLink]="['/harvest-type', movedHive.harvestType.id, 'view']">{{ movedHive.harvestType.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/moved-hive', movedHive.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/moved-hive', movedHive.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(movedHive)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (movedHives && movedHives.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

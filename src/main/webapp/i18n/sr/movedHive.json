@@ -1,0 +1,32 @@
+{
+  "beebackApp": {
+    "movedHive": {
+      "home": {
+        "title": "Moved Hives",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Moved Hive",
+        "createOrEditLabel": "Kreirajte ili izmenite Moved Hive",
+        "notFound": "No Moved Hives found"
+      },
+      "created": "Kreiran je novi Moved Hive pod nazivom {{ param }}",
+      "updated": "Moved Hive pod nazivom {{ param }} je ažuriran",
+      "deleted": "Moved Hive pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Moved Hive pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Moved Hive"
+      },
+      "id": "ID",
+      "location": "Location",
+      "externalId": "External Id",
+      "uuid": "Uuid",
+      "dateCreated": "Date Created",
+      "dateModified": "Date Modified",
+      "dateSynched": "Date Synched",
+      "dateDeleted": "Date Deleted",
+      "user": "User",
+      "harvestType": "Harvest Type"
+    }
+  }
+}
