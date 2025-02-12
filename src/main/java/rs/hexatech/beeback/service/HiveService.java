@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hexatech.beeback.domain.Hive;
 import rs.hexatech.beeback.domain.User;
+import rs.hexatech.beeback.exception.NotFoundException;
 import rs.hexatech.beeback.repository.HiveRepository;
 import rs.hexatech.beeback.service.dto.HiveDTO;
 import rs.hexatech.beeback.service.mapper.HiveMapper;
@@ -102,6 +103,22 @@ public class HiveService {
       return null;
     }
     return hiveRepository.save(toCreateHive);
+  }
+
+  public Hive getHiveByUUIDOrUserAndExternalId(String uuid, User user, Long externalId) {
+    if (uuid != null) {
+      Hive e = hiveRepository.findByUuidIs(uuid);
+      if (e != null) {
+        return e;
+      }
+    }
+    if (user != null && externalId != null) {
+      Hive e = hiveRepository.findByUserAndExternalId(user, externalId.intValue());
+      if (e != null) {
+        return e;
+      }
+    }
+    throw new NotFoundException("Hive not found for");
   }
 
   /**

@@ -30,3 +30,6 @@ docker save -o my-sql-image.tar my-sql:latest
 docker load -i .\my-sql-image.tar
 
 
+-- remove openSSL from node path
+$env:OPENSSL_CONF = ''
+
