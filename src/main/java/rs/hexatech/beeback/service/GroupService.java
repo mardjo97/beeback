@@ -43,7 +43,7 @@ public class GroupService {
   public List<GroupDTO> userEntities(String deviceId) {
     User user = securityService.getCurrentUser();
     LOG.debug("Request to retrieve user's Groups! User {}, DeviceId: {}", user.getLogin(), deviceId);
-    return mapper.toDto(getUserHiveTypesOrDefault(user));
+    return mapper.toDto(getUserGroupsOrDefault(user));
   }
 
   public List<GroupDTO> sync(List<GroupDTO> entityDTOs) {
@@ -99,19 +99,19 @@ public class GroupService {
     entity.uuid(null).dateSynched(null);
   }
 
-  private List<Group> getUserHiveTypesOrDefault(User user) {
+  private List<Group> getUserGroupsOrDefault(User user) {
     List<Group> groups = repository.findByUserIsCurrentUser();
     if (groups.isEmpty()) {
-      List<Group> hiveTypesToCreate = repository.findByUserIsNull().stream()
+      List<Group> groupsToCreate = repository.findByUserIsNull().stream()
           .filter(Objects::nonNull)
-          .map(el -> mapHiveTypeToCreate(el, user))
+          .map(el -> mapGroupToCreate(el, user))
           .toList();
-      groups = repository.saveAll(hiveTypesToCreate);
+      groups = repository.saveAll(groupsToCreate);
     }
     return groups;
   }
 
-  private Group mapHiveTypeToCreate(Group group, User user) {
+  private Group mapGroupToCreate(Group group, User user) {
     return new Group()
         .user(user)
         .uuid(UUID.randomUUID().toString())

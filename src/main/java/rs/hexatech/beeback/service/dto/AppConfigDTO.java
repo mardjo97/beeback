@@ -1,6 +1,8 @@
 package rs.hexatech.beeback.service.dto;
 
-import jakarta.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -11,157 +13,139 @@ import java.util.Objects;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class AppConfigDTO implements Serializable {
 
-    private Long id;
+  private Long id;
 
-    private String key;
+  private String key;
 
-    private String type;
+  private String type;
 
-    private String value;
+  private String value;
 
-    @NotNull
-    private Integer externalId;
+  @NotNull
+  private String uuid;
 
-    @NotNull
-    private String uuid;
+  @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateCreated;
 
-    @NotNull
-    private Instant dateCreated;
+  @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateModified;
 
-    @NotNull
-    private Instant dateModified;
+  @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateSynched;
 
-    @NotNull
-    private Instant dateSynched;
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateDeleted;
 
-    private Instant dateDeleted;
 
-    private UserDTO user;
+  public Long getId() {
+    return id;
+  }
 
-    public Long getId() {
-        return id;
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getKey() {
+    return key;
+  }
+
+  public void setKey(String key) {
+    this.key = key;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public String getValue() {
+    return value;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
+  }
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
+
+  public Instant getDateCreated() {
+    return dateCreated;
+  }
+
+  public void setDateCreated(Instant dateCreated) {
+    this.dateCreated = dateCreated;
+  }
+
+  public Instant getDateModified() {
+    return dateModified;
+  }
+
+  public void setDateModified(Instant dateModified) {
+    this.dateModified = dateModified;
+  }
+
+  public Instant getDateSynched() {
+    return dateSynched;
+  }
+
+  public void setDateSynched(Instant dateSynched) {
+    this.dateSynched = dateSynched;
+  }
+
+  public Instant getDateDeleted() {
+    return dateDeleted;
+  }
+
+  public void setDateDeleted(Instant dateDeleted) {
+    this.dateDeleted = dateDeleted;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof AppConfigDTO)) {
+      return false;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    AppConfigDTO appConfigDTO = (AppConfigDTO) o;
+    if (this.id == null) {
+      return false;
     }
+    return Objects.equals(this.id, appConfigDTO.id);
+  }
 
-    public String getKey() {
-        return key;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id);
+  }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public Integer getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(Integer externalId) {
-        this.externalId = externalId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public Instant getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Instant dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Instant getDateModified() {
-        return dateModified;
-    }
-
-    public void setDateModified(Instant dateModified) {
-        this.dateModified = dateModified;
-    }
-
-    public Instant getDateSynched() {
-        return dateSynched;
-    }
-
-    public void setDateSynched(Instant dateSynched) {
-        this.dateSynched = dateSynched;
-    }
-
-    public Instant getDateDeleted() {
-        return dateDeleted;
-    }
-
-    public void setDateDeleted(Instant dateDeleted) {
-        this.dateDeleted = dateDeleted;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof AppConfigDTO)) {
-            return false;
-        }
-
-        AppConfigDTO appConfigDTO = (AppConfigDTO) o;
-        if (this.id == null) {
-            return false;
-        }
-        return Objects.equals(this.id, appConfigDTO.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id);
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "AppConfigDTO{" +
-            "id=" + getId() +
-            ", key='" + getKey() + "'" +
-            ", type='" + getType() + "'" +
-            ", value='" + getValue() + "'" +
-            ", externalId=" + getExternalId() +
-            ", uuid='" + getUuid() + "'" +
-            ", dateCreated='" + getDateCreated() + "'" +
-            ", dateModified='" + getDateModified() + "'" +
-            ", dateSynched='" + getDateSynched() + "'" +
-            ", dateDeleted='" + getDateDeleted() + "'" +
-            ", user=" + getUser() +
-            "}";
-    }
+  // prettier-ignore
+  @Override
+  public String toString() {
+    return "AppConfigDTO{" +
+        "id=" + getId() +
+        ", key='" + getKey() + "'" +
+        ", type='" + getType() + "'" +
+        ", value='" + getValue() + "'" +
+        ", uuid='" + getUuid() + "'" +
+        ", dateCreated='" + getDateCreated() + "'" +
+        ", dateModified='" + getDateModified() + "'" +
+        ", dateSynched='" + getDateSynched() + "'" +
+        ", dateDeleted='" + getDateDeleted() + "'" +
+        "}";
+  }
 }

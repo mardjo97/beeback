@@ -1,21 +1,40 @@
 package rs.hexatech.beeback.service.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import rs.hexatech.beeback.domain.HiveLocation;
-import rs.hexatech.beeback.domain.User;
 import rs.hexatech.beeback.service.dto.HiveLocationDTO;
-import rs.hexatech.beeback.service.dto.UserDTO;
+
+import java.util.List;
 
 /**
  * Mapper for the entity {@link HiveLocation} and its DTO {@link HiveLocationDTO}.
  */
 @Mapper(componentModel = "spring")
 public interface HiveLocationMapper extends EntityMapper<HiveLocationDTO, HiveLocation> {
-    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
-    HiveLocationDTO toDto(HiveLocation s);
+  @Named("hiveLocationToDto")
+  @Mapping(target = "id", source = "externalId")
+  HiveLocationDTO toDto(HiveLocation s);
 
-    @Named("userId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    UserDTO toDtoUserId(User user);
+  @Named("hiveLocationToDtos")
+  default List<HiveLocationDTO> toDto(List<HiveLocation> s) {
+    return s.stream()
+        .map(this::toDto)
+        .toList();
+  }
+
+  @Named("hiveLocationToEntity")
+  @Mapping(target = "externalId", source = "id")
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "uuid", ignore = true)
+  HiveLocation toEntity(HiveLocationDTO s);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "uuid", ignore = true)
+  @Mapping(target = "dateSynched", ignore = true)
+  @Mapping(target = "externalId", ignore = true)
+  @Mapping(target = "user", ignore = true)
+  void partialUpdate(@MappingTarget HiveLocation entity, HiveLocationDTO dto);
 }

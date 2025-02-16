@@ -29,7 +29,7 @@ public interface QueenMapper extends EntityMapper<QueenDTO, Queen> {
 
   @Named("queenToEntity")
   @Mapping(target = "externalId", source = "id")
-  @Mapping(target = "hive", source = "hive", qualifiedByName = "hiveToEntity")
+  @Mapping(target = "hive", ignore = true)
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "uuid", ignore = true)
   Queen toEntity(QueenDTO s);

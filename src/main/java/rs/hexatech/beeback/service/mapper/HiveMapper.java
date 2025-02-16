@@ -14,7 +14,6 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring", uses = {HiveTypeMapper.class, ApiaryMapper.class})
 public interface HiveMapper extends EntityMapper<HiveDTO, Hive> {
-
   @Named("hiveToDto")
   @Mapping(target = "id", source = "externalId")
   @Mapping(target = "hiveType", source = "hiveType", qualifiedByName = "hiveTypeToDto")
@@ -30,8 +29,8 @@ public interface HiveMapper extends EntityMapper<HiveDTO, Hive> {
 
   @Named("hiveToEntity")
   @Mapping(target = "externalId", source = "id")
-  @Mapping(target = "hiveType", source = "hiveType", qualifiedByName = "hiveTypeToEntity")
-  @Mapping(target = "apiary", source = "beeyard", qualifiedByName = "apiaryToEntity")
+  @Mapping(target = "apiary", ignore = true)
+  @Mapping(target = "hiveType", ignore = true)
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "uuid", ignore = true)
   Hive toEntity(HiveDTO s);

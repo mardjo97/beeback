@@ -1,6 +1,8 @@
 package rs.hexatech.beeback.service.dto;
 
-import jakarta.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -11,223 +13,206 @@ import java.util.Objects;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class NoteDTO implements Serializable {
 
-    private Long id;
+  private Long id;
 
-    private Boolean hasReminder;
+  private Boolean hasReminder;
 
-    private String title;
+  private String title;
 
-    private String content;
+  private String content;
 
-    private String group;
+  private String group;
 
-    private Integer groupRecordId;
+  private Integer groupRecordId;
 
-    private Instant dateHidden;
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateHidden;
 
-    private Instant reminderDate;
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant reminderDate;
 
-    private Integer reminderId;
+  private Integer reminderId;
 
-    @NotNull
-    private Integer externalId;
+  @NotNull
+  private String uuid;
 
-    @NotNull
-    private String uuid;
+  @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateCreated;
 
-    @NotNull
-    private Instant dateCreated;
+  @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateModified;
 
-    @NotNull
-    private Instant dateModified;
+  @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateSynched;
 
-    @NotNull
-    private Instant dateSynched;
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+  private Instant dateDeleted;
 
-    private Instant dateDeleted;
+  private HiveDTO hive;
 
-    private UserDTO user;
+  public Long getId() {
+    return id;
+  }
 
-    private HiveDTO hive;
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public Long getId() {
-        return id;
+  public Boolean getHasReminder() {
+    return hasReminder;
+  }
+
+  public void setHasReminder(Boolean hasReminder) {
+    this.hasReminder = hasReminder;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public String getGroup() {
+    return group;
+  }
+
+  public void setGroup(String group) {
+    this.group = group;
+  }
+
+  public Integer getGroupRecordId() {
+    return groupRecordId;
+  }
+
+  public void setGroupRecordId(Integer groupRecordId) {
+    this.groupRecordId = groupRecordId;
+  }
+
+  public Instant getDateHidden() {
+    return dateHidden;
+  }
+
+  public void setDateHidden(Instant dateHidden) {
+    this.dateHidden = dateHidden;
+  }
+
+  public Instant getReminderDate() {
+    return reminderDate;
+  }
+
+  public void setReminderDate(Instant reminderDate) {
+    this.reminderDate = reminderDate;
+  }
+
+  public Integer getReminderId() {
+    return reminderId;
+  }
+
+  public void setReminderId(Integer reminderId) {
+    this.reminderId = reminderId;
+  }
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
+
+  public Instant getDateCreated() {
+    return dateCreated;
+  }
+
+  public void setDateCreated(Instant dateCreated) {
+    this.dateCreated = dateCreated;
+  }
+
+  public Instant getDateModified() {
+    return dateModified;
+  }
+
+  public void setDateModified(Instant dateModified) {
+    this.dateModified = dateModified;
+  }
+
+  public Instant getDateSynched() {
+    return dateSynched;
+  }
+
+  public void setDateSynched(Instant dateSynched) {
+    this.dateSynched = dateSynched;
+  }
+
+  public Instant getDateDeleted() {
+    return dateDeleted;
+  }
+
+  public void setDateDeleted(Instant dateDeleted) {
+    this.dateDeleted = dateDeleted;
+  }
+
+  public HiveDTO getHive() {
+    return hive;
+  }
+
+  public void setHive(HiveDTO hive) {
+    this.hive = hive;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof NoteDTO)) {
+      return false;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    NoteDTO noteDTO = (NoteDTO) o;
+    if (this.id == null) {
+      return false;
     }
+    return Objects.equals(this.id, noteDTO.id);
+  }
 
-    public Boolean getHasReminder() {
-        return hasReminder;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id);
+  }
 
-    public void setHasReminder(Boolean hasReminder) {
-        this.hasReminder = hasReminder;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public Integer getGroupRecordId() {
-        return groupRecordId;
-    }
-
-    public void setGroupRecordId(Integer groupRecordId) {
-        this.groupRecordId = groupRecordId;
-    }
-
-    public Instant getDateHidden() {
-        return dateHidden;
-    }
-
-    public void setDateHidden(Instant dateHidden) {
-        this.dateHidden = dateHidden;
-    }
-
-    public Instant getReminderDate() {
-        return reminderDate;
-    }
-
-    public void setReminderDate(Instant reminderDate) {
-        this.reminderDate = reminderDate;
-    }
-
-    public Integer getReminderId() {
-        return reminderId;
-    }
-
-    public void setReminderId(Integer reminderId) {
-        this.reminderId = reminderId;
-    }
-
-    public Integer getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(Integer externalId) {
-        this.externalId = externalId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public Instant getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Instant dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Instant getDateModified() {
-        return dateModified;
-    }
-
-    public void setDateModified(Instant dateModified) {
-        this.dateModified = dateModified;
-    }
-
-    public Instant getDateSynched() {
-        return dateSynched;
-    }
-
-    public void setDateSynched(Instant dateSynched) {
-        this.dateSynched = dateSynched;
-    }
-
-    public Instant getDateDeleted() {
-        return dateDeleted;
-    }
-
-    public void setDateDeleted(Instant dateDeleted) {
-        this.dateDeleted = dateDeleted;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
-    public HiveDTO getHive() {
-        return hive;
-    }
-
-    public void setHive(HiveDTO hive) {
-        this.hive = hive;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof NoteDTO)) {
-            return false;
-        }
-
-        NoteDTO noteDTO = (NoteDTO) o;
-        if (this.id == null) {
-            return false;
-        }
-        return Objects.equals(this.id, noteDTO.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id);
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "NoteDTO{" +
-            "id=" + getId() +
-            ", hasReminder='" + getHasReminder() + "'" +
-            ", title='" + getTitle() + "'" +
-            ", content='" + getContent() + "'" +
-            ", group='" + getGroup() + "'" +
-            ", groupRecordId=" + getGroupRecordId() +
-            ", dateHidden='" + getDateHidden() + "'" +
-            ", reminderDate='" + getReminderDate() + "'" +
-            ", reminderId=" + getReminderId() +
-            ", externalId=" + getExternalId() +
-            ", uuid='" + getUuid() + "'" +
-            ", dateCreated='" + getDateCreated() + "'" +
-            ", dateModified='" + getDateModified() + "'" +
-            ", dateSynched='" + getDateSynched() + "'" +
-            ", dateDeleted='" + getDateDeleted() + "'" +
-            ", user=" + getUser() +
-            ", hive=" + getHive() +
-            "}";
-    }
+  // prettier-ignore
+  @Override
+  public String toString() {
+    return "NoteDTO{" +
+        "id=" + getId() +
+        ", hasReminder='" + getHasReminder() + "'" +
+        ", title='" + getTitle() + "'" +
+        ", content='" + getContent() + "'" +
+        ", group='" + getGroup() + "'" +
+        ", groupRecordId=" + getGroupRecordId() +
+        ", dateHidden='" + getDateHidden() + "'" +
+        ", reminderDate='" + getReminderDate() + "'" +
+        ", reminderId=" + getReminderId() +
+        ", uuid='" + getUuid() + "'" +
+        ", dateCreated='" + getDateCreated() + "'" +
+        ", dateModified='" + getDateModified() + "'" +
+        ", dateSynched='" + getDateSynched() + "'" +
+        ", dateDeleted='" + getDateDeleted() + "'" +
+        ", hive=" + getHive() +
+        "}";
+  }
 }

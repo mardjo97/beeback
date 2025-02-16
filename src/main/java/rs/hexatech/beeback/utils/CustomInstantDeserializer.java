@@ -28,13 +28,19 @@ public class CustomInstantDeserializer extends JsonDeserializer<Instant> {
   }
 
   private String getValidInstantString(String dateString) {
-
-    if (dateString.length() > 23) {
-      dateString = dateString.substring(0, 24) + "000000000";
-    } else {
-      dateString = dateString + "000000000";
+    int plusIndex = dateString.indexOf('+');
+    if (plusIndex > -1) {
+      dateString = dateString.substring(0, plusIndex);
     }
     int dotIndex = dateString.indexOf('.');
+    if (dateString.length() > 23) {
+      dateString = dateString.substring(0, 24) + "000000000";
+    } else if (dotIndex == -1) {
+      dateString += ".000000000";
+    } else {
+      dateString += "000000000";
+    }
+    dotIndex = dateString.indexOf('.');
     return dateString.substring(0, dotIndex + 7);
   }
 }

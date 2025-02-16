@@ -1,5 +1,6 @@
 package rs.hexatech.beeback.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
@@ -32,14 +33,18 @@ public class GroupDTO implements Serializable {
   private String uuid;
 
   @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
   private Instant dateCreated;
 
   @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
   private Instant dateModified;
 
   @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
   private Instant dateSynched;
 
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
   private Instant dateDeleted;
 
 

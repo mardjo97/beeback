@@ -22,8 +22,10 @@ public class HiveDTO implements Serializable {
 
   private String description;
 
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
   private Instant examinationDate;
 
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
   private Instant archivedDate;
 
   private String archivedReason;

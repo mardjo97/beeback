@@ -14,18 +14,18 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring")
 public interface GroupMapper extends EntityMapper<GroupDTO, Group> {
-  @Named("queenToDto")
+  @Named("groupToDto")
   @Mapping(target = "id", source = "externalId")
   GroupDTO toDto(Group s);
 
-  @Named("queenToDtos")
+  @Named("groupToDtos")
   default List<GroupDTO> toDto(List<Group> s) {
     return s.stream()
         .map(this::toDto)
         .toList();
   }
 
-  @Named("queenToEntity")
+  @Named("groupToEntity")
   @Mapping(target = "externalId", source = "id")
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "uuid", ignore = true)

@@ -12,19 +12,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import rs.hexatech.beeback.repository.GroupRepository;
+import rs.hexatech.beeback.exception.DeviceIdForbiddenException;
 import rs.hexatech.beeback.service.GroupService;
 import rs.hexatech.beeback.service.SecurityService;
 import rs.hexatech.beeback.service.dto.GroupDTO;
-import rs.hexatech.beeback.web.rest.errors.BadRequestAlertException;
-import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -43,14 +39,11 @@ public class GroupResource {
 
   private final GroupService service;
 
-  private final GroupRepository groupRepository;
-
   @Autowired
-  private SecurityService securityService;
+  SecurityService securityService;
 
-  public GroupResource(GroupService groupService, GroupRepository groupRepository) {
+  public GroupResource(GroupService groupService) {
     this.service = groupService;
-    this.groupRepository = groupRepository;
   }
 
   @PostMapping("/sync")
@@ -79,13 +72,14 @@ public class GroupResource {
   @PostMapping("")
   public ResponseEntity<GroupDTO> createGroup(@Valid @RequestBody GroupDTO groupDTO) throws URISyntaxException {
     LOG.debug("REST request to save Group : {}", groupDTO);
-    if (groupDTO.getId() != null) {
-      throw new BadRequestAlertException("A new group cannot already have an ID", ENTITY_NAME, "idexists");
-    }
-    groupDTO = service.save(groupDTO);
-    return ResponseEntity.created(new URI("/api/groups/" + groupDTO.getId()))
-        .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, groupDTO.getId().toString()))
-        .body(groupDTO);
+    throw new DeviceIdForbiddenException("Can not create record from this device");
+//    if (groupDTO.getId() != null) {
+//      throw new BadRequestAlertException("A new group cannot already have an ID", ENTITY_NAME, "idexists");
+//    }
+//    groupDTO = service.save(groupDTO);
+//    return ResponseEntity.created(new URI("/api/groups/" + groupDTO.getId()))
+//        .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, groupDTO.getId().toString()))
+//        .body(groupDTO);
   }
 
   /**
@@ -104,21 +98,22 @@ public class GroupResource {
       @Valid @RequestBody GroupDTO groupDTO
   ) throws URISyntaxException {
     LOG.debug("REST request to update Group : {}, {}", id, groupDTO);
-    if (groupDTO.getId() == null) {
-      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-    }
-    if (!Objects.equals(id, groupDTO.getId())) {
-      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-    }
-
-    if (!groupRepository.existsById(id)) {
-      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-    }
-
-    groupDTO = service.update(groupDTO);
-    return ResponseEntity.ok()
-        .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, groupDTO.getId().toString()))
-        .body(groupDTO);
+    throw new DeviceIdForbiddenException("Can not create record from this device");
+//    if (groupDTO.getId() == null) {
+//      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+//    }
+//    if (!Objects.equals(id, groupDTO.getId())) {
+//      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+//    }
+//
+//    if (!groupRepository.existsById(id)) {
+//      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+//    }
+//
+//    groupDTO = service.update(groupDTO);
+//    return ResponseEntity.ok()
+//        .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, groupDTO.getId().toString()))
+//        .body(groupDTO);
   }
 
   /**
@@ -138,23 +133,24 @@ public class GroupResource {
       @NotNull @RequestBody GroupDTO groupDTO
   ) throws URISyntaxException {
     LOG.debug("REST request to partial update Group partially : {}, {}", id, groupDTO);
-    if (groupDTO.getId() == null) {
-      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-    }
-    if (!Objects.equals(id, groupDTO.getId())) {
-      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-    }
-
-    if (!groupRepository.existsById(id)) {
-      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-    }
-
-    Optional<GroupDTO> result = service.partialUpdate(groupDTO);
-
-    return ResponseUtil.wrapOrNotFound(
-        result,
-        HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, groupDTO.getId().toString())
-    );
+    throw new DeviceIdForbiddenException("Can not create record from this device");
+//    if (groupDTO.getId() == null) {
+//      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+//    }
+//    if (!Objects.equals(id, groupDTO.getId())) {
+//      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+//    }
+//
+//    if (!groupRepository.existsById(id)) {
+//      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+//    }
+//
+//    Optional<GroupDTO> result = service.partialUpdate(groupDTO);
+//
+//    return ResponseUtil.wrapOrNotFound(
+//        result,
+//        HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, groupDTO.getId().toString())
+//    );
   }
 
   /**
@@ -193,9 +189,10 @@ public class GroupResource {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteGroup(@PathVariable("id") Long id) {
     LOG.debug("REST request to delete Group : {}", id);
-    service.delete(id);
-    return ResponseEntity.noContent()
-        .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-        .build();
+    throw new DeviceIdForbiddenException("Can not delete record from this device");
+//    service.delete(id);
+//    return ResponseEntity.noContent()
+//        .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+//        .build();
   }
 }
