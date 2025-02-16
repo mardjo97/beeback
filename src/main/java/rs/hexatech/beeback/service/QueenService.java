@@ -14,7 +14,6 @@ import rs.hexatech.beeback.service.dto.QueenDTO;
 import rs.hexatech.beeback.service.mapper.QueenMapper;
 import rs.hexatech.beeback.utils.DateTimeUtil;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -58,7 +57,6 @@ public class QueenService {
         .toList();
   }
 
-
   private Queen syncEntity(final QueenDTO entityDto, final User user) {
     if (entityDto.getUuid() != null) {
       Queen existingEntity = repository.findByUuidIs(entityDto.getUuid());
@@ -94,7 +92,7 @@ public class QueenService {
   }
 
   private boolean toCreate(final Queen entity, final QueenDTO entityDto, final User user) {
-    entity.user(user).uuid(UUID.randomUUID().toString()).dateSynched(Instant.now());
+    entity.user(user).uuid(UUID.randomUUID().toString()).dateSynched(DateTimeUtil.now());
     return handleRelations(entity, entityDto, user);
   }
 

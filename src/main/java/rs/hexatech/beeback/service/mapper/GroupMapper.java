@@ -1,21 +1,40 @@
 package rs.hexatech.beeback.service.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import rs.hexatech.beeback.domain.Group;
-import rs.hexatech.beeback.domain.User;
 import rs.hexatech.beeback.service.dto.GroupDTO;
-import rs.hexatech.beeback.service.dto.UserDTO;
+
+import java.util.List;
 
 /**
  * Mapper for the entity {@link Group} and its DTO {@link GroupDTO}.
  */
 @Mapper(componentModel = "spring")
 public interface GroupMapper extends EntityMapper<GroupDTO, Group> {
-    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
-    GroupDTO toDto(Group s);
+  @Named("queenToDto")
+  @Mapping(target = "id", source = "externalId")
+  GroupDTO toDto(Group s);
 
-    @Named("userId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    UserDTO toDtoUserId(User user);
+  @Named("queenToDtos")
+  default List<GroupDTO> toDto(List<Group> s) {
+    return s.stream()
+        .map(this::toDto)
+        .toList();
+  }
+
+  @Named("queenToEntity")
+  @Mapping(target = "externalId", source = "id")
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "uuid", ignore = true)
+  Group toEntity(GroupDTO s);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "uuid", ignore = true)
+  @Mapping(target = "dateSynched", ignore = true)
+  @Mapping(target = "externalId", ignore = true)
+  @Mapping(target = "user", ignore = true)
+  void partialUpdate(@MappingTarget Group entity, GroupDTO dto);
 }

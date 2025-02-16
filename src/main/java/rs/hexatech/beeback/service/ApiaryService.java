@@ -15,7 +15,6 @@ import rs.hexatech.beeback.service.dto.ApiaryDTO;
 import rs.hexatech.beeback.service.mapper.ApiaryMapper;
 import rs.hexatech.beeback.utils.DateTimeUtil;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -200,7 +199,7 @@ public class ApiaryService {
   }
 
   private void toCreate(final Apiary apiary, final User user) {
-    apiary.user(user).uuid(UUID.randomUUID().toString()).dateSynched(Instant.now());
+    apiary.user(user).uuid(UUID.randomUUID().toString()).dateSynched(DateTimeUtil.now());
   }
 
   private void toReset(final Apiary apiary) {

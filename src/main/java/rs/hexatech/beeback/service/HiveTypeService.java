@@ -15,7 +15,6 @@ import rs.hexatech.beeback.service.dto.HiveTypeDTO;
 import rs.hexatech.beeback.service.mapper.HiveTypeMapper;
 import rs.hexatech.beeback.utils.DateTimeUtil;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -184,7 +183,7 @@ public class HiveTypeService {
   }
 
   private void toCreate(final HiveType hiveType, final User user) {
-    hiveType.user(user).uuid(UUID.randomUUID().toString()).dateSynched(Instant.now());
+    hiveType.user(user).uuid(UUID.randomUUID().toString()).dateSynched(DateTimeUtil.now());
   }
 
   private void toReset(final HiveType hiveType) {
