@@ -54,7 +54,7 @@ public class ApiaryService {
         return e;
       }
     }
-    throw new NotFoundException("Apiary not found for");
+    throw new NotFoundException("Apiary not found for uuid: " + uuid + " or externalId: " + externalId + " and user: " + user);
   }
 
   /**

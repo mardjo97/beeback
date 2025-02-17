@@ -31,7 +31,7 @@ public class NoteDTO implements Serializable {
   @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
   private Instant reminderDate;
 
-  private Integer reminderId;
+  private String reminderId;
 
   @NotNull
   private String uuid;
@@ -117,11 +117,11 @@ public class NoteDTO implements Serializable {
     this.reminderDate = reminderDate;
   }
 
-  public Integer getReminderId() {
+  public String getReminderId() {
     return reminderId;
   }
 
-  public void setReminderId(Integer reminderId) {
+  public void setReminderId(String reminderId) {
     this.reminderId = reminderId;
   }
 

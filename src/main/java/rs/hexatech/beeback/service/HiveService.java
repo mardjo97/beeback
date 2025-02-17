@@ -117,7 +117,7 @@ public class HiveService {
         return e;
       }
     }
-    throw new NotFoundException("Hive not found for");
+    throw new NotFoundException("Hive not found for uuid: " + uuid + " or externalId: " + externalId + " and user: " + user);
   }
 
   /**

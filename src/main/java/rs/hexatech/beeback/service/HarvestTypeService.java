@@ -136,7 +136,7 @@ public class HarvestTypeService {
         return e;
       }
     }
-    throw new NotFoundException("HarvestType not found for uuid: " + uuid + ", or externalId: " + externalId);
+    throw new NotFoundException("HarvestType not found for uuid: " + uuid + " or externalId: " + externalId + " and user: " + user);
   }
 
   /**

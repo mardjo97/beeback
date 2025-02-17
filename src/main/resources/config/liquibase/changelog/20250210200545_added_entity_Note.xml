@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <!--
         Added the entity Note.
@@ -15,52 +13,52 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="has_reminder" type="boolean">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="title" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="content" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="jhi_group" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="group_record_id" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="date_hidden" type="${datetimeType}">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="reminder_date" type="${datetimeType}">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
-            <column name="reminder_id" type="integer">
-                <constraints nullable="true" />
+            <column name="reminder_id" type="varchar(255)">
+                <constraints nullable="true"/>
             </column>
             <column name="external_id" type="integer">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="uuid" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_note__uuid" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_note__uuid"/>
             </column>
             <column name="date_created" type="${datetimeType}">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="date_modified" type="${datetimeType}">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="date_synched" type="${datetimeType}">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="date_deleted" type="${datetimeType}">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="user_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="hive_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -84,10 +82,10 @@
     -->
     <changeSet id="20250210200545-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/note.csv"
-                  separator=";"
-                  tableName="note"
-                  usePreparedStatements="true">
+                file="config/liquibase/fake-data/note.csv"
+                separator=";"
+                tableName="note"
+                usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="has_reminder" type="boolean"/>
             <column name="title" type="string"/>
@@ -96,7 +94,7 @@
             <column name="group_record_id" type="numeric"/>
             <column name="date_hidden" type="date"/>
             <column name="reminder_date" type="date"/>
-            <column name="reminder_id" type="numeric"/>
+            <column name="reminder_id" type="string"/>
             <column name="external_id" type="numeric"/>
             <column name="uuid" type="string"/>
             <column name="date_created" type="date"/>
