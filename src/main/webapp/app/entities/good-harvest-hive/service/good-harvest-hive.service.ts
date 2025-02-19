@@ -11,11 +11,15 @@ import { IGoodHarvestHive, NewGoodHarvestHive } from '../good-harvest-hive.model
 
 export type PartialUpdateGoodHarvestHive = Partial<IGoodHarvestHive> & Pick<IGoodHarvestHive, 'id'>;
 
-type RestOf<T extends IGoodHarvestHive | NewGoodHarvestHive> = Omit<T, 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'> & {
+type RestOf<T extends IGoodHarvestHive | NewGoodHarvestHive> = Omit<
+  T,
+  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
+> & {
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 export type RestGoodHarvestHive = RestOf<IGoodHarvestHive>;
@@ -113,6 +117,7 @@ export class GoodHarvestHiveService {
       dateModified: goodHarvestHive.dateModified?.toJSON() ?? null,
       dateSynched: goodHarvestHive.dateSynched?.toJSON() ?? null,
       dateDeleted: goodHarvestHive.dateDeleted?.toJSON() ?? null,
+      dateFinished: goodHarvestHive.dateFinished?.toJSON() ?? null,
     };
   }
 
@@ -123,6 +128,7 @@ export class GoodHarvestHiveService {
       dateModified: restGoodHarvestHive.dateModified ? dayjs(restGoodHarvestHive.dateModified) : undefined,
       dateSynched: restGoodHarvestHive.dateSynched ? dayjs(restGoodHarvestHive.dateSynched) : undefined,
       dateDeleted: restGoodHarvestHive.dateDeleted ? dayjs(restGoodHarvestHive.dateDeleted) : undefined,
+      dateFinished: restGoodHarvestHive.dateFinished ? dayjs(restGoodHarvestHive.dateFinished) : undefined,
     };
   }
 

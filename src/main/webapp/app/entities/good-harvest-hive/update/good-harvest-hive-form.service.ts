@@ -21,19 +21,23 @@ type GoodHarvestHiveFormGroupInput = IGoodHarvestHive | PartialWithRequiredKeyOf
  */
 type FormValueOf<T extends IGoodHarvestHive | NewGoodHarvestHive> = Omit<
   T,
-  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
 > & {
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 type GoodHarvestHiveFormRawValue = FormValueOf<IGoodHarvestHive>;
 
 type NewGoodHarvestHiveFormRawValue = FormValueOf<NewGoodHarvestHive>;
 
-type GoodHarvestHiveFormDefaults = Pick<NewGoodHarvestHive, 'id' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'>;
+type GoodHarvestHiveFormDefaults = Pick<
+  NewGoodHarvestHive,
+  'id' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
+>;
 
 type GoodHarvestHiveFormGroupContent = {
   id: FormControl<GoodHarvestHiveFormRawValue['id'] | NewGoodHarvestHive['id']>;
@@ -44,6 +48,7 @@ type GoodHarvestHiveFormGroupContent = {
   dateModified: FormControl<GoodHarvestHiveFormRawValue['dateModified']>;
   dateSynched: FormControl<GoodHarvestHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<GoodHarvestHiveFormRawValue['dateDeleted']>;
+  dateFinished: FormControl<GoodHarvestHiveFormRawValue['dateFinished']>;
   user: FormControl<GoodHarvestHiveFormRawValue['user']>;
   hive: FormControl<GoodHarvestHiveFormRawValue['hive']>;
   harvestType: FormControl<GoodHarvestHiveFormRawValue['harvestType']>;
@@ -83,6 +88,7 @@ export class GoodHarvestHiveFormService {
         validators: [Validators.required],
       }),
       dateDeleted: new FormControl(goodHarvestHiveRawValue.dateDeleted),
+      dateFinished: new FormControl(goodHarvestHiveRawValue.dateFinished),
       user: new FormControl(goodHarvestHiveRawValue.user),
       hive: new FormControl(goodHarvestHiveRawValue.hive),
       harvestType: new FormControl(goodHarvestHiveRawValue.harvestType),
@@ -114,6 +120,7 @@ export class GoodHarvestHiveFormService {
       dateModified: currentTime,
       dateSynched: currentTime,
       dateDeleted: currentTime,
+      dateFinished: currentTime,
     };
   }
 
@@ -126,6 +133,7 @@ export class GoodHarvestHiveFormService {
       dateModified: dayjs(rawGoodHarvestHive.dateModified, DATE_TIME_FORMAT),
       dateSynched: dayjs(rawGoodHarvestHive.dateSynched, DATE_TIME_FORMAT),
       dateDeleted: dayjs(rawGoodHarvestHive.dateDeleted, DATE_TIME_FORMAT),
+      dateFinished: dayjs(rawGoodHarvestHive.dateFinished, DATE_TIME_FORMAT),
     };
   }
 
@@ -138,6 +146,7 @@ export class GoodHarvestHiveFormService {
       dateModified: goodHarvestHive.dateModified ? goodHarvestHive.dateModified.format(DATE_TIME_FORMAT) : undefined,
       dateSynched: goodHarvestHive.dateSynched ? goodHarvestHive.dateSynched.format(DATE_TIME_FORMAT) : undefined,
       dateDeleted: goodHarvestHive.dateDeleted ? goodHarvestHive.dateDeleted.format(DATE_TIME_FORMAT) : undefined,
+      dateFinished: goodHarvestHive.dateFinished ? goodHarvestHive.dateFinished.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }

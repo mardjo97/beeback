@@ -50,6 +50,9 @@ public class GoodHarvestHive implements Serializable {
     @Column(name = "date_deleted")
     private Instant dateDeleted;
 
+    @Column(name = "date_finished")
+    private Instant dateFinished;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -167,6 +170,19 @@ public class GoodHarvestHive implements Serializable {
         this.dateDeleted = dateDeleted;
     }
 
+    public Instant getDateFinished() {
+        return this.dateFinished;
+    }
+
+    public GoodHarvestHive dateFinished(Instant dateFinished) {
+        this.setDateFinished(dateFinished);
+        return this;
+    }
+
+    public void setDateFinished(Instant dateFinished) {
+        this.dateFinished = dateFinished;
+    }
+
     public User getUser() {
         return this.user;
     }
@@ -237,6 +253,7 @@ public class GoodHarvestHive implements Serializable {
             ", dateModified='" + getDateModified() + "'" +
             ", dateSynched='" + getDateSynched() + "'" +
             ", dateDeleted='" + getDateDeleted() + "'" +
+            ", dateFinished='" + getDateFinished() + "'" +
             "}";
     }
 }

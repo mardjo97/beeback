@@ -91,6 +91,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="dateFinished">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.dateFinished">Date Finished</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="user.id">
               <div class="d-flex">
                 <span jhiTranslate="beebackApp.goodHarvestHive.user">User</span>
@@ -125,6 +132,7 @@
               <td>{{ goodHarvestHive.dateModified | formatMediumDatetime }}</td>
               <td>{{ goodHarvestHive.dateSynched | formatMediumDatetime }}</td>
               <td>{{ goodHarvestHive.dateDeleted | formatMediumDatetime }}</td>
+              <td>{{ goodHarvestHive.dateFinished | formatMediumDatetime }}</td>
               <td>
                 {{ goodHarvestHive.user?.id }}
               </td>
