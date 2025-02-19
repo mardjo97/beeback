@@ -1,6 +1,7 @@
 package rs.hexatech.beeback.service.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -11,157 +12,145 @@ import java.util.Objects;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class MovedHiveDTO implements Serializable {
 
-    private Long id;
+  private Long id;
 
-    private String location;
+  private String location;
 
-    @NotNull
-    private Integer externalId;
+  @NotNull
+  private String uuid;
 
-    @NotNull
-    private String uuid;
+  @NotNull
+  private Instant dateCreated;
 
-    @NotNull
-    private Instant dateCreated;
+  @NotNull
+  private Instant dateModified;
 
-    @NotNull
-    private Instant dateModified;
+  @NotNull
+  private Instant dateSynched;
 
-    @NotNull
-    private Instant dateSynched;
+  private Instant dateDeleted;
 
-    private Instant dateDeleted;
+  private Instant dateFinished;
 
-    private UserDTO user;
+  private HiveDTO hive;
 
-    private HiveDTO hive;
+  private HarvestTypeDTO harvestType;
 
-    private HarvestTypeDTO harvestType;
+  public Long getId() {
+    return id;
+  }
 
-    public Long getId() {
-        return id;
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
+
+  public Instant getDateCreated() {
+    return dateCreated;
+  }
+
+  public void setDateCreated(Instant dateCreated) {
+    this.dateCreated = dateCreated;
+  }
+
+  public Instant getDateModified() {
+    return dateModified;
+  }
+
+  public void setDateModified(Instant dateModified) {
+    this.dateModified = dateModified;
+  }
+
+  public Instant getDateSynched() {
+    return dateSynched;
+  }
+
+  public void setDateSynched(Instant dateSynched) {
+    this.dateSynched = dateSynched;
+  }
+
+  public Instant getDateDeleted() {
+    return dateDeleted;
+  }
+
+  public void setDateDeleted(Instant dateDeleted) {
+    this.dateDeleted = dateDeleted;
+  }
+
+  public Instant getDateFinished() {
+    return dateFinished;
+  }
+
+  public void setDateFinished(Instant dateFinished) {
+    this.dateFinished = dateFinished;
+  }
+
+  public HiveDTO getHive() {
+    return hive;
+  }
+
+  public void setHive(HiveDTO hive) {
+    this.hive = hive;
+  }
+
+  public HarvestTypeDTO getHarvestType() {
+    return harvestType;
+  }
+
+  public void setHarvestType(HarvestTypeDTO harvestType) {
+    this.harvestType = harvestType;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof MovedHiveDTO)) {
+      return false;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    MovedHiveDTO movedHiveDTO = (MovedHiveDTO) o;
+    if (this.id == null) {
+      return false;
     }
+    return Objects.equals(this.id, movedHiveDTO.id);
+  }
 
-    public String getLocation() {
-        return location;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id);
+  }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Integer getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(Integer externalId) {
-        this.externalId = externalId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public Instant getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Instant dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Instant getDateModified() {
-        return dateModified;
-    }
-
-    public void setDateModified(Instant dateModified) {
-        this.dateModified = dateModified;
-    }
-
-    public Instant getDateSynched() {
-        return dateSynched;
-    }
-
-    public void setDateSynched(Instant dateSynched) {
-        this.dateSynched = dateSynched;
-    }
-
-    public Instant getDateDeleted() {
-        return dateDeleted;
-    }
-
-    public void setDateDeleted(Instant dateDeleted) {
-        this.dateDeleted = dateDeleted;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
-    public HiveDTO getHive() {
-        return hive;
-    }
-
-    public void setHive(HiveDTO hive) {
-        this.hive = hive;
-    }
-
-    public HarvestTypeDTO getHarvestType() {
-        return harvestType;
-    }
-
-    public void setHarvestType(HarvestTypeDTO harvestType) {
-        this.harvestType = harvestType;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof MovedHiveDTO)) {
-            return false;
-        }
-
-        MovedHiveDTO movedHiveDTO = (MovedHiveDTO) o;
-        if (this.id == null) {
-            return false;
-        }
-        return Objects.equals(this.id, movedHiveDTO.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id);
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "MovedHiveDTO{" +
-            "id=" + getId() +
-            ", location='" + getLocation() + "'" +
-            ", externalId=" + getExternalId() +
-            ", uuid='" + getUuid() + "'" +
-            ", dateCreated='" + getDateCreated() + "'" +
-            ", dateModified='" + getDateModified() + "'" +
-            ", dateSynched='" + getDateSynched() + "'" +
-            ", dateDeleted='" + getDateDeleted() + "'" +
-            ", user=" + getUser() +
-            ", hive=" + getHive() +
-            ", harvestType=" + getHarvestType() +
-            "}";
-    }
+  // prettier-ignore
+  @Override
+  public String toString() {
+    return "MovedHiveDTO{" +
+        "id=" + getId() +
+        ", location='" + getLocation() + "'" +
+        ", uuid='" + getUuid() + "'" +
+        ", dateCreated='" + getDateCreated() + "'" +
+        ", dateModified='" + getDateModified() + "'" +
+        ", dateSynched='" + getDateSynched() + "'" +
+        ", dateDeleted='" + getDateDeleted() + "'" +
+        ", dateFinished='" + getDateFinished() + "'" +
+        ", hive=" + getHive() +
+        ", harvestType=" + getHarvestType() +
+        "}";
+  }
 }

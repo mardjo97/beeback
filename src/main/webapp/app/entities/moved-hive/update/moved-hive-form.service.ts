@@ -19,18 +19,22 @@ type MovedHiveFormGroupInput = IMovedHive | PartialWithRequiredKeyOf<NewMovedHiv
 /**
  * Type that converts some properties for forms.
  */
-type FormValueOf<T extends IMovedHive | NewMovedHive> = Omit<T, 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'> & {
+type FormValueOf<T extends IMovedHive | NewMovedHive> = Omit<
+  T,
+  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
+> & {
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 type MovedHiveFormRawValue = FormValueOf<IMovedHive>;
 
 type NewMovedHiveFormRawValue = FormValueOf<NewMovedHive>;
 
-type MovedHiveFormDefaults = Pick<NewMovedHive, 'id' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'>;
+type MovedHiveFormDefaults = Pick<NewMovedHive, 'id' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'>;
 
 type MovedHiveFormGroupContent = {
   id: FormControl<MovedHiveFormRawValue['id'] | NewMovedHive['id']>;
@@ -41,6 +45,7 @@ type MovedHiveFormGroupContent = {
   dateModified: FormControl<MovedHiveFormRawValue['dateModified']>;
   dateSynched: FormControl<MovedHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<MovedHiveFormRawValue['dateDeleted']>;
+  dateFinished: FormControl<MovedHiveFormRawValue['dateFinished']>;
   user: FormControl<MovedHiveFormRawValue['user']>;
   hive: FormControl<MovedHiveFormRawValue['hive']>;
   harvestType: FormControl<MovedHiveFormRawValue['harvestType']>;
@@ -80,6 +85,7 @@ export class MovedHiveFormService {
         validators: [Validators.required],
       }),
       dateDeleted: new FormControl(movedHiveRawValue.dateDeleted),
+      dateFinished: new FormControl(movedHiveRawValue.dateFinished),
       user: new FormControl(movedHiveRawValue.user),
       hive: new FormControl(movedHiveRawValue.hive),
       harvestType: new FormControl(movedHiveRawValue.harvestType),
@@ -109,6 +115,7 @@ export class MovedHiveFormService {
       dateModified: currentTime,
       dateSynched: currentTime,
       dateDeleted: currentTime,
+      dateFinished: currentTime,
     };
   }
 
@@ -119,6 +126,7 @@ export class MovedHiveFormService {
       dateModified: dayjs(rawMovedHive.dateModified, DATE_TIME_FORMAT),
       dateSynched: dayjs(rawMovedHive.dateSynched, DATE_TIME_FORMAT),
       dateDeleted: dayjs(rawMovedHive.dateDeleted, DATE_TIME_FORMAT),
+      dateFinished: dayjs(rawMovedHive.dateFinished, DATE_TIME_FORMAT),
     };
   }
 
@@ -131,6 +139,7 @@ export class MovedHiveFormService {
       dateModified: movedHive.dateModified ? movedHive.dateModified.format(DATE_TIME_FORMAT) : undefined,
       dateSynched: movedHive.dateSynched ? movedHive.dateSynched.format(DATE_TIME_FORMAT) : undefined,
       dateDeleted: movedHive.dateDeleted ? movedHive.dateDeleted.format(DATE_TIME_FORMAT) : undefined,
+      dateFinished: movedHive.dateFinished ? movedHive.dateFinished.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }

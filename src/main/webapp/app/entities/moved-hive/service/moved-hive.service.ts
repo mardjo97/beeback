@@ -11,11 +11,15 @@ import { IMovedHive, NewMovedHive } from '../moved-hive.model';
 
 export type PartialUpdateMovedHive = Partial<IMovedHive> & Pick<IMovedHive, 'id'>;
 
-type RestOf<T extends IMovedHive | NewMovedHive> = Omit<T, 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'> & {
+type RestOf<T extends IMovedHive | NewMovedHive> = Omit<
+  T,
+  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
+> & {
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 export type RestMovedHive = RestOf<IMovedHive>;
@@ -107,6 +111,7 @@ export class MovedHiveService {
       dateModified: movedHive.dateModified?.toJSON() ?? null,
       dateSynched: movedHive.dateSynched?.toJSON() ?? null,
       dateDeleted: movedHive.dateDeleted?.toJSON() ?? null,
+      dateFinished: movedHive.dateFinished?.toJSON() ?? null,
     };
   }
 
@@ -117,6 +122,7 @@ export class MovedHiveService {
       dateModified: restMovedHive.dateModified ? dayjs(restMovedHive.dateModified) : undefined,
       dateSynched: restMovedHive.dateSynched ? dayjs(restMovedHive.dateSynched) : undefined,
       dateDeleted: restMovedHive.dateDeleted ? dayjs(restMovedHive.dateDeleted) : undefined,
+      dateFinished: restMovedHive.dateFinished ? dayjs(restMovedHive.dateFinished) : undefined,
     };
   }
 
