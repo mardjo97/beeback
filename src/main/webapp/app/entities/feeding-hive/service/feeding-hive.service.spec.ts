@@ -13,6 +13,7 @@ const requireRestSample: RestFeedingHive = {
   dateModified: sampleWithRequiredData.dateModified?.toJSON(),
   dateSynched: sampleWithRequiredData.dateSynched?.toJSON(),
   dateDeleted: sampleWithRequiredData.dateDeleted?.toJSON(),
+  dateFinished: sampleWithRequiredData.dateFinished?.toJSON(),
 };
 
 describe('FeedingHive Service', () => {

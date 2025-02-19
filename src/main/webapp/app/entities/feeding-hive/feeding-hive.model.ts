@@ -11,6 +11,7 @@ export interface IFeedingHive {
   dateModified?: dayjs.Dayjs | null;
   dateSynched?: dayjs.Dayjs | null;
   dateDeleted?: dayjs.Dayjs | null;
+  dateFinished?: dayjs.Dayjs | null;
   user?: Pick<IUser, 'id'> | null;
   hive?: Pick<IHive, 'id'> | null;
 }

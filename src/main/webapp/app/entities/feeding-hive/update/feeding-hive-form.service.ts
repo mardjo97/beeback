@@ -19,18 +19,22 @@ type FeedingHiveFormGroupInput = IFeedingHive | PartialWithRequiredKeyOf<NewFeed
 /**
  * Type that converts some properties for forms.
  */
-type FormValueOf<T extends IFeedingHive | NewFeedingHive> = Omit<T, 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'> & {
+type FormValueOf<T extends IFeedingHive | NewFeedingHive> = Omit<
+  T,
+  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
+> & {
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 type FeedingHiveFormRawValue = FormValueOf<IFeedingHive>;
 
 type NewFeedingHiveFormRawValue = FormValueOf<NewFeedingHive>;
 
-type FeedingHiveFormDefaults = Pick<NewFeedingHive, 'id' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'>;
+type FeedingHiveFormDefaults = Pick<NewFeedingHive, 'id' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'>;
 
 type FeedingHiveFormGroupContent = {
   id: FormControl<FeedingHiveFormRawValue['id'] | NewFeedingHive['id']>;
@@ -41,6 +45,7 @@ type FeedingHiveFormGroupContent = {
   dateModified: FormControl<FeedingHiveFormRawValue['dateModified']>;
   dateSynched: FormControl<FeedingHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<FeedingHiveFormRawValue['dateDeleted']>;
+  dateFinished: FormControl<FeedingHiveFormRawValue['dateFinished']>;
   user: FormControl<FeedingHiveFormRawValue['user']>;
   hive: FormControl<FeedingHiveFormRawValue['hive']>;
 };
@@ -79,6 +84,7 @@ export class FeedingHiveFormService {
         validators: [Validators.required],
       }),
       dateDeleted: new FormControl(feedingHiveRawValue.dateDeleted),
+      dateFinished: new FormControl(feedingHiveRawValue.dateFinished),
       user: new FormControl(feedingHiveRawValue.user),
       hive: new FormControl(feedingHiveRawValue.hive),
     });
@@ -107,6 +113,7 @@ export class FeedingHiveFormService {
       dateModified: currentTime,
       dateSynched: currentTime,
       dateDeleted: currentTime,
+      dateFinished: currentTime,
     };
   }
 
@@ -119,6 +126,7 @@ export class FeedingHiveFormService {
       dateModified: dayjs(rawFeedingHive.dateModified, DATE_TIME_FORMAT),
       dateSynched: dayjs(rawFeedingHive.dateSynched, DATE_TIME_FORMAT),
       dateDeleted: dayjs(rawFeedingHive.dateDeleted, DATE_TIME_FORMAT),
+      dateFinished: dayjs(rawFeedingHive.dateFinished, DATE_TIME_FORMAT),
     };
   }
 
@@ -131,6 +139,7 @@ export class FeedingHiveFormService {
       dateModified: feedingHive.dateModified ? feedingHive.dateModified.format(DATE_TIME_FORMAT) : undefined,
       dateSynched: feedingHive.dateSynched ? feedingHive.dateSynched.format(DATE_TIME_FORMAT) : undefined,
       dateDeleted: feedingHive.dateDeleted ? feedingHive.dateDeleted.format(DATE_TIME_FORMAT) : undefined,
+      dateFinished: feedingHive.dateFinished ? feedingHive.dateFinished.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }

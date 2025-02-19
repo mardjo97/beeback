@@ -11,11 +11,15 @@ import { IFeedingHive, NewFeedingHive } from '../feeding-hive.model';
 
 export type PartialUpdateFeedingHive = Partial<IFeedingHive> & Pick<IFeedingHive, 'id'>;
 
-type RestOf<T extends IFeedingHive | NewFeedingHive> = Omit<T, 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'> & {
+type RestOf<T extends IFeedingHive | NewFeedingHive> = Omit<
+  T,
+  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
+> & {
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 export type RestFeedingHive = RestOf<IFeedingHive>;
@@ -107,6 +111,7 @@ export class FeedingHiveService {
       dateModified: feedingHive.dateModified?.toJSON() ?? null,
       dateSynched: feedingHive.dateSynched?.toJSON() ?? null,
       dateDeleted: feedingHive.dateDeleted?.toJSON() ?? null,
+      dateFinished: feedingHive.dateFinished?.toJSON() ?? null,
     };
   }
 
@@ -117,6 +122,7 @@ export class FeedingHiveService {
       dateModified: restFeedingHive.dateModified ? dayjs(restFeedingHive.dateModified) : undefined,
       dateSynched: restFeedingHive.dateSynched ? dayjs(restFeedingHive.dateSynched) : undefined,
       dateDeleted: restFeedingHive.dateDeleted ? dayjs(restFeedingHive.dateDeleted) : undefined,
+      dateFinished: restFeedingHive.dateFinished ? dayjs(restFeedingHive.dateFinished) : undefined,
     };
   }
 

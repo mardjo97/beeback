@@ -58,6 +58,9 @@ class FeedingHiveResourceIT {
     private static final Instant DEFAULT_DATE_DELETED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_DELETED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Instant DEFAULT_DATE_FINISHED = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_FINISHED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final String ENTITY_API_URL = "/api/feeding-hives";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -100,7 +103,8 @@ class FeedingHiveResourceIT {
             .dateCreated(DEFAULT_DATE_CREATED)
             .dateModified(DEFAULT_DATE_MODIFIED)
             .dateSynched(DEFAULT_DATE_SYNCHED)
-            .dateDeleted(DEFAULT_DATE_DELETED);
+            .dateDeleted(DEFAULT_DATE_DELETED)
+            .dateFinished(DEFAULT_DATE_FINISHED);
     }
 
     /**
@@ -117,7 +121,8 @@ class FeedingHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
     }
 
     @BeforeEach
@@ -278,7 +283,8 @@ class FeedingHiveResourceIT {
             .andExpect(jsonPath("$.[*].dateCreated").value(hasItem(DEFAULT_DATE_CREATED.toString())))
             .andExpect(jsonPath("$.[*].dateModified").value(hasItem(DEFAULT_DATE_MODIFIED.toString())))
             .andExpect(jsonPath("$.[*].dateSynched").value(hasItem(DEFAULT_DATE_SYNCHED.toString())))
-            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())));
+            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())))
+            .andExpect(jsonPath("$.[*].dateFinished").value(hasItem(DEFAULT_DATE_FINISHED.toString())));
     }
 
     @Test
@@ -299,7 +305,8 @@ class FeedingHiveResourceIT {
             .andExpect(jsonPath("$.dateCreated").value(DEFAULT_DATE_CREATED.toString()))
             .andExpect(jsonPath("$.dateModified").value(DEFAULT_DATE_MODIFIED.toString()))
             .andExpect(jsonPath("$.dateSynched").value(DEFAULT_DATE_SYNCHED.toString()))
-            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()));
+            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()))
+            .andExpect(jsonPath("$.dateFinished").value(DEFAULT_DATE_FINISHED.toString()));
     }
 
     @Test
@@ -328,7 +335,8 @@ class FeedingHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
         FeedingHiveDTO feedingHiveDTO = feedingHiveMapper.toDto(updatedFeedingHive);
 
         restFeedingHiveMockMvc
@@ -418,7 +426,7 @@ class FeedingHiveResourceIT {
         FeedingHive partialUpdatedFeedingHive = new FeedingHive();
         partialUpdatedFeedingHive.setId(feedingHive.getId());
 
-        partialUpdatedFeedingHive.foodAmount(UPDATED_FOOD_AMOUNT).externalId(UPDATED_EXTERNAL_ID).uuid(UPDATED_UUID);
+        partialUpdatedFeedingHive.dateModified(UPDATED_DATE_MODIFIED).dateSynched(UPDATED_DATE_SYNCHED).dateDeleted(UPDATED_DATE_DELETED);
 
         restFeedingHiveMockMvc
             .perform(
@@ -456,7 +464,8 @@ class FeedingHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
 
         restFeedingHiveMockMvc
             .perform(
