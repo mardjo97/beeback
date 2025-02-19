@@ -21,13 +21,14 @@ type QueenChangeHiveFormGroupInput = IQueenChangeHive | PartialWithRequiredKeyOf
  */
 type FormValueOf<T extends IQueenChangeHive | NewQueenChangeHive> = Omit<
   T,
-  'dateQueenChange' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+  'dateQueenChange' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
 > & {
   dateQueenChange?: string | null;
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 type QueenChangeHiveFormRawValue = FormValueOf<IQueenChangeHive>;
@@ -36,7 +37,7 @@ type NewQueenChangeHiveFormRawValue = FormValueOf<NewQueenChangeHive>;
 
 type QueenChangeHiveFormDefaults = Pick<
   NewQueenChangeHive,
-  'id' | 'dateQueenChange' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+  'id' | 'dateQueenChange' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
 >;
 
 type QueenChangeHiveFormGroupContent = {
@@ -49,6 +50,7 @@ type QueenChangeHiveFormGroupContent = {
   dateModified: FormControl<QueenChangeHiveFormRawValue['dateModified']>;
   dateSynched: FormControl<QueenChangeHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<QueenChangeHiveFormRawValue['dateDeleted']>;
+  dateFinished: FormControl<QueenChangeHiveFormRawValue['dateFinished']>;
   user: FormControl<QueenChangeHiveFormRawValue['user']>;
   hive: FormControl<QueenChangeHiveFormRawValue['hive']>;
 };
@@ -88,6 +90,7 @@ export class QueenChangeHiveFormService {
         validators: [Validators.required],
       }),
       dateDeleted: new FormControl(queenChangeHiveRawValue.dateDeleted),
+      dateFinished: new FormControl(queenChangeHiveRawValue.dateFinished),
       user: new FormControl(queenChangeHiveRawValue.user),
       hive: new FormControl(queenChangeHiveRawValue.hive),
     });
@@ -119,6 +122,7 @@ export class QueenChangeHiveFormService {
       dateModified: currentTime,
       dateSynched: currentTime,
       dateDeleted: currentTime,
+      dateFinished: currentTime,
     };
   }
 
@@ -132,6 +136,7 @@ export class QueenChangeHiveFormService {
       dateModified: dayjs(rawQueenChangeHive.dateModified, DATE_TIME_FORMAT),
       dateSynched: dayjs(rawQueenChangeHive.dateSynched, DATE_TIME_FORMAT),
       dateDeleted: dayjs(rawQueenChangeHive.dateDeleted, DATE_TIME_FORMAT),
+      dateFinished: dayjs(rawQueenChangeHive.dateFinished, DATE_TIME_FORMAT),
     };
   }
 
@@ -145,6 +150,7 @@ export class QueenChangeHiveFormService {
       dateModified: queenChangeHive.dateModified ? queenChangeHive.dateModified.format(DATE_TIME_FORMAT) : undefined,
       dateSynched: queenChangeHive.dateSynched ? queenChangeHive.dateSynched.format(DATE_TIME_FORMAT) : undefined,
       dateDeleted: queenChangeHive.dateDeleted ? queenChangeHive.dateDeleted.format(DATE_TIME_FORMAT) : undefined,
+      dateFinished: queenChangeHive.dateFinished ? queenChangeHive.dateFinished.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }

@@ -61,6 +61,9 @@ class QueenChangeHiveResourceIT {
     private static final Instant DEFAULT_DATE_DELETED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_DELETED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Instant DEFAULT_DATE_FINISHED = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_FINISHED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final String ENTITY_API_URL = "/api/queen-change-hives";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -104,7 +107,8 @@ class QueenChangeHiveResourceIT {
             .dateCreated(DEFAULT_DATE_CREATED)
             .dateModified(DEFAULT_DATE_MODIFIED)
             .dateSynched(DEFAULT_DATE_SYNCHED)
-            .dateDeleted(DEFAULT_DATE_DELETED);
+            .dateDeleted(DEFAULT_DATE_DELETED)
+            .dateFinished(DEFAULT_DATE_FINISHED);
     }
 
     /**
@@ -122,7 +126,8 @@ class QueenChangeHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
     }
 
     @BeforeEach
@@ -284,7 +289,8 @@ class QueenChangeHiveResourceIT {
             .andExpect(jsonPath("$.[*].dateCreated").value(hasItem(DEFAULT_DATE_CREATED.toString())))
             .andExpect(jsonPath("$.[*].dateModified").value(hasItem(DEFAULT_DATE_MODIFIED.toString())))
             .andExpect(jsonPath("$.[*].dateSynched").value(hasItem(DEFAULT_DATE_SYNCHED.toString())))
-            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())));
+            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())))
+            .andExpect(jsonPath("$.[*].dateFinished").value(hasItem(DEFAULT_DATE_FINISHED.toString())));
     }
 
     @Test
@@ -306,7 +312,8 @@ class QueenChangeHiveResourceIT {
             .andExpect(jsonPath("$.dateCreated").value(DEFAULT_DATE_CREATED.toString()))
             .andExpect(jsonPath("$.dateModified").value(DEFAULT_DATE_MODIFIED.toString()))
             .andExpect(jsonPath("$.dateSynched").value(DEFAULT_DATE_SYNCHED.toString()))
-            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()));
+            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()))
+            .andExpect(jsonPath("$.dateFinished").value(DEFAULT_DATE_FINISHED.toString()));
     }
 
     @Test
@@ -336,7 +343,8 @@ class QueenChangeHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
         QueenChangeHiveDTO queenChangeHiveDTO = queenChangeHiveMapper.toDto(updatedQueenChangeHive);
 
         restQueenChangeHiveMockMvc
@@ -426,7 +434,11 @@ class QueenChangeHiveResourceIT {
         QueenChangeHive partialUpdatedQueenChangeHive = new QueenChangeHive();
         partialUpdatedQueenChangeHive.setId(queenChangeHive.getId());
 
-        partialUpdatedQueenChangeHive.dateQueenChange(UPDATED_DATE_QUEEN_CHANGE).uuid(UPDATED_UUID);
+        partialUpdatedQueenChangeHive
+            .uuid(UPDATED_UUID)
+            .dateModified(UPDATED_DATE_MODIFIED)
+            .dateSynched(UPDATED_DATE_SYNCHED)
+            .dateDeleted(UPDATED_DATE_DELETED);
 
         restQueenChangeHiveMockMvc
             .perform(
@@ -465,7 +477,8 @@ class QueenChangeHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
 
         restQueenChangeHiveMockMvc
             .perform(

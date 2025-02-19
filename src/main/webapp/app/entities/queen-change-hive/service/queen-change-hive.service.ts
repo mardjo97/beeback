@@ -13,13 +13,14 @@ export type PartialUpdateQueenChangeHive = Partial<IQueenChangeHive> & Pick<IQue
 
 type RestOf<T extends IQueenChangeHive | NewQueenChangeHive> = Omit<
   T,
-  'dateQueenChange' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+  'dateQueenChange' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
 > & {
   dateQueenChange?: string | null;
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 export type RestQueenChangeHive = RestOf<IQueenChangeHive>;
@@ -118,6 +119,7 @@ export class QueenChangeHiveService {
       dateModified: queenChangeHive.dateModified?.toJSON() ?? null,
       dateSynched: queenChangeHive.dateSynched?.toJSON() ?? null,
       dateDeleted: queenChangeHive.dateDeleted?.toJSON() ?? null,
+      dateFinished: queenChangeHive.dateFinished?.toJSON() ?? null,
     };
   }
 
@@ -129,6 +131,7 @@ export class QueenChangeHiveService {
       dateModified: restQueenChangeHive.dateModified ? dayjs(restQueenChangeHive.dateModified) : undefined,
       dateSynched: restQueenChangeHive.dateSynched ? dayjs(restQueenChangeHive.dateSynched) : undefined,
       dateDeleted: restQueenChangeHive.dateDeleted ? dayjs(restQueenChangeHive.dateDeleted) : undefined,
+      dateFinished: restQueenChangeHive.dateFinished ? dayjs(restQueenChangeHive.dateFinished) : undefined,
     };
   }
 
