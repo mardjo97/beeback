@@ -16,5 +16,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="hive_id"
+                                 baseTableName="feeding_hive"
+                                 constraintName="fk_feeding_hive__hive_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hive"
+                                 />
     </changeSet>
 </databaseChangeLog>

@@ -64,6 +64,8 @@ public class QueenChangeHiveAsserts {
      * @param actual the actual entity
      */
     public static void assertQueenChangeHiveUpdatableRelationshipsEquals(QueenChangeHive expected, QueenChangeHive actual) {
-        // empty method
+        assertThat(expected)
+            .as("Verify QueenChangeHive relationships")
+            .satisfies(e -> assertThat(e.getHive()).as("check hive").isEqualTo(actual.getHive()));
     }
 }

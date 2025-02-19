@@ -47,6 +47,14 @@
           <dd>
             <span>{{ movedHiveRef.user?.id }}</span>
           </dd>
+          <dt><span jhiTranslate="beebackApp.movedHive.hive">Hive</span></dt>
+          <dd>
+            @if (movedHive()!.hive) {
+              <div>
+                <a [routerLink]="['/hive', movedHive()!.hive?.id, 'view']">{{ movedHiveRef.hive?.id }}</a>
+              </div>
+            }
+          </dd>
           <dt><span jhiTranslate="beebackApp.movedHive.harvestType">Harvest Type</span></dt>
           <dd>
             @if (movedHive()!.harvestType) {

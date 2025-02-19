@@ -53,6 +53,14 @@
           <dd>
             <span>{{ queenChangeHiveRef.user?.id }}</span>
           </dd>
+          <dt><span jhiTranslate="beebackApp.queenChangeHive.hive">Hive</span></dt>
+          <dd>
+            @if (queenChangeHive()!.hive) {
+              <div>
+                <a [routerLink]="['/hive', queenChangeHive()!.hive?.id, 'view']">{{ queenChangeHiveRef.hive?.id }}</a>
+              </div>
+            }
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

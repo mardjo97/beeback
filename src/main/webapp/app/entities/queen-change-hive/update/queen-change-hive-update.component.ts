@@ -9,8 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
-import { IQueenChangeHive } from '../queen-change-hive.model';
+import { IHive } from 'app/entities/hive/hive.model';
+import { HiveService } from 'app/entities/hive/service/hive.service';
 import { QueenChangeHiveService } from '../service/queen-change-hive.service';
+import { IQueenChangeHive } from '../queen-change-hive.model';
 import { QueenChangeHiveFormGroup, QueenChangeHiveFormService } from './queen-change-hive-form.service';
 
 @Component({
@@ -24,16 +26,20 @@ export class QueenChangeHiveUpdateComponent implements OnInit {
   queenChangeHive: IQueenChangeHive | null = null;
 
   usersSharedCollection: IUser[] = [];
+  hivesSharedCollection: IHive[] = [];
 
   protected queenChangeHiveService = inject(QueenChangeHiveService);
   protected queenChangeHiveFormService = inject(QueenChangeHiveFormService);
   protected userService = inject(UserService);
+  protected hiveService = inject(HiveService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: QueenChangeHiveFormGroup = this.queenChangeHiveFormService.createQueenChangeHiveFormGroup();
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+
+  compareHive = (o1: IHive | null, o2: IHive | null): boolean => this.hiveService.compareHive(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ queenChangeHive }) => {
@@ -84,6 +90,7 @@ export class QueenChangeHiveUpdateComponent implements OnInit {
     this.queenChangeHiveFormService.resetForm(this.editForm, queenChangeHive);
 
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, queenChangeHive.user);
+    this.hivesSharedCollection = this.hiveService.addHiveToCollectionIfMissing<IHive>(this.hivesSharedCollection, queenChangeHive.hive);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -92,5 +99,11 @@ export class QueenChangeHiveUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.queenChangeHive?.user)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+
+    this.hiveService
+      .query()
+      .pipe(map((res: HttpResponse<IHive[]>) => res.body ?? []))
+      .pipe(map((hives: IHive[]) => this.hiveService.addHiveToCollectionIfMissing<IHive>(hives, this.queenChangeHive?.hive)))
+      .subscribe((hives: IHive[]) => (this.hivesSharedCollection = hives));
   }
 }

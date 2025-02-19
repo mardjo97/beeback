@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
+import { IHive } from 'app/entities/hive/hive.model';
+import { HiveService } from 'app/entities/hive/service/hive.service';
 import { IHarvestType } from 'app/entities/harvest-type/harvest-type.model';
 import { HarvestTypeService } from 'app/entities/harvest-type/service/harvest-type.service';
 import { MovedHiveService } from '../service/moved-hive.service';
@@ -26,11 +28,13 @@ export class MovedHiveUpdateComponent implements OnInit {
   movedHive: IMovedHive | null = null;
 
   usersSharedCollection: IUser[] = [];
+  hivesSharedCollection: IHive[] = [];
   harvestTypesSharedCollection: IHarvestType[] = [];
 
   protected movedHiveService = inject(MovedHiveService);
   protected movedHiveFormService = inject(MovedHiveFormService);
   protected userService = inject(UserService);
+  protected hiveService = inject(HiveService);
   protected harvestTypeService = inject(HarvestTypeService);
   protected activatedRoute = inject(ActivatedRoute);
 
@@ -38,6 +42,8 @@ export class MovedHiveUpdateComponent implements OnInit {
   editForm: MovedHiveFormGroup = this.movedHiveFormService.createMovedHiveFormGroup();
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+
+  compareHive = (o1: IHive | null, o2: IHive | null): boolean => this.hiveService.compareHive(o1, o2);
 
   compareHarvestType = (o1: IHarvestType | null, o2: IHarvestType | null): boolean => this.harvestTypeService.compareHarvestType(o1, o2);
 
@@ -90,6 +96,7 @@ export class MovedHiveUpdateComponent implements OnInit {
     this.movedHiveFormService.resetForm(this.editForm, movedHive);
 
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, movedHive.user);
+    this.hivesSharedCollection = this.hiveService.addHiveToCollectionIfMissing<IHive>(this.hivesSharedCollection, movedHive.hive);
     this.harvestTypesSharedCollection = this.harvestTypeService.addHarvestTypeToCollectionIfMissing<IHarvestType>(
       this.harvestTypesSharedCollection,
       movedHive.harvestType,
@@ -102,6 +109,12 @@ export class MovedHiveUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.movedHive?.user)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+
+    this.hiveService
+      .query()
+      .pipe(map((res: HttpResponse<IHive[]>) => res.body ?? []))
+      .pipe(map((hives: IHive[]) => this.hiveService.addHiveToCollectionIfMissing<IHive>(hives, this.movedHive?.hive)))
+      .subscribe((hives: IHive[]) => (this.hivesSharedCollection = hives));
 
     this.harvestTypeService
       .query()

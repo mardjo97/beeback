@@ -28,6 +28,7 @@ describe('MovedHive Form Service', () => {
             dateSynched: expect.any(Object),
             dateDeleted: expect.any(Object),
             user: expect.any(Object),
+            hive: expect.any(Object),
             harvestType: expect.any(Object),
           }),
         );
@@ -47,6 +48,7 @@ describe('MovedHive Form Service', () => {
             dateSynched: expect.any(Object),
             dateDeleted: expect.any(Object),
             user: expect.any(Object),
+            hive: expect.any(Object),
             harvestType: expect.any(Object),
           }),
         );

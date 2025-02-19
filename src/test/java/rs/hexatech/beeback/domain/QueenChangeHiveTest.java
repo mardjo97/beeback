@@ -1,6 +1,7 @@
 package rs.hexatech.beeback.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static rs.hexatech.beeback.domain.HiveTestSamples.*;
 import static rs.hexatech.beeback.domain.QueenChangeHiveTestSamples.*;
 
 import org.junit.jupiter.api.Test;
@@ -20,5 +21,17 @@ class QueenChangeHiveTest {
 
         queenChangeHive2 = getQueenChangeHiveSample2();
         assertThat(queenChangeHive1).isNotEqualTo(queenChangeHive2);
+    }
+
+    @Test
+    void hiveTest() {
+        QueenChangeHive queenChangeHive = getQueenChangeHiveRandomSampleGenerator();
+        Hive hiveBack = getHiveRandomSampleGenerator();
+
+        queenChangeHive.setHive(hiveBack);
+        assertThat(queenChangeHive.getHive()).isEqualTo(hiveBack);
+
+        queenChangeHive.hive(null);
+        assertThat(queenChangeHive.getHive()).isNull();
     }
 }

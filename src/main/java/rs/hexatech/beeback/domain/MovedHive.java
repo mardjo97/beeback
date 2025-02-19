@@ -54,6 +54,10 @@ public class MovedHive implements Serializable {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "user", "hiveType", "apiary" }, allowSetters = true)
+    private Hive hive;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private HarvestType harvestType;
 
@@ -173,6 +177,19 @@ public class MovedHive implements Serializable {
 
     public MovedHive user(User user) {
         this.setUser(user);
+        return this;
+    }
+
+    public Hive getHive() {
+        return this.hive;
+    }
+
+    public void setHive(Hive hive) {
+        this.hive = hive;
+    }
+
+    public MovedHive hive(Hive hive) {
+        this.setHive(hive);
         return this;
     }
 

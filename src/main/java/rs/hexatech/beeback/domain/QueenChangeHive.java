@@ -1,5 +1,6 @@
 package rs.hexatech.beeback.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -54,6 +55,10 @@ public class QueenChangeHive implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "user", "hiveType", "apiary" }, allowSetters = true)
+    private Hive hive;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -184,6 +189,19 @@ public class QueenChangeHive implements Serializable {
 
     public QueenChangeHive user(User user) {
         this.setUser(user);
+        return this;
+    }
+
+    public Hive getHive() {
+        return this.hive;
+    }
+
+    public void setHive(Hive hive) {
+        this.hive = hive;
+    }
+
+    public QueenChangeHive hive(Hive hive) {
+        this.setHive(hive);
         return this;
     }
 

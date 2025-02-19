@@ -2,9 +2,11 @@ package rs.hexatech.beeback.service.mapper;
 
 import org.mapstruct.*;
 import rs.hexatech.beeback.domain.HarvestType;
+import rs.hexatech.beeback.domain.Hive;
 import rs.hexatech.beeback.domain.MovedHive;
 import rs.hexatech.beeback.domain.User;
 import rs.hexatech.beeback.service.dto.HarvestTypeDTO;
+import rs.hexatech.beeback.service.dto.HiveDTO;
 import rs.hexatech.beeback.service.dto.MovedHiveDTO;
 import rs.hexatech.beeback.service.dto.UserDTO;
 
@@ -14,6 +16,7 @@ import rs.hexatech.beeback.service.dto.UserDTO;
 @Mapper(componentModel = "spring")
 public interface MovedHiveMapper extends EntityMapper<MovedHiveDTO, MovedHive> {
     @Mapping(target = "user", source = "user", qualifiedByName = "userId")
+    @Mapping(target = "hive", source = "hive", qualifiedByName = "hiveId")
     @Mapping(target = "harvestType", source = "harvestType", qualifiedByName = "harvestTypeId")
     MovedHiveDTO toDto(MovedHive s);
 
@@ -21,6 +24,11 @@ public interface MovedHiveMapper extends EntityMapper<MovedHiveDTO, MovedHive> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     UserDTO toDtoUserId(User user);
+
+    @Named("hiveId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    HiveDTO toDtoHiveId(Hive hive);
 
     @Named("harvestTypeId")
     @BeanMapping(ignoreByDefault = true)

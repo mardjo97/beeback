@@ -65,6 +65,7 @@ public class MovedHiveAsserts {
     public static void assertMovedHiveUpdatableRelationshipsEquals(MovedHive expected, MovedHive actual) {
         assertThat(expected)
             .as("Verify MovedHive relationships")
+            .satisfies(e -> assertThat(e.getHive()).as("check hive").isEqualTo(actual.getHive()))
             .satisfies(e -> assertThat(e.getHarvestType()).as("check harvestType").isEqualTo(actual.getHarvestType()));
     }
 }

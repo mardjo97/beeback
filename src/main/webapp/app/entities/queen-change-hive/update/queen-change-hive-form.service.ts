@@ -50,6 +50,7 @@ type QueenChangeHiveFormGroupContent = {
   dateSynched: FormControl<QueenChangeHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<QueenChangeHiveFormRawValue['dateDeleted']>;
   user: FormControl<QueenChangeHiveFormRawValue['user']>;
+  hive: FormControl<QueenChangeHiveFormRawValue['hive']>;
 };
 
 export type QueenChangeHiveFormGroup = FormGroup<QueenChangeHiveFormGroupContent>;
@@ -88,6 +89,7 @@ export class QueenChangeHiveFormService {
       }),
       dateDeleted: new FormControl(queenChangeHiveRawValue.dateDeleted),
       user: new FormControl(queenChangeHiveRawValue.user),
+      hive: new FormControl(queenChangeHiveRawValue.hive),
     });
   }
 

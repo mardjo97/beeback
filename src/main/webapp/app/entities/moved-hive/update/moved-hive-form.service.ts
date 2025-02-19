@@ -42,6 +42,7 @@ type MovedHiveFormGroupContent = {
   dateSynched: FormControl<MovedHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<MovedHiveFormRawValue['dateDeleted']>;
   user: FormControl<MovedHiveFormRawValue['user']>;
+  hive: FormControl<MovedHiveFormRawValue['hive']>;
   harvestType: FormControl<MovedHiveFormRawValue['harvestType']>;
 };
 
@@ -80,6 +81,7 @@ export class MovedHiveFormService {
       }),
       dateDeleted: new FormControl(movedHiveRawValue.dateDeleted),
       user: new FormControl(movedHiveRawValue.user),
+      hive: new FormControl(movedHiveRawValue.hive),
       harvestType: new FormControl(movedHiveRawValue.harvestType),
     });
   }

@@ -51,6 +51,7 @@ type ExaminationHiveFormGroupContent = {
   dateSynched: FormControl<ExaminationHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<ExaminationHiveFormRawValue['dateDeleted']>;
   user: FormControl<ExaminationHiveFormRawValue['user']>;
+  hive: FormControl<ExaminationHiveFormRawValue['hive']>;
 };
 
 export type ExaminationHiveFormGroup = FormGroup<ExaminationHiveFormGroupContent>;
@@ -90,6 +91,7 @@ export class ExaminationHiveFormService {
       }),
       dateDeleted: new FormControl(examinationHiveRawValue.dateDeleted),
       user: new FormControl(examinationHiveRawValue.user),
+      hive: new FormControl(examinationHiveRawValue.hive),
     });
   }
 

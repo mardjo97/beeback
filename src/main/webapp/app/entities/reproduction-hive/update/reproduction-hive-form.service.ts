@@ -45,6 +45,7 @@ type ReproductionHiveFormGroupContent = {
   dateSynched: FormControl<ReproductionHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<ReproductionHiveFormRawValue['dateDeleted']>;
   user: FormControl<ReproductionHiveFormRawValue['user']>;
+  hive: FormControl<ReproductionHiveFormRawValue['hive']>;
 };
 
 export type ReproductionHiveFormGroup = FormGroup<ReproductionHiveFormGroupContent>;
@@ -82,6 +83,7 @@ export class ReproductionHiveFormService {
       }),
       dateDeleted: new FormControl(reproductionHiveRawValue.dateDeleted),
       user: new FormControl(reproductionHiveRawValue.user),
+      hive: new FormControl(reproductionHiveRawValue.hive),
     });
   }
 

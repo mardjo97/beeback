@@ -38,6 +38,9 @@
             <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="hive_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="harvest_type_id" type="bigint">
                 <constraints nullable="true" />
             </column>

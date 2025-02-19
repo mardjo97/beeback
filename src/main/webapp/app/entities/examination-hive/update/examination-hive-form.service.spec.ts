@@ -30,6 +30,7 @@ describe('ExaminationHive Form Service', () => {
             dateSynched: expect.any(Object),
             dateDeleted: expect.any(Object),
             user: expect.any(Object),
+            hive: expect.any(Object),
           }),
         );
       });
@@ -50,6 +51,7 @@ describe('ExaminationHive Form Service', () => {
             dateSynched: expect.any(Object),
             dateDeleted: expect.any(Object),
             user: expect.any(Object),
+            hive: expect.any(Object),
           }),
         );
       });

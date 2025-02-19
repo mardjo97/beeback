@@ -57,6 +57,14 @@
           <dd>
             <span>{{ examinationHiveRef.user?.id }}</span>
           </dd>
+          <dt><span jhiTranslate="beebackApp.examinationHive.hive">Hive</span></dt>
+          <dd>
+            @if (examinationHive()!.hive) {
+              <div>
+                <a [routerLink]="['/hive', examinationHive()!.hive?.id, 'view']">{{ examinationHiveRef.hive?.id }}</a>
+              </div>
+            }
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

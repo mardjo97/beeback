@@ -65,6 +65,7 @@ public class GoodHarvestHiveAsserts {
     public static void assertGoodHarvestHiveUpdatableRelationshipsEquals(GoodHarvestHive expected, GoodHarvestHive actual) {
         assertThat(expected)
             .as("Verify GoodHarvestHive relationships")
+            .satisfies(e -> assertThat(e.getHive()).as("check hive").isEqualTo(actual.getHive()))
             .satisfies(e -> assertThat(e.getHarvestType()).as("check harvestType").isEqualTo(actual.getHarvestType()));
     }
 }

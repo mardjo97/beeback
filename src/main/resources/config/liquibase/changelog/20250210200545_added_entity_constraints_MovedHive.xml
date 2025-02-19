@@ -17,6 +17,13 @@
                                  referencedTableName="jhi_user"
                                  />
 
+        <addForeignKeyConstraint baseColumnNames="hive_id"
+                                 baseTableName="moved_hive"
+                                 constraintName="fk_moved_hive__hive_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hive"
+                                 />
+
         <addForeignKeyConstraint baseColumnNames="harvest_type_id"
                                  baseTableName="moved_hive"
                                  constraintName="fk_moved_hive__harvest_type_id"

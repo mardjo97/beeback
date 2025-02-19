@@ -42,6 +42,7 @@ type FeedingHiveFormGroupContent = {
   dateSynched: FormControl<FeedingHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<FeedingHiveFormRawValue['dateDeleted']>;
   user: FormControl<FeedingHiveFormRawValue['user']>;
+  hive: FormControl<FeedingHiveFormRawValue['hive']>;
 };
 
 export type FeedingHiveFormGroup = FormGroup<FeedingHiveFormGroupContent>;
@@ -79,6 +80,7 @@ export class FeedingHiveFormService {
       }),
       dateDeleted: new FormControl(feedingHiveRawValue.dateDeleted),
       user: new FormControl(feedingHiveRawValue.user),
+      hive: new FormControl(feedingHiveRawValue.hive),
     });
   }
 

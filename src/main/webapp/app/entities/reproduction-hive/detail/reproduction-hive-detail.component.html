@@ -49,6 +49,14 @@
           <dd>
             <span>{{ reproductionHiveRef.user?.id }}</span>
           </dd>
+          <dt><span jhiTranslate="beebackApp.reproductionHive.hive">Hive</span></dt>
+          <dd>
+            @if (reproductionHive()!.hive) {
+              <div>
+                <a [routerLink]="['/hive', reproductionHive()!.hive?.id, 'view']">{{ reproductionHiveRef.hive?.id }}</a>
+              </div>
+            }
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

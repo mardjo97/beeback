@@ -6,6 +6,8 @@ import { Subject, from, of } from 'rxjs';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
+import { IHive } from 'app/entities/hive/hive.model';
+import { HiveService } from 'app/entities/hive/service/hive.service';
 import { IHarvestType } from 'app/entities/harvest-type/harvest-type.model';
 import { HarvestTypeService } from 'app/entities/harvest-type/service/harvest-type.service';
 import { IMovedHive } from '../moved-hive.model';
@@ -21,6 +23,7 @@ describe('MovedHive Management Update Component', () => {
   let movedHiveFormService: MovedHiveFormService;
   let movedHiveService: MovedHiveService;
   let userService: UserService;
+  let hiveService: HiveService;
   let harvestTypeService: HarvestTypeService;
 
   beforeEach(() => {
@@ -45,6 +48,7 @@ describe('MovedHive Management Update Component', () => {
     movedHiveFormService = TestBed.inject(MovedHiveFormService);
     movedHiveService = TestBed.inject(MovedHiveService);
     userService = TestBed.inject(UserService);
+    hiveService = TestBed.inject(HiveService);
     harvestTypeService = TestBed.inject(HarvestTypeService);
 
     comp = fixture.componentInstance;
@@ -73,6 +77,28 @@ describe('MovedHive Management Update Component', () => {
       expect(comp.usersSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Hive query and add missing value', () => {
+      const movedHive: IMovedHive = { id: 456 };
+      const hive: IHive = { id: 18320 };
+      movedHive.hive = hive;
+
+      const hiveCollection: IHive[] = [{ id: 21274 }];
+      jest.spyOn(hiveService, 'query').mockReturnValue(of(new HttpResponse({ body: hiveCollection })));
+      const additionalHives = [hive];
+      const expectedCollection: IHive[] = [...additionalHives, ...hiveCollection];
+      jest.spyOn(hiveService, 'addHiveToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ movedHive });
+      comp.ngOnInit();
+
+      expect(hiveService.query).toHaveBeenCalled();
+      expect(hiveService.addHiveToCollectionIfMissing).toHaveBeenCalledWith(
+        hiveCollection,
+        ...additionalHives.map(expect.objectContaining),
+      );
+      expect(comp.hivesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call HarvestType query and add missing value', () => {
       const movedHive: IMovedHive = { id: 456 };
       const harvestType: IHarvestType = { id: 23618 };
@@ -99,6 +125,8 @@ describe('MovedHive Management Update Component', () => {
       const movedHive: IMovedHive = { id: 456 };
       const user: IUser = { id: 10834 };
       movedHive.user = user;
+      const hive: IHive = { id: 1710 };
+      movedHive.hive = hive;
       const harvestType: IHarvestType = { id: 17675 };
       movedHive.harvestType = harvestType;
 
@@ -106,6 +134,7 @@ describe('MovedHive Management Update Component', () => {
       comp.ngOnInit();
 
       expect(comp.usersSharedCollection).toContain(user);
+      expect(comp.hivesSharedCollection).toContain(hive);
       expect(comp.harvestTypesSharedCollection).toContain(harvestType);
       expect(comp.movedHive).toEqual(movedHive);
     });
@@ -187,6 +216,16 @@ describe('MovedHive Management Update Component', () => {
         jest.spyOn(userService, 'compareUser');
         comp.compareUser(entity, entity2);
         expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareHive', () => {
+      it('Should forward to hiveService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(hiveService, 'compareHive');
+        comp.compareHive(entity, entity2);
+        expect(hiveService.compareHive).toHaveBeenCalledWith(entity, entity2);
       });
     });
 

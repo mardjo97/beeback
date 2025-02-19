@@ -97,6 +97,12 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="hive.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.goodHarvestHive.hive">Hive</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="harvestType.id">
               <div class="d-flex">
                 <span jhiTranslate="beebackApp.goodHarvestHive.harvestType">Harvest Type</span>
@@ -121,6 +127,13 @@
               <td>{{ goodHarvestHive.dateDeleted | formatMediumDatetime }}</td>
               <td>
                 {{ goodHarvestHive.user?.id }}
+              </td>
+              <td>
+                @if (goodHarvestHive.hive) {
+                  <div>
+                    <a [routerLink]="['/hive', goodHarvestHive.hive.id, 'view']">{{ goodHarvestHive.hive.id }}</a>
+                  </div>
+                }
               </td>
               <td>
                 @if (goodHarvestHive.harvestType) {

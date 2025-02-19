@@ -3,6 +3,7 @@ package rs.hexatech.beeback.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rs.hexatech.beeback.domain.GoodHarvestHiveTestSamples.*;
 import static rs.hexatech.beeback.domain.HarvestTypeTestSamples.*;
+import static rs.hexatech.beeback.domain.HiveTestSamples.*;
 
 import org.junit.jupiter.api.Test;
 import rs.hexatech.beeback.web.rest.TestUtil;
@@ -21,6 +22,18 @@ class GoodHarvestHiveTest {
 
         goodHarvestHive2 = getGoodHarvestHiveSample2();
         assertThat(goodHarvestHive1).isNotEqualTo(goodHarvestHive2);
+    }
+
+    @Test
+    void hiveTest() {
+        GoodHarvestHive goodHarvestHive = getGoodHarvestHiveRandomSampleGenerator();
+        Hive hiveBack = getHiveRandomSampleGenerator();
+
+        goodHarvestHive.setHive(hiveBack);
+        assertThat(goodHarvestHive.getHive()).isEqualTo(hiveBack);
+
+        goodHarvestHive.hive(null);
+        assertThat(goodHarvestHive.getHive()).isNull();
     }
 
     @Test

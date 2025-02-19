@@ -6,8 +6,10 @@ import { Subject, from, of } from 'rxjs';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
-import { QueenChangeHiveService } from '../service/queen-change-hive.service';
+import { IHive } from 'app/entities/hive/hive.model';
+import { HiveService } from 'app/entities/hive/service/hive.service';
 import { IQueenChangeHive } from '../queen-change-hive.model';
+import { QueenChangeHiveService } from '../service/queen-change-hive.service';
 import { QueenChangeHiveFormService } from './queen-change-hive-form.service';
 
 import { QueenChangeHiveUpdateComponent } from './queen-change-hive-update.component';
@@ -19,6 +21,7 @@ describe('QueenChangeHive Management Update Component', () => {
   let queenChangeHiveFormService: QueenChangeHiveFormService;
   let queenChangeHiveService: QueenChangeHiveService;
   let userService: UserService;
+  let hiveService: HiveService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,6 +45,7 @@ describe('QueenChangeHive Management Update Component', () => {
     queenChangeHiveFormService = TestBed.inject(QueenChangeHiveFormService);
     queenChangeHiveService = TestBed.inject(QueenChangeHiveService);
     userService = TestBed.inject(UserService);
+    hiveService = TestBed.inject(HiveService);
 
     comp = fixture.componentInstance;
   });
@@ -69,15 +73,40 @@ describe('QueenChangeHive Management Update Component', () => {
       expect(comp.usersSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Hive query and add missing value', () => {
+      const queenChangeHive: IQueenChangeHive = { id: 456 };
+      const hive: IHive = { id: 6765 };
+      queenChangeHive.hive = hive;
+
+      const hiveCollection: IHive[] = [{ id: 23552 }];
+      jest.spyOn(hiveService, 'query').mockReturnValue(of(new HttpResponse({ body: hiveCollection })));
+      const additionalHives = [hive];
+      const expectedCollection: IHive[] = [...additionalHives, ...hiveCollection];
+      jest.spyOn(hiveService, 'addHiveToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ queenChangeHive });
+      comp.ngOnInit();
+
+      expect(hiveService.query).toHaveBeenCalled();
+      expect(hiveService.addHiveToCollectionIfMissing).toHaveBeenCalledWith(
+        hiveCollection,
+        ...additionalHives.map(expect.objectContaining),
+      );
+      expect(comp.hivesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const queenChangeHive: IQueenChangeHive = { id: 456 };
       const user: IUser = { id: 32524 };
       queenChangeHive.user = user;
+      const hive: IHive = { id: 15308 };
+      queenChangeHive.hive = hive;
 
       activatedRoute.data = of({ queenChangeHive });
       comp.ngOnInit();
 
       expect(comp.usersSharedCollection).toContain(user);
+      expect(comp.hivesSharedCollection).toContain(hive);
       expect(comp.queenChangeHive).toEqual(queenChangeHive);
     });
   });
@@ -158,6 +187,16 @@ describe('QueenChangeHive Management Update Component', () => {
         jest.spyOn(userService, 'compareUser');
         comp.compareUser(entity, entity2);
         expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareHive', () => {
+      it('Should forward to hiveService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(hiveService, 'compareHive');
+        comp.compareHive(entity, entity2);
+        expect(hiveService.compareHive).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

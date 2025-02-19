@@ -29,6 +29,7 @@ describe('QueenChangeHive Form Service', () => {
             dateSynched: expect.any(Object),
             dateDeleted: expect.any(Object),
             user: expect.any(Object),
+            hive: expect.any(Object),
           }),
         );
       });
@@ -48,6 +49,7 @@ describe('QueenChangeHive Form Service', () => {
             dateSynched: expect.any(Object),
             dateDeleted: expect.any(Object),
             user: expect.any(Object),
+            hive: expect.any(Object),
           }),
         );
       });

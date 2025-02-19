@@ -181,6 +181,16 @@
             }
           </select>
         </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_hive" jhiTranslate="beebackApp.feedingHive.hive">Hive</label>
+          <select class="form-control" id="field_hive" data-cy="hive" name="hive" formControlName="hive" [compareWith]="compareHive">
+            <option [ngValue]="null"></option>
+            @for (hiveOption of hivesSharedCollection; track $index) {
+              <option [ngValue]="hiveOption">{{ hiveOption.id }}</option>
+            }
+          </select>
+        </div>
       </div>
 
       <div>

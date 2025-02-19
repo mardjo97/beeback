@@ -63,6 +63,8 @@ public class ReproductionHiveAsserts {
      * @param actual the actual entity
      */
     public static void assertReproductionHiveUpdatableRelationshipsEquals(ReproductionHive expected, ReproductionHive actual) {
-        // empty method
+        assertThat(expected)
+            .as("Verify ReproductionHive relationships")
+            .satisfies(e -> assertThat(e.getHive()).as("check hive").isEqualTo(actual.getHive()));
     }
 }

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs/esm';
 import { IUser } from 'app/entities/user/user.model';
+import { IHive } from 'app/entities/hive/hive.model';
 
 export interface IReproductionHive {
   id: number;
@@ -11,6 +12,7 @@ export interface IReproductionHive {
   dateSynched?: dayjs.Dayjs | null;
   dateDeleted?: dayjs.Dayjs | null;
   user?: Pick<IUser, 'id'> | null;
+  hive?: Pick<IHive, 'id'> | null;
 }
 
 export type NewReproductionHive = Omit<IReproductionHive, 'id'> & { id: null };

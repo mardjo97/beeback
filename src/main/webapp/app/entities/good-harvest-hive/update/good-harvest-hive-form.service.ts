@@ -45,6 +45,7 @@ type GoodHarvestHiveFormGroupContent = {
   dateSynched: FormControl<GoodHarvestHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<GoodHarvestHiveFormRawValue['dateDeleted']>;
   user: FormControl<GoodHarvestHiveFormRawValue['user']>;
+  hive: FormControl<GoodHarvestHiveFormRawValue['hive']>;
   harvestType: FormControl<GoodHarvestHiveFormRawValue['harvestType']>;
 };
 
@@ -83,6 +84,7 @@ export class GoodHarvestHiveFormService {
       }),
       dateDeleted: new FormControl(goodHarvestHiveRawValue.dateDeleted),
       user: new FormControl(goodHarvestHiveRawValue.user),
+      hive: new FormControl(goodHarvestHiveRawValue.hive),
       harvestType: new FormControl(goodHarvestHiveRawValue.harvestType),
     });
   }

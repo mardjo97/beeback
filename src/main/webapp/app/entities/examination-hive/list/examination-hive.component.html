@@ -111,6 +111,12 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="hive.id">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.examinationHive.hive">Hive</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -131,6 +137,13 @@
               <td>{{ examinationHive.dateDeleted | formatMediumDatetime }}</td>
               <td>
                 {{ examinationHive.user?.id }}
+              </td>
+              <td>
+                @if (examinationHive.hive) {
+                  <div>
+                    <a [routerLink]="['/hive', examinationHive.hive.id, 'view']">{{ examinationHive.hive.id }}</a>
+                  </div>
+                }
               </td>
               <td class="text-end">
                 <div class="btn-group">

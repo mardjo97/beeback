@@ -26,6 +26,7 @@
       "dateSynched": "Date Synched",
       "dateDeleted": "Date Deleted",
       "user": "User",
+      "hive": "Hive",
       "harvestType": "Harvest Type"
     }
   }

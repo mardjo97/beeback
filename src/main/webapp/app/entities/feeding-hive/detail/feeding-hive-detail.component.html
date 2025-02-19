@@ -47,6 +47,14 @@
           <dd>
             <span>{{ feedingHiveRef.user?.id }}</span>
           </dd>
+          <dt><span jhiTranslate="beebackApp.feedingHive.hive">Hive</span></dt>
+          <dd>
+            @if (feedingHive()!.hive) {
+              <div>
+                <a [routerLink]="['/hive', feedingHive()!.hive?.id, 'view']">{{ feedingHiveRef.hive?.id }}</a>
+              </div>
+            }
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -6,8 +6,10 @@ import { Subject, from, of } from 'rxjs';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
-import { ReproductionHiveService } from '../service/reproduction-hive.service';
+import { IHive } from 'app/entities/hive/hive.model';
+import { HiveService } from 'app/entities/hive/service/hive.service';
 import { IReproductionHive } from '../reproduction-hive.model';
+import { ReproductionHiveService } from '../service/reproduction-hive.service';
 import { ReproductionHiveFormService } from './reproduction-hive-form.service';
 
 import { ReproductionHiveUpdateComponent } from './reproduction-hive-update.component';
@@ -19,6 +21,7 @@ describe('ReproductionHive Management Update Component', () => {
   let reproductionHiveFormService: ReproductionHiveFormService;
   let reproductionHiveService: ReproductionHiveService;
   let userService: UserService;
+  let hiveService: HiveService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,6 +45,7 @@ describe('ReproductionHive Management Update Component', () => {
     reproductionHiveFormService = TestBed.inject(ReproductionHiveFormService);
     reproductionHiveService = TestBed.inject(ReproductionHiveService);
     userService = TestBed.inject(UserService);
+    hiveService = TestBed.inject(HiveService);
 
     comp = fixture.componentInstance;
   });
@@ -69,15 +73,40 @@ describe('ReproductionHive Management Update Component', () => {
       expect(comp.usersSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Hive query and add missing value', () => {
+      const reproductionHive: IReproductionHive = { id: 456 };
+      const hive: IHive = { id: 18644 };
+      reproductionHive.hive = hive;
+
+      const hiveCollection: IHive[] = [{ id: 1619 }];
+      jest.spyOn(hiveService, 'query').mockReturnValue(of(new HttpResponse({ body: hiveCollection })));
+      const additionalHives = [hive];
+      const expectedCollection: IHive[] = [...additionalHives, ...hiveCollection];
+      jest.spyOn(hiveService, 'addHiveToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ reproductionHive });
+      comp.ngOnInit();
+
+      expect(hiveService.query).toHaveBeenCalled();
+      expect(hiveService.addHiveToCollectionIfMissing).toHaveBeenCalledWith(
+        hiveCollection,
+        ...additionalHives.map(expect.objectContaining),
+      );
+      expect(comp.hivesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const reproductionHive: IReproductionHive = { id: 456 };
       const user: IUser = { id: 32732 };
       reproductionHive.user = user;
+      const hive: IHive = { id: 25172 };
+      reproductionHive.hive = hive;
 
       activatedRoute.data = of({ reproductionHive });
       comp.ngOnInit();
 
       expect(comp.usersSharedCollection).toContain(user);
+      expect(comp.hivesSharedCollection).toContain(hive);
       expect(comp.reproductionHive).toEqual(reproductionHive);
     });
   });
@@ -158,6 +187,16 @@ describe('ReproductionHive Management Update Component', () => {
         jest.spyOn(userService, 'compareUser');
         comp.compareUser(entity, entity2);
         expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareHive', () => {
+      it('Should forward to hiveService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(hiveService, 'compareHive');
+        comp.compareHive(entity, entity2);
+        expect(hiveService.compareHive).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });
