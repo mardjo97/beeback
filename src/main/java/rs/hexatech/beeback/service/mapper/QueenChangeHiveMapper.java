@@ -1,29 +1,43 @@
 package rs.hexatech.beeback.service.mapper;
 
-import org.mapstruct.*;
-import rs.hexatech.beeback.domain.Hive;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import rs.hexatech.beeback.domain.QueenChangeHive;
-import rs.hexatech.beeback.domain.User;
-import rs.hexatech.beeback.service.dto.HiveDTO;
 import rs.hexatech.beeback.service.dto.QueenChangeHiveDTO;
-import rs.hexatech.beeback.service.dto.UserDTO;
+
+import java.util.List;
 
 /**
  * Mapper for the entity {@link QueenChangeHive} and its DTO {@link QueenChangeHiveDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {HiveMapper.class})
 public interface QueenChangeHiveMapper extends EntityMapper<QueenChangeHiveDTO, QueenChangeHive> {
-    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
-    @Mapping(target = "hive", source = "hive", qualifiedByName = "hiveId")
-    QueenChangeHiveDTO toDto(QueenChangeHive s);
+  @Named("queenChangeHiveToDto")
+  @Mapping(target = "id", source = "externalId")
+  @Mapping(target = "hive", source = "hive", qualifiedByName = "hiveToDto")
+  QueenChangeHiveDTO toDto(QueenChangeHive s);
 
-    @Named("userId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    UserDTO toDtoUserId(User user);
+  @Named("queenChangeHiveToDtos")
+  default List<QueenChangeHiveDTO> toDto(List<QueenChangeHive> s) {
+    return s.stream()
+        .map(this::toDto)
+        .toList();
+  }
 
-    @Named("hiveId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    HiveDTO toDtoHiveId(Hive hive);
+  @Named("queenChangeHiveToEntity")
+  @Mapping(target = "externalId", source = "id")
+  @Mapping(target = "hive", ignore = true)
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "uuid", ignore = true)
+  QueenChangeHive toEntity(QueenChangeHiveDTO s);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "uuid", ignore = true)
+  @Mapping(target = "dateSynched", ignore = true)
+  @Mapping(target = "externalId", ignore = true)
+  @Mapping(target = "hive", ignore = true)
+  @Mapping(target = "user", ignore = true)
+  void partialUpdate(@MappingTarget QueenChangeHive entity, QueenChangeHiveDTO dto);
 }

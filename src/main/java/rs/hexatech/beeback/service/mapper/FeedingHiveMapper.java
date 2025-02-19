@@ -1,29 +1,43 @@
 package rs.hexatech.beeback.service.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import rs.hexatech.beeback.domain.FeedingHive;
-import rs.hexatech.beeback.domain.Hive;
-import rs.hexatech.beeback.domain.User;
 import rs.hexatech.beeback.service.dto.FeedingHiveDTO;
-import rs.hexatech.beeback.service.dto.HiveDTO;
-import rs.hexatech.beeback.service.dto.UserDTO;
+
+import java.util.List;
 
 /**
  * Mapper for the entity {@link FeedingHive} and its DTO {@link FeedingHiveDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {HiveMapper.class})
 public interface FeedingHiveMapper extends EntityMapper<FeedingHiveDTO, FeedingHive> {
-    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
-    @Mapping(target = "hive", source = "hive", qualifiedByName = "hiveId")
-    FeedingHiveDTO toDto(FeedingHive s);
+  @Named("feedingHiveToDto")
+  @Mapping(target = "id", source = "externalId")
+  @Mapping(target = "hive", source = "hive", qualifiedByName = "hiveToDto")
+  FeedingHiveDTO toDto(FeedingHive s);
 
-    @Named("userId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    UserDTO toDtoUserId(User user);
+  @Named("feedingHiveToDtos")
+  default List<FeedingHiveDTO> toDto(List<FeedingHive> s) {
+    return s.stream()
+        .map(this::toDto)
+        .toList();
+  }
 
-    @Named("hiveId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    HiveDTO toDtoHiveId(Hive hive);
+  @Named("feedingHiveToEntity")
+  @Mapping(target = "externalId", source = "id")
+  @Mapping(target = "hive", ignore = true)
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "uuid", ignore = true)
+  FeedingHive toEntity(FeedingHiveDTO s);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "uuid", ignore = true)
+  @Mapping(target = "dateSynched", ignore = true)
+  @Mapping(target = "externalId", ignore = true)
+  @Mapping(target = "hive", ignore = true)
+  @Mapping(target = "user", ignore = true)
+  void partialUpdate(@MappingTarget FeedingHive entity, FeedingHiveDTO dto);
 }
