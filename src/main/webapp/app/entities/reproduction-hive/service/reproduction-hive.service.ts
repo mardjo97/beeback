@@ -11,11 +11,15 @@ import { IReproductionHive, NewReproductionHive } from '../reproduction-hive.mod
 
 export type PartialUpdateReproductionHive = Partial<IReproductionHive> & Pick<IReproductionHive, 'id'>;
 
-type RestOf<T extends IReproductionHive | NewReproductionHive> = Omit<T, 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'> & {
+type RestOf<T extends IReproductionHive | NewReproductionHive> = Omit<
+  T,
+  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
+> & {
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 export type RestReproductionHive = RestOf<IReproductionHive>;
@@ -115,6 +119,7 @@ export class ReproductionHiveService {
       dateModified: reproductionHive.dateModified?.toJSON() ?? null,
       dateSynched: reproductionHive.dateSynched?.toJSON() ?? null,
       dateDeleted: reproductionHive.dateDeleted?.toJSON() ?? null,
+      dateFinished: reproductionHive.dateFinished?.toJSON() ?? null,
     };
   }
 
@@ -125,6 +130,7 @@ export class ReproductionHiveService {
       dateModified: restReproductionHive.dateModified ? dayjs(restReproductionHive.dateModified) : undefined,
       dateSynched: restReproductionHive.dateSynched ? dayjs(restReproductionHive.dateSynched) : undefined,
       dateDeleted: restReproductionHive.dateDeleted ? dayjs(restReproductionHive.dateDeleted) : undefined,
+      dateFinished: restReproductionHive.dateFinished ? dayjs(restReproductionHive.dateFinished) : undefined,
     };
   }
 

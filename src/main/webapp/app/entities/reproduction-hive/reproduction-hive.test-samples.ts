@@ -3,41 +3,42 @@ import dayjs from 'dayjs/esm';
 import { IReproductionHive, NewReproductionHive } from './reproduction-hive.model';
 
 export const sampleWithRequiredData: IReproductionHive = {
-  id: 4154,
-  externalId: 28845,
-  uuid: 'testify perfection',
-  dateCreated: dayjs('2025-02-10T18:22'),
-  dateModified: dayjs('2025-02-10T14:20'),
-  dateSynched: dayjs('2025-02-10T03:15'),
+  id: 17241,
+  externalId: 16517,
+  uuid: 'wilt',
+  dateCreated: dayjs('2025-02-10T01:44'),
+  dateModified: dayjs('2025-02-10T02:38'),
+  dateSynched: dayjs('2025-02-09T22:56'),
 };
 
 export const sampleWithPartialData: IReproductionHive = {
-  id: 27220,
-  externalId: 8809,
-  uuid: 'hospitalization nicely',
-  dateCreated: dayjs('2025-02-10T06:51'),
-  dateModified: dayjs('2025-02-10T19:12'),
-  dateSynched: dayjs('2025-02-10T05:52'),
-  dateDeleted: dayjs('2025-02-10T17:18'),
+  id: 4504,
+  externalId: 12016,
+  uuid: 'pace decision free',
+  dateCreated: dayjs('2025-02-09T22:29'),
+  dateModified: dayjs('2025-02-10T06:51'),
+  dateSynched: dayjs('2025-02-10T00:50'),
+  dateDeleted: dayjs('2025-02-10T18:16'),
 };
 
 export const sampleWithFullData: IReproductionHive = {
-  id: 12111,
-  note: 'aside wolf',
-  externalId: 30289,
-  uuid: 'creaking blah',
-  dateCreated: dayjs('2025-02-10T13:14'),
-  dateModified: dayjs('2025-02-10T11:02'),
-  dateSynched: dayjs('2025-02-10T08:02'),
-  dateDeleted: dayjs('2025-02-10T15:54'),
+  id: 23974,
+  note: 'frantically colorless mixture',
+  externalId: 32112,
+  uuid: 'perfection ew recount',
+  dateCreated: dayjs('2025-02-10T06:29'),
+  dateModified: dayjs('2025-02-10T03:52'),
+  dateSynched: dayjs('2025-02-09T20:19'),
+  dateDeleted: dayjs('2025-02-10T19:26'),
+  dateFinished: dayjs('2025-02-10T09:07'),
 };
 
 export const sampleWithNewData: NewReproductionHive = {
-  externalId: 17881,
-  uuid: 'likable respectful',
-  dateCreated: dayjs('2025-02-10T01:22'),
-  dateModified: dayjs('2025-02-10T03:21'),
-  dateSynched: dayjs('2025-02-10T05:37'),
+  externalId: 32663,
+  uuid: 'founder',
+  dateCreated: dayjs('2025-02-10T03:21'),
+  dateModified: dayjs('2025-02-10T13:15'),
+  dateSynched: dayjs('2025-02-10T11:19'),
   id: null,
 };
 

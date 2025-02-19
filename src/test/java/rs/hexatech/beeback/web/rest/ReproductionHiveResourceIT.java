@@ -58,6 +58,9 @@ class ReproductionHiveResourceIT {
     private static final Instant DEFAULT_DATE_DELETED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_DELETED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Instant DEFAULT_DATE_FINISHED = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_FINISHED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final String ENTITY_API_URL = "/api/reproduction-hives";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -100,7 +103,8 @@ class ReproductionHiveResourceIT {
             .dateCreated(DEFAULT_DATE_CREATED)
             .dateModified(DEFAULT_DATE_MODIFIED)
             .dateSynched(DEFAULT_DATE_SYNCHED)
-            .dateDeleted(DEFAULT_DATE_DELETED);
+            .dateDeleted(DEFAULT_DATE_DELETED)
+            .dateFinished(DEFAULT_DATE_FINISHED);
     }
 
     /**
@@ -117,7 +121,8 @@ class ReproductionHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
     }
 
     @BeforeEach
@@ -278,7 +283,8 @@ class ReproductionHiveResourceIT {
             .andExpect(jsonPath("$.[*].dateCreated").value(hasItem(DEFAULT_DATE_CREATED.toString())))
             .andExpect(jsonPath("$.[*].dateModified").value(hasItem(DEFAULT_DATE_MODIFIED.toString())))
             .andExpect(jsonPath("$.[*].dateSynched").value(hasItem(DEFAULT_DATE_SYNCHED.toString())))
-            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())));
+            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())))
+            .andExpect(jsonPath("$.[*].dateFinished").value(hasItem(DEFAULT_DATE_FINISHED.toString())));
     }
 
     @Test
@@ -299,7 +305,8 @@ class ReproductionHiveResourceIT {
             .andExpect(jsonPath("$.dateCreated").value(DEFAULT_DATE_CREATED.toString()))
             .andExpect(jsonPath("$.dateModified").value(DEFAULT_DATE_MODIFIED.toString()))
             .andExpect(jsonPath("$.dateSynched").value(DEFAULT_DATE_SYNCHED.toString()))
-            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()));
+            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()))
+            .andExpect(jsonPath("$.dateFinished").value(DEFAULT_DATE_FINISHED.toString()));
     }
 
     @Test
@@ -328,7 +335,8 @@ class ReproductionHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
         ReproductionHiveDTO reproductionHiveDTO = reproductionHiveMapper.toDto(updatedReproductionHive);
 
         restReproductionHiveMockMvc
@@ -420,9 +428,12 @@ class ReproductionHiveResourceIT {
 
         partialUpdatedReproductionHive
             .note(UPDATED_NOTE)
+            .externalId(UPDATED_EXTERNAL_ID)
             .uuid(UPDATED_UUID)
             .dateCreated(UPDATED_DATE_CREATED)
-            .dateModified(UPDATED_DATE_MODIFIED);
+            .dateModified(UPDATED_DATE_MODIFIED)
+            .dateSynched(UPDATED_DATE_SYNCHED)
+            .dateFinished(UPDATED_DATE_FINISHED);
 
         restReproductionHiveMockMvc
             .perform(
@@ -460,7 +471,8 @@ class ReproductionHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
 
         restReproductionHiveMockMvc
             .perform(

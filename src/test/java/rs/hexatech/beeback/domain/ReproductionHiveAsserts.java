@@ -53,7 +53,8 @@ public class ReproductionHiveAsserts {
             .satisfies(e -> assertThat(e.getDateCreated()).as("check dateCreated").isEqualTo(actual.getDateCreated()))
             .satisfies(e -> assertThat(e.getDateModified()).as("check dateModified").isEqualTo(actual.getDateModified()))
             .satisfies(e -> assertThat(e.getDateSynched()).as("check dateSynched").isEqualTo(actual.getDateSynched()))
-            .satisfies(e -> assertThat(e.getDateDeleted()).as("check dateDeleted").isEqualTo(actual.getDateDeleted()));
+            .satisfies(e -> assertThat(e.getDateDeleted()).as("check dateDeleted").isEqualTo(actual.getDateDeleted()))
+            .satisfies(e -> assertThat(e.getDateFinished()).as("check dateFinished").isEqualTo(actual.getDateFinished()));
     }
 
     /**

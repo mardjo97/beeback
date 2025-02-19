@@ -91,6 +91,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="dateFinished">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.reproductionHive.dateFinished">Date Finished</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="user.id">
               <div class="d-flex">
                 <span jhiTranslate="beebackApp.reproductionHive.user">User</span>
@@ -119,6 +126,7 @@
               <td>{{ reproductionHive.dateModified | formatMediumDatetime }}</td>
               <td>{{ reproductionHive.dateSynched | formatMediumDatetime }}</td>
               <td>{{ reproductionHive.dateDeleted | formatMediumDatetime }}</td>
+              <td>{{ reproductionHive.dateFinished | formatMediumDatetime }}</td>
               <td>
                 {{ reproductionHive.user?.id }}
               </td>

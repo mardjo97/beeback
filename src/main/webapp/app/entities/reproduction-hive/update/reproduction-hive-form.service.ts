@@ -21,19 +21,23 @@ type ReproductionHiveFormGroupInput = IReproductionHive | PartialWithRequiredKey
  */
 type FormValueOf<T extends IReproductionHive | NewReproductionHive> = Omit<
   T,
-  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+  'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
 > & {
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 type ReproductionHiveFormRawValue = FormValueOf<IReproductionHive>;
 
 type NewReproductionHiveFormRawValue = FormValueOf<NewReproductionHive>;
 
-type ReproductionHiveFormDefaults = Pick<NewReproductionHive, 'id' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'>;
+type ReproductionHiveFormDefaults = Pick<
+  NewReproductionHive,
+  'id' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
+>;
 
 type ReproductionHiveFormGroupContent = {
   id: FormControl<ReproductionHiveFormRawValue['id'] | NewReproductionHive['id']>;
@@ -44,6 +48,7 @@ type ReproductionHiveFormGroupContent = {
   dateModified: FormControl<ReproductionHiveFormRawValue['dateModified']>;
   dateSynched: FormControl<ReproductionHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<ReproductionHiveFormRawValue['dateDeleted']>;
+  dateFinished: FormControl<ReproductionHiveFormRawValue['dateFinished']>;
   user: FormControl<ReproductionHiveFormRawValue['user']>;
   hive: FormControl<ReproductionHiveFormRawValue['hive']>;
 };
@@ -82,6 +87,7 @@ export class ReproductionHiveFormService {
         validators: [Validators.required],
       }),
       dateDeleted: new FormControl(reproductionHiveRawValue.dateDeleted),
+      dateFinished: new FormControl(reproductionHiveRawValue.dateFinished),
       user: new FormControl(reproductionHiveRawValue.user),
       hive: new FormControl(reproductionHiveRawValue.hive),
     });
@@ -115,6 +121,7 @@ export class ReproductionHiveFormService {
       dateModified: currentTime,
       dateSynched: currentTime,
       dateDeleted: currentTime,
+      dateFinished: currentTime,
     };
   }
 
@@ -127,6 +134,7 @@ export class ReproductionHiveFormService {
       dateModified: dayjs(rawReproductionHive.dateModified, DATE_TIME_FORMAT),
       dateSynched: dayjs(rawReproductionHive.dateSynched, DATE_TIME_FORMAT),
       dateDeleted: dayjs(rawReproductionHive.dateDeleted, DATE_TIME_FORMAT),
+      dateFinished: dayjs(rawReproductionHive.dateFinished, DATE_TIME_FORMAT),
     };
   }
 
@@ -139,6 +147,7 @@ export class ReproductionHiveFormService {
       dateModified: reproductionHive.dateModified ? reproductionHive.dateModified.format(DATE_TIME_FORMAT) : undefined,
       dateSynched: reproductionHive.dateSynched ? reproductionHive.dateSynched.format(DATE_TIME_FORMAT) : undefined,
       dateDeleted: reproductionHive.dateDeleted ? reproductionHive.dateDeleted.format(DATE_TIME_FORMAT) : undefined,
+      dateFinished: reproductionHive.dateFinished ? reproductionHive.dateFinished.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }
