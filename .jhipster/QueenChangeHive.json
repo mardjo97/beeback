@@ -40,6 +40,10 @@
     {
       "fieldName": "dateDeleted",
       "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dateFinished",
+      "fieldType": "Instant"
     }
   ],
   "jpaMetamodelFiltering": false,

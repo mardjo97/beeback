@@ -13,13 +13,14 @@ export type PartialUpdateExaminationHive = Partial<IExaminationHive> & Pick<IExa
 
 type RestOf<T extends IExaminationHive | NewExaminationHive> = Omit<
   T,
-  'dateExamination' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+  'dateExamination' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
 > & {
   dateExamination?: string | null;
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 export type RestExaminationHive = RestOf<IExaminationHive>;
@@ -118,6 +119,7 @@ export class ExaminationHiveService {
       dateModified: examinationHive.dateModified?.toJSON() ?? null,
       dateSynched: examinationHive.dateSynched?.toJSON() ?? null,
       dateDeleted: examinationHive.dateDeleted?.toJSON() ?? null,
+      dateFinished: examinationHive.dateFinished?.toJSON() ?? null,
     };
   }
 
@@ -129,6 +131,7 @@ export class ExaminationHiveService {
       dateModified: restExaminationHive.dateModified ? dayjs(restExaminationHive.dateModified) : undefined,
       dateSynched: restExaminationHive.dateSynched ? dayjs(restExaminationHive.dateSynched) : undefined,
       dateDeleted: restExaminationHive.dateDeleted ? dayjs(restExaminationHive.dateDeleted) : undefined,
+      dateFinished: restExaminationHive.dateFinished ? dayjs(restExaminationHive.dateFinished) : undefined,
     };
   }
 

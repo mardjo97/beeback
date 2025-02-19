@@ -27,6 +27,7 @@
       "dateModified": "Date Modified",
       "dateSynched": "Date Synched",
       "dateDeleted": "Date Deleted",
+      "dateFinished": "Date Finished",
       "user": "User",
       "hive": "Hive"
     }

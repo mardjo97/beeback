@@ -21,13 +21,14 @@ type ExaminationHiveFormGroupInput = IExaminationHive | PartialWithRequiredKeyOf
  */
 type FormValueOf<T extends IExaminationHive | NewExaminationHive> = Omit<
   T,
-  'dateExamination' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+  'dateExamination' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
 > & {
   dateExamination?: string | null;
   dateCreated?: string | null;
   dateModified?: string | null;
   dateSynched?: string | null;
   dateDeleted?: string | null;
+  dateFinished?: string | null;
 };
 
 type ExaminationHiveFormRawValue = FormValueOf<IExaminationHive>;
@@ -36,7 +37,7 @@ type NewExaminationHiveFormRawValue = FormValueOf<NewExaminationHive>;
 
 type ExaminationHiveFormDefaults = Pick<
   NewExaminationHive,
-  'id' | 'dateExamination' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted'
+  'id' | 'dateExamination' | 'dateCreated' | 'dateModified' | 'dateSynched' | 'dateDeleted' | 'dateFinished'
 >;
 
 type ExaminationHiveFormGroupContent = {
@@ -50,6 +51,7 @@ type ExaminationHiveFormGroupContent = {
   dateModified: FormControl<ExaminationHiveFormRawValue['dateModified']>;
   dateSynched: FormControl<ExaminationHiveFormRawValue['dateSynched']>;
   dateDeleted: FormControl<ExaminationHiveFormRawValue['dateDeleted']>;
+  dateFinished: FormControl<ExaminationHiveFormRawValue['dateFinished']>;
   user: FormControl<ExaminationHiveFormRawValue['user']>;
   hive: FormControl<ExaminationHiveFormRawValue['hive']>;
 };
@@ -90,6 +92,7 @@ export class ExaminationHiveFormService {
         validators: [Validators.required],
       }),
       dateDeleted: new FormControl(examinationHiveRawValue.dateDeleted),
+      dateFinished: new FormControl(examinationHiveRawValue.dateFinished),
       user: new FormControl(examinationHiveRawValue.user),
       hive: new FormControl(examinationHiveRawValue.hive),
     });
@@ -121,6 +124,7 @@ export class ExaminationHiveFormService {
       dateModified: currentTime,
       dateSynched: currentTime,
       dateDeleted: currentTime,
+      dateFinished: currentTime,
     };
   }
 
@@ -134,6 +138,7 @@ export class ExaminationHiveFormService {
       dateModified: dayjs(rawExaminationHive.dateModified, DATE_TIME_FORMAT),
       dateSynched: dayjs(rawExaminationHive.dateSynched, DATE_TIME_FORMAT),
       dateDeleted: dayjs(rawExaminationHive.dateDeleted, DATE_TIME_FORMAT),
+      dateFinished: dayjs(rawExaminationHive.dateFinished, DATE_TIME_FORMAT),
     };
   }
 
@@ -147,6 +152,7 @@ export class ExaminationHiveFormService {
       dateModified: examinationHive.dateModified ? examinationHive.dateModified.format(DATE_TIME_FORMAT) : undefined,
       dateSynched: examinationHive.dateSynched ? examinationHive.dateSynched.format(DATE_TIME_FORMAT) : undefined,
       dateDeleted: examinationHive.dateDeleted ? examinationHive.dateDeleted.format(DATE_TIME_FORMAT) : undefined,
+      dateFinished: examinationHive.dateFinished ? examinationHive.dateFinished.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }

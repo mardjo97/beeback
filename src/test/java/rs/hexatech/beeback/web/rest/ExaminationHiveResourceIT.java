@@ -64,6 +64,9 @@ class ExaminationHiveResourceIT {
     private static final Instant DEFAULT_DATE_DELETED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_DELETED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Instant DEFAULT_DATE_FINISHED = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_FINISHED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final String ENTITY_API_URL = "/api/examination-hives";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -108,7 +111,8 @@ class ExaminationHiveResourceIT {
             .dateCreated(DEFAULT_DATE_CREATED)
             .dateModified(DEFAULT_DATE_MODIFIED)
             .dateSynched(DEFAULT_DATE_SYNCHED)
-            .dateDeleted(DEFAULT_DATE_DELETED);
+            .dateDeleted(DEFAULT_DATE_DELETED)
+            .dateFinished(DEFAULT_DATE_FINISHED);
     }
 
     /**
@@ -127,7 +131,8 @@ class ExaminationHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
     }
 
     @BeforeEach
@@ -290,7 +295,8 @@ class ExaminationHiveResourceIT {
             .andExpect(jsonPath("$.[*].dateCreated").value(hasItem(DEFAULT_DATE_CREATED.toString())))
             .andExpect(jsonPath("$.[*].dateModified").value(hasItem(DEFAULT_DATE_MODIFIED.toString())))
             .andExpect(jsonPath("$.[*].dateSynched").value(hasItem(DEFAULT_DATE_SYNCHED.toString())))
-            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())));
+            .andExpect(jsonPath("$.[*].dateDeleted").value(hasItem(DEFAULT_DATE_DELETED.toString())))
+            .andExpect(jsonPath("$.[*].dateFinished").value(hasItem(DEFAULT_DATE_FINISHED.toString())));
     }
 
     @Test
@@ -313,7 +319,8 @@ class ExaminationHiveResourceIT {
             .andExpect(jsonPath("$.dateCreated").value(DEFAULT_DATE_CREATED.toString()))
             .andExpect(jsonPath("$.dateModified").value(DEFAULT_DATE_MODIFIED.toString()))
             .andExpect(jsonPath("$.dateSynched").value(DEFAULT_DATE_SYNCHED.toString()))
-            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()));
+            .andExpect(jsonPath("$.dateDeleted").value(DEFAULT_DATE_DELETED.toString()))
+            .andExpect(jsonPath("$.dateFinished").value(DEFAULT_DATE_FINISHED.toString()));
     }
 
     @Test
@@ -344,7 +351,8 @@ class ExaminationHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
         ExaminationHiveDTO examinationHiveDTO = examinationHiveMapper.toDto(updatedExaminationHive);
 
         restExaminationHiveMockMvc
@@ -435,9 +443,10 @@ class ExaminationHiveResourceIT {
         partialUpdatedExaminationHive.setId(examinationHive.getId());
 
         partialUpdatedExaminationHive
-            .note(UPDATED_NOTE)
             .dateExamination(UPDATED_DATE_EXAMINATION)
-            .externalId(UPDATED_EXTERNAL_ID)
+            .reminderId(UPDATED_REMINDER_ID)
+            .uuid(UPDATED_UUID)
+            .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED);
 
         restExaminationHiveMockMvc
@@ -478,7 +487,8 @@ class ExaminationHiveResourceIT {
             .dateCreated(UPDATED_DATE_CREATED)
             .dateModified(UPDATED_DATE_MODIFIED)
             .dateSynched(UPDATED_DATE_SYNCHED)
-            .dateDeleted(UPDATED_DATE_DELETED);
+            .dateDeleted(UPDATED_DATE_DELETED)
+            .dateFinished(UPDATED_DATE_FINISHED);
 
         restExaminationHiveMockMvc
             .perform(

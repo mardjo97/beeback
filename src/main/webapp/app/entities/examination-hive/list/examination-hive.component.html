@@ -105,6 +105,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="dateFinished">
+              <div class="d-flex">
+                <span jhiTranslate="beebackApp.examinationHive.dateFinished">Date Finished</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="user.id">
               <div class="d-flex">
                 <span jhiTranslate="beebackApp.examinationHive.user">User</span>
@@ -135,6 +142,7 @@
               <td>{{ examinationHive.dateModified | formatMediumDatetime }}</td>
               <td>{{ examinationHive.dateSynched | formatMediumDatetime }}</td>
               <td>{{ examinationHive.dateDeleted | formatMediumDatetime }}</td>
+              <td>{{ examinationHive.dateFinished | formatMediumDatetime }}</td>
               <td>
                 {{ examinationHive.user?.id }}
               </td>
