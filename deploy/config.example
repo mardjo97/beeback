@@ -1,0 +1,13 @@
+# Copy to config (or config.local) and fill in. Do not commit config with secrets.
+# DEPLOY_HOST=188.245.219.171
+# DEPLOY_USER=root
+# DEPLOY_PATH=/opt/beeback
+# SSH_KEY=
+
+# Required
+DEPLOY_HOST=188.245.219.171
+DEPLOY_USER=root
+DEPLOY_PATH=/opt/beeback
+
+# Optional: path to private key (default: ~/.ssh/id_rsa or let SSH use agent)
+# SSH_KEY=C:\Users\you\.ssh\id_ed25519

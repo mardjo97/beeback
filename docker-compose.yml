@@ -1,0 +1,37 @@
+# Run beeback backend with MySQL. From beeback root: docker compose up --build
+# App: http://188.245.219.171:8080 (bound on all interfaces so reachable at server IP)
+name: beeback
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/beeback_prod?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=dorde
+      - SPRING_LIQUIBASE_URL=jdbc:mysql://mysql:3306/beeback_prod?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+      - SPRING_LIQUIBASE_USER=root
+      - SPRING_LIQUIBASE_PASSWORD=dorde
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+  mysql:
+    image: mysql:9.1.0
+    volumes:
+      - ./src/main/docker/config/mysql:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=dorde
+      - MYSQL_DATABASE=beeback_prod
+    ports:
+      - "127.0.0.1:3308:3306"
+    command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test: ["CMD", "mysql", "-uroot", "-pdorde", "-e", "SHOW DATABASES;"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
