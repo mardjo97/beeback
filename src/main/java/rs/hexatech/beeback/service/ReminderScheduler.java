@@ -45,7 +45,7 @@ public class ReminderScheduler {
         if (tokenOpt.isEmpty()) {
           LOG.warn("Reminder {}: no FCM token for device {}", r.getId(), r.getDeviceId());
         } else {
-          String token = tokenOpt.get();
+          String token = tokenOpt.orElseThrow();
           boolean sent = fcmService.sendToToken(token, title, body);
           if (sent) {
             LOG.info("Reminder {} sent via FCM to device {}", r.getId(), r.getDeviceId());
