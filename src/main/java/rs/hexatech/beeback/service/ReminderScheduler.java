@@ -31,7 +31,7 @@ public class ReminderScheduler {
   @Transactional
   public void sendDueReminders() {
     if (!fcmService.isInitialized()) {
-          LOG.warn("Reminder job ran: FCM service not initialized.");
+      LOG.debug("Reminder job skipped: FCM not initialized (set application.firebase.credentials-path or FIREBASE_CREDENTIALS_PATH).");
       return;
     }
     Instant now = Instant.now();

@@ -118,6 +118,9 @@ Desktop.ini
 /bin/
 /deploy/config
 /deploy/config.local
+# Firebase service account (contains private key)
+config/firebase-credentials.json
+
 # Server backup env (contains DB_PASSWORD, GMAIL_PASSWORD)
 .env.backup
 python/.env.backup

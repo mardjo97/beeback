@@ -6,9 +6,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: unless-stopped
     environment:
-      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - _JAVA_OPTIONS=-Xmx768m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - APPLICATION_FIREBASE_CREDENTIALS_PATH=/app/config/firebase-credentials.json
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/beeback_prod?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=dorde
@@ -16,7 +18,9 @@ services:
       - SPRING_LIQUIBASE_USER=root
       - SPRING_LIQUIBASE_PASSWORD=dorde
     ports:
-      - "8080:8080"
+      - "0.0.0.0:8080:8080"
+    volumes:
+      - ./config/firebase-credentials.json:/app/config/firebase-credentials.json:ro
     depends_on:
       mysql:
         condition: service_healthy

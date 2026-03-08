@@ -180,6 +180,9 @@ if (-not $SkipPull) {
     Invoke-Remote "cd '$path' && git pull"
 }
 
+# Ensure config/ exists on server (for Firebase credentials mount)
+Invoke-Remote "mkdir -p '$path/config'"
+
 $pathEscapedForRemote = $path -replace "'", "'\\''"
 if ($Build) {
     Write-Host "Building and starting containers (retrying on network errors)..." -ForegroundColor Yellow

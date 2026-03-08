@@ -119,5 +119,5 @@ jhipster:
 
 application:
   firebase:
-    # Firebase Admin SDK service account JSON (use forward slashes on Windows)
-    credentials-path: c:/Users/djord/Downloads/beekeeper-9ed88-firebase-adminsdk-fbsvc-11dd560e01.json
+    # Firebase Admin SDK: file in project config/ (relative to run dir)
+    credentials-path: config/firebase-credentials.json

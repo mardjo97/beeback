@@ -92,6 +92,35 @@ If you get **connection refused** when opening http://188.245.219.171:8080:
    .\deploy\deploy.ps1 -Build
    ```
 
+### Firebase (FCM) on the server
+
+The app can send reminder push notifications via Firebase Cloud Messaging. The JSON key file is **not** in Git (it’s in `.gitignore`). To enable FCM on the server:
+
+1. **Copy your Firebase credentials file to the server** (same file you use locally, e.g. `config/firebase-credentials.json`):
+   ```powershell
+   scp config\firebase-credentials.json root@188.245.219.171:/opt/beeback/config/
+   ```
+   Or from Bash: `scp config/firebase-credentials.json root@188.245.219.171:/opt/beeback/config/`
+
+2. **Restart the app** so it picks up the mounted file:
+   ```powershell
+   .\deploy\deploy.ps1 -SkipPull
+   ```
+   Or on the server: `cd /opt/beeback && docker compose restart app`
+
+3. **Check that it’s used**: app logs should show `FCM: initialized from /app/config/firebase-credentials.json` (not “no credentials path set” or “could not load credentials”):
+   ```bash
+   ssh root@188.245.219.171 "cd /opt/beeback && docker compose logs app --tail 30" | findstr FCM
+   ```
+
+The deploy script ensures `config/` exists on the server. You can copy the file and restart in one go from your machine:
+
+```powershell
+.\deploy\copy-firebase.ps1
+```
+
+(This requires `config\firebase-credentials.json` to exist locally and uses `deploy\config` for host/user/path.)
+
 ---
 
 ## Python scripts (backup and cron)
