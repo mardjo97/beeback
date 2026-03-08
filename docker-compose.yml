@@ -10,7 +10,7 @@ services:
     environment:
       - _JAVA_OPTIONS=-Xmx768m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,api-docs
-      - APPLICATION_FIREBASE_CREDENTIALS_PATH=/app/config/firebase-credentials.json
+      - FIREBASE_CREDENTIALS_PATH=/app/config/firebase-credentials.json
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/beeback_prod?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=dorde
