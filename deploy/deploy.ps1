@@ -183,10 +183,12 @@ if (-not $SkipPull) {
 $pathEscapedForRemote = $path -replace "'", "'\\''"
 if ($Build) {
     Write-Host "Building and starting containers (retrying on network errors)..." -ForegroundColor Yellow
+    Invoke-Remote "cd '$pathEscapedForRemote' && docker compose rm -sf app 2>/dev/null; true"
     $retryCmd = "cd '$pathEscapedForRemote' && for i in 1 2 3 4 5; do docker compose pull && docker compose up -d --build && exit 0; echo `"Attempt `$i failed, retry in 45s...`"; sleep 45; done; exit 1"
     Invoke-Remote $retryCmd
 } else {
     Write-Host "Starting containers (no rebuild)..." -ForegroundColor Yellow
+    Invoke-Remote "cd '$pathEscapedForRemote' && docker compose rm -sf app 2>/dev/null; true"
     $retryCmd = "cd '$pathEscapedForRemote' && for i in 1 2 3 4 5; do docker compose pull 2>/dev/null; docker compose up -d && exit 0; echo `"Attempt `$i failed, retry in 45s...`"; sleep 45; done; exit 1"
     Invoke-Remote $retryCmd
 }

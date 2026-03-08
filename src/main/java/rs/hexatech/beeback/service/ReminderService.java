@@ -50,7 +50,7 @@ public class ReminderService {
     token.setFcmToken(fcmToken);
     token.setUpdatedAt(now);
     deviceFcmTokenRepository.save(token);
-    LOG.debug("Registered FCM token for device: {}", deviceId);
+    LOG.info("FCM token registered for device: {}", deviceId);
   }
 
   public ReminderDTO create(ReminderDTO dto, String deviceId) {

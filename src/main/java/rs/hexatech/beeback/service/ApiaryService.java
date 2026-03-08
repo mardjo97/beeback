@@ -90,11 +90,10 @@ public class ApiaryService {
     if (apiaryDto.getUuid() != null) {
       Apiary existingApiary = apiaryRepository.findByUuidIs(apiaryDto.getUuid());
       if (existingApiary == null) {
-        LOG.error("The entity does not exist, but there is uuid in the request body {}", apiaryDto);
-        LOG.error("Returning the response with uuid and dateSynched as nulls!");
+        LOG.debug("Creating Apiary from client (uuid not on server): {}", apiaryDto.getUuid());
         Apiary mappedApiary = apiaryMapper.toEntity(apiaryDto);
-        toReset(mappedApiary);
-        return mappedApiary;
+        toCreateFromClient(mappedApiary, user, apiaryDto.getUuid());
+        return apiaryRepository.save(mappedApiary);
       }
       apiaryMapper.partialUpdate(existingApiary, apiaryDto);
       toUpdate(existingApiary);
@@ -200,6 +199,10 @@ public class ApiaryService {
 
   private void toCreate(final Apiary apiary, final User user) {
     apiary.user(user).uuid(UUID.randomUUID().toString()).dateSynched(DateTimeUtil.now());
+  }
+
+  private void toCreateFromClient(final Apiary apiary, final User user, final String uuid) {
+    apiary.user(user).uuid(uuid).dateSynched(DateTimeUtil.now());
   }
 
   private void toReset(final Apiary apiary) {

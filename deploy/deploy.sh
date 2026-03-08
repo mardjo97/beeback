@@ -153,6 +153,7 @@ if [[ "$SKIP_PULL" == false ]]; then
   run_remote "cd '$DEPLOY_PATH' && git pull"
 fi
 
+run_remote "cd '$DEPLOY_PATH' && docker compose rm -sf app 2>/dev/null; true"
 if [[ "$BUILD" == true ]]; then
   echo "Building and starting containers (retrying on network errors)..."
   run_remote "cd '$DEPLOY_PATH' && for i in 1 2 3 4 5; do docker compose pull && docker compose up -d --build && exit 0; echo \"Attempt \$i failed, retry in 45s...\"; sleep 45; done; exit 1"

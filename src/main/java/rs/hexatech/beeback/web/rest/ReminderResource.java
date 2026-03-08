@@ -62,6 +62,7 @@ public class ReminderResource {
       throw new BadRequestAlertException("A new reminder cannot already have an ID", ENTITY_NAME, "idexists");
     }
     ReminderDTO created = reminderService.create(dto, deviceId);
+    LOG.info("Reminder created: id={}, scheduledAt={}, title={}", created.getId(), created.getScheduledAt(), created.getTitle());
     return ResponseEntity.ok(created);
   }
 

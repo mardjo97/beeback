@@ -31,10 +31,12 @@ public class ReminderScheduler {
   @Transactional
   public void sendDueReminders() {
     if (!fcmService.isInitialized()) {
+          LOG.warn("Reminder job ran: FCM service not initialized.");
       return;
     }
     Instant now = Instant.now();
     List<Reminder> due = reminderService.findDueReminders(now);
+    LOG.info("Reminder job ran: {} due reminder(s) at {}", due.size(), now);
     for (Reminder r : due) {
       try {
         String title = r.getTitle() != null ? r.getTitle() : "Podsetnik";
@@ -43,10 +45,12 @@ public class ReminderScheduler {
         if (tokenOpt.isEmpty()) {
           LOG.warn("Reminder {}: no FCM token for device {}", r.getId(), r.getDeviceId());
         } else {
-          String token = tokenOpt.orElseThrow();
+          String token = tokenOpt.get();
           boolean sent = fcmService.sendToToken(token, title, body);
           if (sent) {
-            LOG.debug("Reminder {} sent to device {}", r.getId(), r.getDeviceId());
+            LOG.info("Reminder {} sent via FCM to device {}", r.getId(), r.getDeviceId());
+          } else {
+            LOG.warn("Reminder {}: FCM send failed for device {}", r.getId(), r.getDeviceId());
           }
         }
       } catch (Exception e) {
@@ -54,9 +58,6 @@ public class ReminderScheduler {
       } finally {
         reminderService.deleteReminder(r);
       }
-    }
-    if (!due.isEmpty()) {
-      LOG.debug("Processed {} due reminder(s)", due.size());
     }
   }
 }
