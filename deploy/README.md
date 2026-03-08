@@ -69,6 +69,29 @@ chmod +x deploy/deploy.sh
 To only restart containers without pulling or rebuilding:  
 `.\deploy\deploy.ps1 -SkipPull`
 
+### Connection refused on port 8080
+
+If you get **connection refused** when opening http://188.245.219.171:8080:
+
+1. **Check containers on the server**
+   ```bash
+   ssh root@188.245.219.171 "cd /opt/beeback && docker compose ps"
+   ```
+   Both `app` and `mysql` should be `Up`. If `app` is `Exit` or missing, check logs:
+   ```bash
+   ssh root@188.245.219.171 "cd /opt/beeback && docker compose logs app --tail 80"
+   ```
+
+2. **Open port 8080 in the server firewall** (if enabled)
+   - **ufw (Ubuntu/Debian):** `sudo ufw allow 8080/tcp && sudo ufw reload`
+   - **firewalld:** `sudo firewall-cmd --permanent --add-port=8080/tcp && sudo firewall-cmd --reload`
+   - **Cloud (e.g. Hetzner/AWS):** In the control panel, add an inbound rule for TCP port 8080 from 0.0.0.0/0 or your IP.
+
+3. **Redeploy** so the app binds on all interfaces (we use `0.0.0.0:8080:8080` in compose):
+   ```powershell
+   .\deploy\deploy.ps1 -Build
+   ```
+
 ---
 
 ## Python scripts (backup and cron)
