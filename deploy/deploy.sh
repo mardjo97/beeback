@@ -36,12 +36,14 @@ BUILD=false
 SKIP_PULL=false
 SETUP=false
 DOWN=false
+INSTALL_CRON=false
 for arg in "$@"; do
   case "$arg" in
-    --build)     BUILD=true ;;
-    --skip-pull) SKIP_PULL=true ;;
-    --setup)     SETUP=true ;;
-    --down)      DOWN=true ;;
+    --build)       BUILD=true ;;
+    --skip-pull)   SKIP_PULL=true ;;
+    --setup)       SETUP=true ;;
+    --down)        DOWN=true ;;
+    --install-cron) INSTALL_CRON=true ;;
   esac
 done
 
@@ -137,17 +139,26 @@ if [[ "$DOWN" == true ]]; then
   exit 0
 fi
 
+if [[ "$INSTALL_CRON" == true ]]; then
+  echo "Creating backup dirs and installing cron for Python backup..."
+  run_remote "mkdir -p '$DEPLOY_PATH/backup/created' '$DEPLOY_PATH/backup/processed' && chmod +x '$DEPLOY_PATH/python/run_backup.sh' && \
+    ( [ -f '$DEPLOY_PATH/.env.backup' ] || { cp '$DEPLOY_PATH/python/.env.backup.example' '$DEPLOY_PATH/.env.backup'; echo 'Created .env.backup from example'; } ) && \
+    ( crontab -l 2>/dev/null | grep -v run_backup.sh || true; echo \"0 2 * * * $DEPLOY_PATH/python/run_backup.sh >> $DEPLOY_PATH/backup/backup.log 2>&1\" ) | crontab -"
+  echo "Cron installed (daily 2 AM). Edit $DEPLOY_PATH/.env.backup on the server for DB_PASSWORD / GMAIL_PASSWORD."
+  exit 0
+fi
+
 if [[ "$SKIP_PULL" == false ]]; then
   echo "Pulling latest on server..."
   run_remote "cd '$DEPLOY_PATH' && git pull"
 fi
 
 if [[ "$BUILD" == true ]]; then
-  echo "Building and starting containers..."
-  run_remote "cd '$DEPLOY_PATH' && docker compose up -d --build"
+  echo "Building and starting containers (retrying on network errors)..."
+  run_remote "cd '$DEPLOY_PATH' && for i in 1 2 3 4 5; do docker compose pull && docker compose up -d --build && exit 0; echo \"Attempt \$i failed, retry in 45s...\"; sleep 45; done; exit 1"
 else
   echo "Starting containers (no rebuild)..."
-  run_remote "cd '$DEPLOY_PATH' && docker compose up -d"
+  run_remote "cd '$DEPLOY_PATH' && for i in 1 2 3 4 5; do docker compose pull 2>/dev/null; docker compose up -d && exit 0; echo \"Attempt \$i failed, retry in 45s...\"; sleep 45; done; exit 1"
 fi
 
 echo "Deploy done. App: http://${DEPLOY_HOST}:8080"

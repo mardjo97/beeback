@@ -116,7 +116,11 @@ Desktop.ini
 # Directories
 ######################
 /bin/
-/deploy/
+/deploy/config
+/deploy/config.local
+# Server backup env (contains DB_PASSWORD, GMAIL_PASSWORD)
+.env.backup
+python/.env.backup
 
 ######################
 # Logs

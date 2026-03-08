@@ -3,10 +3,11 @@
 # With -Setup: installs git and Docker on server if missing, then clones repo.
 
 param(
-    [switch]$Build,      # run docker compose up --build -d
-    [switch]$SkipPull,   # skip git pull on server
-    [switch]$Setup,     # one-time: create DEPLOY_PATH on server and clone repo
-    [switch]$Down        # run docker compose down on server
+    [switch]$Build,       # run docker compose up -d --build
+    [switch]$SkipPull,    # skip git pull on server
+    [switch]$Setup,       # one-time: create DEPLOY_PATH on server and clone repo
+    [switch]$Down,        # run docker compose down on server
+    [switch]$InstallCron  # create backup dirs + crontab for python/run_backup.sh (daily 2 AM)
 )
 
 $ErrorActionPreference = "Stop"
@@ -160,17 +161,34 @@ if ($Down) {
     exit 0
 }
 
+if ($InstallCron) {
+    $pathEsc = $path -replace "'", "'\\''"
+    Write-Host "Creating backup dirs and installing cron for Python backup..." -ForegroundColor Yellow
+    $cronCmd = @"
+mkdir -p '$pathEsc/backup/created' '$pathEsc/backup/processed' && chmod +x '$pathEsc/python/run_backup.sh' && \
+if [ ! -f '$pathEsc/.env.backup' ]; then cp '$pathEsc/python/.env.backup.example' '$pathEsc/.env.backup'; echo 'Created .env.backup from example; edit it to set DB_PASSWORD (and GMAIL_PASSWORD if you use email backup).'; fi && \
+(crontab -l 2>/dev/null | grep -v run_backup.sh || true; echo "0 2 * * * $pathEsc/python/run_backup.sh >> $pathEsc/backup/backup.log 2>&1") | crontab -
+"@
+    Invoke-Remote $cronCmd
+    Write-Host "Cron installed (daily 2 AM). Backup dirs: $path/backup/created, $path/backup/processed." -ForegroundColor Green
+    Write-Host "Edit $path/.env.backup on the server to set DB_PASSWORD (and GMAIL_PASSWORD for email)." -ForegroundColor Cyan
+    exit 0
+}
+
 if (-not $SkipPull) {
     Write-Host "Pulling latest on server..." -ForegroundColor Yellow
     Invoke-Remote "cd '$path' && git pull"
 }
 
+$pathEscapedForRemote = $path -replace "'", "'\\''"
 if ($Build) {
-    Write-Host "Building and starting containers..." -ForegroundColor Yellow
-    Invoke-Remote "cd '$path' && docker compose up -d --build"
+    Write-Host "Building and starting containers (retrying on network errors)..." -ForegroundColor Yellow
+    $retryCmd = "cd '$pathEscapedForRemote' && for i in 1 2 3 4 5; do docker compose pull && docker compose up -d --build && exit 0; echo `"Attempt `$i failed, retry in 45s...`"; sleep 45; done; exit 1"
+    Invoke-Remote $retryCmd
 } else {
     Write-Host "Starting containers (no rebuild)..." -ForegroundColor Yellow
-    Invoke-Remote "cd '$path' && docker compose up -d"
+    $retryCmd = "cd '$pathEscapedForRemote' && for i in 1 2 3 4 5; do docker compose pull 2>/dev/null; docker compose up -d && exit 0; echo `"Attempt `$i failed, retry in 45s...`"; sleep 45; done; exit 1"
+    Invoke-Remote $retryCmd
 }
 
 Write-Host "Deploy done. App: http://${host_name}:8080" -ForegroundColor Green

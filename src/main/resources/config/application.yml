@@ -223,4 +223,12 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+# Firebase Cloud Messaging (optional). Path to service account JSON. If not set, reminder push is disabled.
+# app:
+#   firebase:
+#     credentials-path: /path/to/firebase-service-account.json
+application:
+  firebase:
+    credentials-path: ${FIREBASE_CREDENTIALS_PATH:}
+  reminder-scheduler:
+    interval-ms: 60000  # run every minute

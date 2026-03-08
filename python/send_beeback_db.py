@@ -1,53 +1,46 @@
-import smtplib
+#!/usr/bin/env python3
+"""Send backup files from BACKUP_CREATED_DIR by email, then move to BACKUP_PROCESSED_DIR. Needs GMAIL_PASSWORD."""
+
 import glob
 import os
 import shutil
+import smtplib
+import sys
 import time
-# MIMEMultipart send emails with both text content and attachments.
-from email.mime.multipart import MIMEMultipart
-# MIMEText for creating body of the email message.
-from email.mime.text import MIMEText
-# MIMEApplication attaching application-specific data (like CSV files) to email messages.
 from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
-subject = "BB DB Backup - "+time.strftime('%Y-%m-%dT%H:%M:%S')
+created_dir = os.environ.get("BACKUP_CREATED_DIR", "/opt/beeback/backup/created")
+processed_dir = os.environ.get("BACKUP_PROCESSED_DIR", "/opt/beeback/backup/processed")
+password = os.environ.get("GMAIL_PASSWORD")
+if not password:
+    print("GMAIL_PASSWORD not set; skipping send.", file=sys.stderr)
+    sys.exit(0)
+
+os.makedirs(processed_dir, exist_ok=True)
+pattern = os.path.join(created_dir, "beeback_prod*")
+file_list = glob.glob(pattern)
+if not file_list:
+    print("No backup files to send.")
+    sys.exit(0)
+
+subject = "BB DB Backup - " + time.strftime("%Y-%m-%dT%H:%M:%S")
 body = "This is the created Backup"
 username = "backup.beeback@gmail.com"
-recipient_email = "backup.beeback@gmail.com"
-#password = os.getenv("GMAIL_PASSWORD")
-#print(password)
-#password = "pwd"
-server = 'smtp.gmail.com'
+recipient_email = os.environ.get("BACKUP_RECIPIENT_EMAIL", username)
+server = "smtp.gmail.com"
 port = 587
 
-move_to_dest_path = '/backup/processed'
-
-# MIMEMultipart() creates a container for an email message that can hold
-# different parts, like text and attachments and in next line we are
-# attaching different parts to email container like subject and others.
 message = MIMEMultipart()
-message['Subject'] = subject
-message['From'] = username
-message['To'] = recipient_email
-body_part = MIMEText(body)
-message.attach(body_part)
+message["Subject"] = subject
+message["From"] = username
+message["To"] = recipient_email
+message.attach(MIMEText(body))
 
-pattern = os.path.join('/backup/created', 'beeback_prod*')
-file_list = glob.glob(pattern)
-
-# section 1 to attach file
 for path in file_list:
-    with open(path,'rb') as file:
-        # Attach the file with filename to the email
-        #print(path)
-        #print(file.read())
-        message.attach(MIMEApplication(file.read(), Name=os.path.basename(path)))
-
-# secction 2 for sending email
-#with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
-#   server.starttls()
-#   server.login(sender_email, sender_password)
-#   server.sendmail(sender_email, recipient_email, message.as_string())
+    with open(path, "rb") as f:
+        message.attach(MIMEApplication(f.read(), Name=os.path.basename(path)))
 
 smtp = smtplib.SMTP(server, port)
 smtp.starttls()
@@ -55,9 +48,7 @@ smtp.login(username, password)
 smtp.sendmail(username, recipient_email, message.as_string())
 smtp.quit()
 
-#time.sleep(10)
-
 for path in file_list:
-    dest_path = os.path.join(move_to_dest_path, os.path.basename(path))
-    print("moved: :"+path+" -> "+dest_path)
-    shutil.move(path, dest_path)
+    dest = os.path.join(processed_dir, os.path.basename(path))
+    print(f"moved: {path} -> {dest}")
+    shutil.move(path, dest)

@@ -41,6 +41,10 @@
              relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250210200545_added_entity_AppConfig.xml"
              relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250306120000_added_entity_DeviceFcmToken.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250306120100_added_entity_Reminder.xml"
+             relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20241113174017_added_entity_constraints_Apiary.xml"
              relativeToChangelogFile="false"/>
@@ -73,6 +77,8 @@
     <include file="config/liquibase/changelog/20250210200545_added_entity_constraints_FeedingHive.xml"
              relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250210200545_added_entity_constraints_AppConfig.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250306120100_added_entity_constraints_Reminder.xml"
              relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
